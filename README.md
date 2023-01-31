@@ -12,6 +12,7 @@
 
 ## Miembros del equipo
 Andrés Ángel González Granda - uo68216@uniovi.es
+Pedro Garcia-Cañal Sánchez - uo264578@uniovi.es
 
 This project is a basic example of website using **React** with **Typescript** and an endpoint using **NodeJS** with **express**.
 
