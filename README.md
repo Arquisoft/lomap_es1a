@@ -10,6 +10,7 @@
 <img src="https://miro.medium.com/max/365/1*Jr3NFSKTfQWRUyjblBSKeg.png" height="100">
 </p>
 
+Adrián Alves Morales - uo284288@uniovi.es
 
 This project is a basic example of website using **React** with **Typescript** and an endpoint using **NodeJS** with **express**.
 
