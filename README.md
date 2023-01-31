@@ -11,6 +11,8 @@
 </p>
 
 
+Marcos Caraduje Martínez
+
 This project is a basic example of website using **React** with **Typescript** and an endpoint using **NodeJS** with **express**.
 
 ## Quick start guide
