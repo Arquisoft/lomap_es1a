@@ -11,7 +11,7 @@
 </p>
 
 
-Marcos Caraduje Martínez
+Marcos Caraduje Martínez - uo270285@uniovi.es
 
 This project is a basic example of website using **React** with **Typescript** and an endpoint using **NodeJS** with **express**.
 
