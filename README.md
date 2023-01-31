@@ -13,6 +13,8 @@
 ## Miembros del equipo
 Andrés Ángel González Granda - uo68216@uniovi.es
 
+Marcos Caraduje Martínez - uo270285@uniovi.es
+
 This project is a basic example of website using **React** with **Typescript** and an endpoint using **NodeJS** with **express**.
 
 ## Quick start guide
