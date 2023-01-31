@@ -12,6 +12,7 @@
 
 ## Miembros del equipo
 Andrés Ángel González Granda - uo68216@uniovi.es
+Pedro Garcia-Cañal Sánchez - uo264578@uniovi.es
 
 Marcos Caraduje Martínez - uo270285@uniovi.es
 
