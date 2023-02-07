@@ -1,6 +1,10 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
+- Business goals and essential features: (Requisitos de alto nivel)
+- Quality goals: (Criterios de valoración)
+- Relevant stakeholders: The developers, Brussels city hall.
+
 [role="arc42help"]
 ****
 Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
