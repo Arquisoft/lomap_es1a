@@ -1,6 +1,40 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
+=== Technologies
+
+The technologies that are going to be used to develop this project are:
+* React for the front-end.
+* Node.js for the back-end.
+* Typescript for both front-end and back-end.
+* The SOLID specification.
+* AsciiDoc for documentation.
+
+=== Project-specific constraints
+
+Although the company has been hired by the council of one specific city, one of their goals is to develop a generic software solution that can be deployed and used in other cities. As such, it is important to take into consideration that the application must be built with this in mind.
+
+It is also important to keep in mind that while the personalized maps will be under full control of the users, the shared information will be stored in a personal pod according to the SOLID project.
+
+The features that MUST be included in the project are the following:
+
+* Users can add locations in different categories like: shops, bars, restaurants, sights, monuments, etc.
+* Users will be able to show the locations in a map window
+* Users can add review scores, comments, pictures, etc. about the added places.
+* It will be possible to manage from the application the information that is accessible with other users, like their friends or groups of friends.
+* The information about a place stored by each user should not be centralized and should be stored in each user's pod.
+* If it is considered necessary, the system could store other information in a centralized way for performance reasons trying to respect the privacy of the users as much as possible.
+* The system will allow users to see places and information about those places taken from their friends.
+* The system will allow users to see the map with filters like by category, friends, etc.
+
+=== Quality constraints
+
+There exist several constraints that must be met:
+
+* The application must be usable for non technical people.
+* It must be secure and it must respect the user's privacy.
+* It should be responsive.
+
 
 [role="arc42help"]
 ****

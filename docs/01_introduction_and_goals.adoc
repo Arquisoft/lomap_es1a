@@ -11,10 +11,10 @@ Como stakeholders, tendríamos el Ayuntamiento de Bruselas, nuestros profesores,
 que se sigan en el proyecto, y nosotros, como estudiantes, que buscaremos aprender y adaptarnos a las dificultades que puedan surgir 
 durante el desarrollo.
 
-
 [role="arc42help"]
 ****
 Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
+
 
 * underlying business goals, essential features and functional requirements for the system
 * quality goals for the architecture
