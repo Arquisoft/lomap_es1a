@@ -1,6 +1,17 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
+Se nos plantea hipotéticamente un proyecto por parte del ayuntamiento de Bruselas para crear una aplicación llamada LoMap.
+Esta aplicación consistirá en unos mapas personalizados del que pueden disponer los ciudadanos de la ciudad, en el que podrán
+compartir diferentes lugares de la ciudad, como bares, restaurantes, monumentos, etc.
+
+Se plantea también que pueda ser extrapolable a otras ciudades, por lo que buscaremos una alta compatibilidad entre los diferentes
+elementos de la arquitectura. Además de buscar la posible escalabilidad del proyecto.
+Como stakeholders, tendríamos el Ayuntamiento de Bruselas, nuestros profesores, que revisarán y evaluarán el desarrollo y todos lo pasos
+que se sigan en el proyecto, y nosotros, como estudiantes, que buscaremos aprender y adaptarnos a las dificultades que puedan surgir 
+durante el desarrollo.
+
+
 [role="arc42help"]
 ****
 Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
@@ -8,9 +19,21 @@ Describes the relevant requirements and the driving forces that software archite
 * underlying business goals, essential features and functional requirements for the system
 * quality goals for the architecture
 * relevant stakeholders and their expectations
+
+
 ****
 
 === Requirements Overview
+
+* Añadir distintos tipos de localizaciones (bares, tiendas, restaurantes, paisajes, monumentos, etc)
+* Mostrar dichos lugares en una ventana de tipo Mapa
+* Los usuarios son capaces de dar puntuaciones y poner comentarios sobre los lugares añadidos
+* Se podría gestionar desde la app la información que los usuarios pueden compartir con sus amigos
+* La información almacenada sobre cualquier ubicación se debe almacenar en el pod de SOLID de cada usuario
+* Se podría almacenar cierta información de manera centralizada, por motivos de rendimientos, pero siempre 
+respetando la privacidad de los usuarios
+* Se permitirá ver los lugares e información sobre dichos lugares que han podido compartir sus amigos
+* Se podrá filtrar la información mostrada en el mapa. (Categoría, amigos)
 
 [role="arc42help"]
 ****
@@ -31,6 +54,18 @@ Keep these excerpts as short as possible. Balance readability of this document w
 ****
 
 === Quality Goals
+
+* Estética y usabilidad para personas que no tengan conocimientos técnicos
+* Seguridad en relación a la privacidad de los usuarios
+* Solidez de la aplicación a la hora de su uso
+* Solución tan usable como original
+* Documentación correcta y técnica teniendo en todas las decisiones que se puedan tomar por el equipo
+* Caldad del código, que será almacenado de forma manual y automática+
+* Calidad de la estrategia de pruebas del proyecto
+* Correcta gestión del proyecto mediante el uso de issues, actas de cada reunión, registro y seguimiento de cada decisión que se tome dentro del
+equipo a lo largo del proyecto, etc.
+* Uso de integración continua
+* Interoperabilidad entre los datos para las distintas aplicaciones que se puedan desarrollar del mismo estilo o con la misma funcionalidad
 
 [role="arc42help"]
 ****
@@ -70,6 +105,6 @@ Table with role names, person names, and their expectations with respect to the 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+| _<Profesores>_ | _<labra@univovi.es>_ | _<Aprendizaje y correcto funcionamienteo del equipo durante el desarrollo del proyecto>_
+| _<Ayuntamiento de Bruselas>_ | _<https://www.bruxelles.be/hotel-de-ville>_ | _<Desarrollar un proyecto parecido a Google Maps para que los usuarios puedan compartir ciertos lugares de cada ciudad>_
 |===
