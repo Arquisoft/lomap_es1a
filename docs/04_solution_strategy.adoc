@@ -1,36 +1,36 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-==Tecnologias
+== Tecnologias
 
 Backend
 
-* NodeJS: es un entorno de tiempo de ejecución de JavaScript que se utiliza para crear aplicaciones escalables del lado del servidor y de red a través de servidores privados virtuales.
+* NodeJS: es un entorno de tiempo de ejecuciï¿½n de JavaScript que se utiliza para crear aplicaciones escalables del lado del servidor y de red a travï¿½s de servidores privados virtuales.
 
 Frontend
 
-* React: es una biblioteca JavaScript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola pagina.
-* TypeScript: es un lenguaje de programación de código abierto pensado para ejecutar grandes proyectos y que permite trabajar de manera estructurada.
+* React: es una biblioteca JavaScript de cï¿½digo abierto diseï¿½ada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola pagina.
+* TypeScript: es un lenguaje de programaciï¿½n de cï¿½digo abierto pensado para ejecutar grandes proyectos y que permite trabajar de manera estructurada.
 
 Base de datos
 
-* MongoDb: se utilizara para la creación de la base de datos.
+* MongoDb: se utilizara para la creaciï¿½n de la base de datos.
 
 Utilizaremos POD para los usuarios.
 
-==Objetivos
+== Objetivos
 
 * Privacidad: Utilizaremos PODs para que cada usuario tenga mas seguridad y no sean tan vulnerables.
 
-==Decisiones organizativas
+== Decisiones organizativas
 
 Issues
 
-Cada miembro del equipo creará issues cada vez que vaya a realizar una tarea y asignará que miembros van a realizarla.
+Cada miembro del equipo crearï¿½ issues cada vez que vaya a realizar una tarea y asignarï¿½ que miembros van a realizarla.
 
-Comunicación
+Comunicaciï¿½n
 
-La comunicación del equipo se realizará a través de discord y mediante Whatsapp. También mediante las issues se realizara el reparto de tareas.
+La comunicaciï¿½n del equipo se realizarï¿½ a travï¿½s de discord y mediante Whatsapp. Tambiï¿½n mediante las issues se realizara el reparto de tareas.
 
 
 
