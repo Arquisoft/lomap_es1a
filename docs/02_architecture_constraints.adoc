@@ -1,36 +1,36 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
-=== Technologies
+=== Technical Constraints
 
 The technologies that are going to be used to develop this project are:
-* React for the front-end.
-* Node.js for the back-end.
-* Typescript for both front-end and back-end.
-* The SOLID specification.
-* AsciiDoc for documentation.
 
-=== Project-specific constraints
+|===
+| **Constraint** | **Explanation**
+| React | The React Framework will be used for making the user interface.
+| Node.js | The application's back-end will be implemented through Node.js.
+| The SOLID specification | The application must use PODs to store user data.
+| GitHub | Employed for version control and for team coordination, with tools such as issues and branches.
+| Interactive Map | A means of implementing an interactive map must be included.
+| Docker | The web application will run on docker.
+|===
 
-Although the company has been hired by the council of one specific city, one of their goals is to develop a generic software solution that can be deployed and used in other cities. As such, it is important to take into consideration that the application must be built with this in mind.
+=== Organizational constraints
 
-It is also important to keep in mind that while the personalized maps will be under full control of the users, the shared information will be stored in a personal pod according to the SOLID project.
+|===
+| **Constraint** | **Explanation**
+| Data | All of the data must be uniquely stored in each user's PODs, and they're the only ones with access to it.
+| Time | The application must be finished and delivered within a given timeframe.
+| Git | The use of Git must be mandatory in order to keep a good workflow.
+| New Technologies | Most of the technologies employed in this proyect have never been used by any of us.
+|===
 
-The features that MUST be included in the project are the following:
+=== Conventions
 
-* Users can add locations in different categories like: shops, bars, restaurants, sights, monuments, etc.
-* Users will be able to show the locations in a map window
-* Users can add review scores, comments, pictures, etc. about the added places.
-* It will be possible to manage from the application the information that is accessible with other users, like their friends or groups of friends.
-* The information about a place stored by each user should not be centralized and should be stored in each user's pod.
-* If it is considered necessary, the system could store other information in a centralized way for performance reasons trying to respect the privacy of the users as much as possible.
-* The system will allow users to see places and information about those places taken from their friends.
-* The system will allow users to see the map with filters like by category, friends, etc.
-
-=== Quality constraints
-
-There exist several constraints that must be met:
-
-* The application must be usable for non technical people.
-* It must be secure and it must respect the user's privacy.
-* It should be responsive.
+|===
+| **Constraint** | **Explanation**
+| Language | The application, both the documentation and the code, will be entirely developed in english.
+| TypeScript | As we are using the TypeScript programming language, it's naming conventions must be followed.
+| SOLID | The application must follow the SOLID specification.
+| Arc42 | The documentation will be written following the arc42 architecture.
+|===

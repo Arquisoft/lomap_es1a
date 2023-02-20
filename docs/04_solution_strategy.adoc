@@ -1,56 +1,46 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-== Tecnologias
+== Technologies
 
-Backend
+=== Back-end
 
-* NodeJS: es un entorno de tiempo de ejecución de JavaScript que se utiliza para crear aplicaciones escalables del lado del servidor y de red a través de servidores privados virtuales.
+* *NodeJS*: It is a JavaScript runtime environment used to create scalable server-side and network applications through virtual private servers.
 
-Frontend
+=== Front-end
 
-* React: es una biblioteca JavaScript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola pagina.
-* TypeScript: es un lenguaje de programación de código abierto pensado para ejecutar grandes proyectos y que permite trabajar de manera estructurada.
+* *React*: It is an open-source JavaScript library designed for creating user interfaces with the goal of facilitating the development of single-page applications.
+* *TypeScript*: It is an open-source programming language designed for executing large projects and allows for structured work.
 
-Base de datos
+=== Database
 
-* MongoDb: se utilizara para la creación de la base de datos.
+* *MongoDb*: Will be used for creating the database as we decided that, because it is a NoSQL database, it makes us able to work with a lot of data
+without having to spend too much time in the modelling process.
 
-Utilizaremos POD para los usuarios.
+* *SOLID specification*: We will use PODs for the users, as it provides a high ammount of security for each user's data.
 
-== Objetivos
+== Decisions to achieve quality goals
 
-* Privacidad: Utilizaremos PODs para que cada usuario tenga mas seguridad y no sean tan vulnerables.
+* *Privacy*: We will use PODs so that each user has more security and is less vulnerable.
+* *Mantainability*: The architecture of the application must be built in a way that allows us to keep adding and modifying features
+while having to replace as little code as possible.
+* *Usability*: The app must be accesible and usable, and for that we will be implementing several design features into our
+user interface in order for clients to be able to complete their tasks efficiently.
+* *Disponibility*: The application must always work with as little errors as possible and, if any bugs appear, the application
+must be able to take care of them and inform the user in an organised manner. As such, we will implement mechanisms for these functionalities
+to take effect.
 
-== Decisiones organizativas
+== Organizational Decisions
 
-Issues
+=== Issues
 
-Cada miembro del equipo creará issues cada vez que vaya a realizar una tarea y asignará que miembros van a realizarla.
+Each team member will create issues whenever they are going to perform a task and assign which members will perform it.
 
-Comunicación
+=== Communication
 
-La comunicación del equipo se realizará a través de discord y mediante Whatsapp. También mediante las issues se realizara el reparto de tareas.
+Task allocation will mainly be perfomed through GitHub issues, although we will be performing regular meetings on Discord while also
+using WhatsApp for quick communication.
 
+=== Documentation
 
-
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
-
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
-
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
-
-.Form
-Keep the explanation of these key decisions short.
-
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
+All of the project's documentation, as well as the code itself, will be entirely made in english.

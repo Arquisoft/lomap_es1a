@@ -3,5 +3,7 @@
 
 Regarding the risks and technical debt that may hinder the implementation of the proposal, we have the following:
 
-* The lack of knowledge of users about the technologies we will use to carry out the project (React, Node.js, MongoDB or other non-relational databases), and the way to make them all work together correctly to provide the best possible user experience.
-* The complete unfamiliarity with the operation of SOLID and how to integrate it into an application that will have to handle decentralized data and provided by a third-party application.
+* The *lack of knowledge of users about the technologies we will use to carry out the project* (React, Node.js, MongoDB or other non-relational databases), and the way to make them all work together correctly to provide the best possible user experience.
+* The complete *unfamiliarity with the operation of SOLID and how to integrate it* into an application that will have to handle decentralized data and provided by a third-party application.
+* Having *to work as a team*, especially because we do not know each other.
+* *Time*, since we have to finish the project at a given deadline.
