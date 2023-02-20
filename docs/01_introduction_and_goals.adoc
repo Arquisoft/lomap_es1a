@@ -1,110 +1,44 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-Se nos plantea hipotéticamente un proyecto por parte del ayuntamiento de Bruselas para crear una aplicación llamada LoMap.
-Esta aplicación consistirá en unos mapas personalizados del que pueden disponer los ciudadanos de la ciudad, en el que podrán
-compartir diferentes lugares de la ciudad, como bares, restaurantes, monumentos, etc.
+Hypothetically, we have been presented with a project by the Brussels City Council to create an application called LoMap. This application will consist of customized maps that city residents can access, where they can share different places in the city such as bars, restaurants, monuments, and so on.
 
-Se plantea también que pueda ser extrapolable a otras ciudades, por lo que buscaremos una alta compatibilidad entre los diferentes
-elementos de la arquitectura. Además de buscar la posible escalabilidad del proyecto.
-Como stakeholders, tendríamos el Ayuntamiento de Bruselas, nuestros profesores, que revisarán y evaluarán el desarrollo y todos lo pasos
-que se sigan en el proyecto, y nosotros, como estudiantes, que buscaremos aprender y adaptarnos a las dificultades que puedan surgir 
-durante el desarrollo.
+It is also proposed that this application could be extrapolated to other cities, therefore we will aim for high compatibility between the different elements of the architecture. Additionally, we will possible scalability of the project. As stakeholders, we would have the Brussels City Council, our professors who will review and evaluate the development and all the steps taken in the project, and us as students, who will seek to learn and adapt to any difficulties that may arise during development.
 
-[role="arc42help"]
-****
-Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
-
-
-* underlying business goals, essential features and functional requirements for the system
-* quality goals for the architecture
-* relevant stakeholders and their expectations
-
-
-****
 
 === Requirements Overview
 
-* Añadir distintos tipos de localizaciones (bares, tiendas, restaurantes, paisajes, monumentos, etc)
-* Mostrar dichos lugares en una ventana de tipo Mapa
-* Los usuarios son capaces de dar puntuaciones y poner comentarios sobre los lugares añadidos
-* Se podría gestionar desde la app la información que los usuarios pueden compartir con sus amigos
-* La información almacenada sobre cualquier ubicación se debe almacenar en el pod de SOLID de cada usuario
-* Se podría almacenar cierta información de manera centralizada, por motivos de rendimientos, pero siempre 
-respetando la privacidad de los usuarios
-* Se permitirá ver los lugares e información sobre dichos lugares que han podido compartir sus amigos
-* Se podrá filtrar la información mostrada en el mapa. (Categoría, amigos)
+* Add different types of locations (bars, shops, restaurants, landscapes, monuments, etc.).
+* Display these places in a Map window.
+* Allow users to rate and comment on the added locations.
+* Manage the information that users can share with their friends from within the app.
+* Store the information about any location in each user's SOLID pod.
+* Certain information can be stored centrally for performance reasons, but always respecting the privacy of the users.
+* Allow users to view the places and information about them that their friends have shared.
+* Provide filtering options for the information displayed on the map (by category, friends, etc.).
 
-[role="arc42help"]
-****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
 
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
-
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
-
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
-****
 
 === Quality Goals
 
-* Estética y usabilidad para personas que no tengan conocimientos técnicos
-* Seguridad en relación a la privacidad de los usuarios
-* Solidez de la aplicación a la hora de su uso
-* Solución tan usable como original
-* Documentación correcta y técnica teniendo en todas las decisiones que se puedan tomar por el equipo
-* Caldad del código, que será almacenado de forma manual y automática+
-* Calidad de la estrategia de pruebas del proyecto
-* Correcta gestión del proyecto mediante el uso de issues, actas de cada reunión, registro y seguimiento de cada decisión que se tome dentro del
-equipo a lo largo del proyecto, etc.
-* Uso de integración continua
-* Interoperabilidad entre los datos para las distintas aplicaciones que se puedan desarrollar del mismo estilo o con la misma funcionalidad
+* Aesthetics and usability for users with no technical knowledge.
+* Security and privacy for users.
+* Reliability of the application during use.
+* Innovative and usable solution.
+* Proper and technical documentation to capture all decisions made by the team.
+* Quality of the code, which will be stored manually and automatically.
+* Quality of the project's testing strategy.
+* Proper project management through the use of issues, meeting minutes, record keeping and monitoring of every decision made by the team throughout the project.
+* Use of continuous integration.
+* Interoperability of data across different applications that may be developed with the same functionality.
 
-[role="arc42help"]
-****
-.Contents
-The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. We really mean quality goals for the architecture. Don't confuse them with project goals. They are not necessarily identical.
 
-.Motivation
-You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged …
-
-.Form
-A table with quality goals and concrete scenarios, ordered by priorities
-****
 
 === Stakeholders
-
-[role="arc42help"]
-****
-.Contents
-Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that
-
-* should know the architecture
-* have to be convinced of the architecture
-* have to work with the architecture or with code
-* need the documentation of the architecture for their work
-* have to come up with decisions about the system or its development
-
-.Motivation
-You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.
-
-.Form
-Table with role names, person names, and their expectations with respect to the architecture and its documentation.
-****
 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| _<Profesores>_ | _<labra@univovi.es>_ | _<Aprendizaje y correcto funcionamienteo del equipo durante el desarrollo del proyecto>_
-| _<Ayuntamiento de Bruselas>_ | _<https://www.bruxelles.be/hotel-de-ville>_ | _<Desarrollar un proyecto parecido a Google Maps para que los usuarios puedan compartir ciertos lugares de cada ciudad>_
+| _<Profesores>_ | _<labra@univovi.es>_ | _<Learning and proper functioning of the team during the development of the project.>_
+| _<Ayuntamiento de Bruselas>_ | _<https://www.bruxelles.be/hotel-de-ville>_ | _<Develop a project similar to Google Maps so that users can share certain places in each city.>_
 |===

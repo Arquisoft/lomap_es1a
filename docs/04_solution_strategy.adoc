@@ -1,6 +1,38 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
+== Tecnologias
+
+Backend
+
+* NodeJS: es un entorno de tiempo de ejecución de JavaScript que se utiliza para crear aplicaciones escalables del lado del servidor y de red a través de servidores privados virtuales.
+
+Frontend
+
+* React: es una biblioteca JavaScript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola pagina.
+* TypeScript: es un lenguaje de programación de código abierto pensado para ejecutar grandes proyectos y que permite trabajar de manera estructurada.
+
+Base de datos
+
+* MongoDb: se utilizara para la creación de la base de datos.
+
+Utilizaremos POD para los usuarios.
+
+== Objetivos
+
+* Privacidad: Utilizaremos PODs para que cada usuario tenga mas seguridad y no sean tan vulnerables.
+
+== Decisiones organizativas
+
+Issues
+
+Cada miembro del equipo creará issues cada vez que vaya a realizar una tarea y asignará que miembros van a realizarla.
+
+Comunicación
+
+La comunicación del equipo se realizará a través de discord y mediante Whatsapp. También mediante las issues se realizara el reparto de tareas.
+
+
 
 [role="arc42help"]
 ****
