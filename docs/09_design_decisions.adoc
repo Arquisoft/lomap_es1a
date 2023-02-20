@@ -1,26 +1,11 @@
 [[section-design-decisions]]
 == Design Decisions
+Regarding the design decisions made by the team, we have the following:
 
+* Use of React to develop the front-end of the application. We chose this technology because of the wide support available due to its high usage in the job market and on the internet. This is also an incentive for us to learn this technology, which may be useful in our future careers.
+    
+* Use of Node.js for the development, execution, and deployment of the back-end of the project. We made this decision for similar reasons as the choice of React - it is a widely used technology with high support and is ideal for running JavaScript code quickly and easily.
 
+We have many more decisions to make regarding the implementation and functionality of the application, but these decisions will be made later, and we will update this section to reference all those decisions made throughout the development of the project.
 [role="arc42help"]
-****
-.Contents
-Important, expensive, large scale or risky architecture decisions including rationals.
-With "decisions" we mean selecting one alternative based on given criteria.
-
-Please use your judgement to decide whether an architectural decision should be documented
-here in this central section or whether you better document it locally
-(e.g. within the white box template of one building block).
-
-Avoid redundancy. Refer to section 4, where you already captured the most important decisions of your architecture.
-
-.Motivation
-Stakeholders of your system should be able to comprehend and retrace your decisions.
-
-.Form
-Various options:
-
-* List or table, ordered by importance and consequences or:
-* more detailed in form of separate sections per decision
-* ADR (architecture decision record) for every important decision
 ****
