@@ -6,6 +6,6 @@ Regarding the design decisions made by the team, we have the following:
     
 * Use of Node.js for the development, execution, and deployment of the back-end of the project. We made this decision for similar reasons as the choice of React - it is a widely used technology with high support and is ideal for running JavaScript code quickly and easily.
 
+* We start with the idea of using MongoDB to better adapt to what a web application requires, with a variety of data to manage. For this, a non-relational database like MongoDB will help us have greater flexibility for storing data, since we will be storing a wide variety of data types.
+
 We have many more decisions to make regarding the implementation and functionality of the application, but these decisions will be made later, and we will update this section to reference all those decisions made throughout the development of the project.
-[role="arc42help"]
-****
