@@ -1,31 +1,15 @@
 [[section-glossary]]
 == Glossary
 
+This glossary of terms will serve as an appendix to explain or clarify any term that may be used at any point in the documentation of this project that may be confusing or unfamiliar to any project stakeholder.
 
 
-[role="arc42help"]
-****
-.Contents
-The most important domain and technical terms that your stakeholders use when discussing the system.
-
-You can also see the glossary as source for translations if you work in multi-language teams.
-
-.Motivation
-You should clearly define your terms, so that all stakeholders
-
-* have an identical understanding of these terms
-* do not use synonyms and homonyms
-
-.Form
-A table with columns <Term> and <Definition>.
-
-Potentially more columns in case you need translations.
-
-****
 
 [options="header"]
 |===
 | Term         | Definition
-| <Term-1>     | <definition-1>
-| <Term-2>     | <definition-2>
+| <React>     | <Open-Source JavaScript library used for building user interfaces. Developed by Facebook (META)>
+| <Node.js>     | <Open-Source cross-platform, back-end javaScript runtime environment>
+| <MongoDB>     | <Popular Open-Source document-oriented NoSQL database commonly used in web applications>
+| <SOLID>       | <"A data decentralization project on the web led by Tim Berners-Lee based on Pods.>
 |===
