@@ -1,7 +1,7 @@
 [[section-solution-strategy]]
-==Solution Strategy
+== Solution Strategy
 
-==Tecnologias
+== Tecnologias
 
 Backend
 
@@ -18,11 +18,11 @@ Base de datos
 
 Utilizaremos POD para los usuarios.
 
-==Objetivos
+== Objetivos
 
 * Privacidad: Utilizaremos PODs para que cada usuario tenga mas seguridad y no sean tan vulnerables.
 
-==Decisiones organizativas
+== Decisiones organizativas
 
 Issues
 
