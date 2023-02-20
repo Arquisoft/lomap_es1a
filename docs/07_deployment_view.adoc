@@ -14,7 +14,7 @@ The Frontend is the interface with which users interact.
 
 The Backend manages the logic of the application and the access to the data.
 
-It is pending to decide on which platform or platforms the frontend and backend of the application will be deployed
+It is pending to decide on which platform or platforms the frontend and backend of the application will be deployed.
 
 Quality and/or Performance Features::
 
