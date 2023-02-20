@@ -36,30 +36,25 @@ when your infrastructure is more complex.
 
 === Infrastructure Level 1
 
-[role="arc42help"]
-****
-Describe (usually in a combination of diagrams, tables, and text):
-
-*  the distribution of your system to multiple locations, environments, computers, processors, .. as well as the physical connections between them
-*  important justification or motivation for this deployment structure
-* Quality and/or performance features of the infrastructure
-*  the mapping of software artifacts to elements of the infrastructure
-
-For multiple environments or alternative deployments please copy that section of arc42 for all relevant environments.
-****
-
-_**<Overview Diagram>**_
+image:7.1Deploydiagram.png["Deploy diagram"]
 
 Motivation::
 
-_<explanation in text form>_
+Access to the application will be through web browsers from users' devices.
+The application is divided into 2 modules: Frontend and Backend.
+The Frontend is the interface with which users interact.
+The Backend manages the logic of the application and the access to the data.
+It is pending to decide on which platform or platforms the frontend and backend of the application will be deployed
 
 Quality and/or Performance Features::
 
-_<explanation in text form>_
+Deployment in the cloud has advantages over an on-premises solution (software deployed on hardware located at the client's premises, in this case the Brussels City Council):
+* Scalability. By working with virtualized hardware in the cloud, the system can be easily scaled, even automatically in the face of increased demand.
+* Availability. Cloud platforms guarantee high availability that can be established through a service level agreement.
+* Security. Cloud platforms have hundreds of engineers dedicated exclusively to security.
 
 Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
+To do
 
 
 === Infrastructure Level 2
