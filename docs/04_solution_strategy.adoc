@@ -1,24 +1,46 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
+== Technologies
 
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
+=== Back-end
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
+* *NodeJS*: It is a JavaScript runtime environment used to create scalable server-side and network applications through virtual private servers.
 
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
+=== Front-end
 
-.Form
-Keep the explanation of these key decisions short.
+* *React*: It is an open-source JavaScript library designed for creating user interfaces with the goal of facilitating the development of single-page applications.
+* *TypeScript*: It is an open-source programming language designed for executing large projects and allows for structured work.
 
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
+=== Database
+
+* *MongoDb*: Will be used for creating the database as we decided that, because it is a NoSQL database, it makes us able to work with a lot of data
+without having to spend too much time in the modelling process.
+
+* *SOLID specification*: We will use PODs for the users, as it provides a high ammount of security for each user's data.
+
+== Decisions to achieve quality goals
+
+* *Privacy*: We will use PODs so that each user has more security and is less vulnerable.
+* *Mantainability*: The architecture of the application must be built in a way that allows us to keep adding and modifying features
+while having to replace as little code as possible.
+* *Usability*: The app must be accesible and usable, and for that we will be implementing several design features into our
+user interface in order for clients to be able to complete their tasks efficiently.
+* *Disponibility*: The application must always work with as little errors as possible and, if any bugs appear, the application
+must be able to take care of them and inform the user in an organised manner. As such, we will implement mechanisms for these functionalities
+to take effect.
+
+== Organizational Decisions
+
+=== Issues
+
+Each team member will create issues whenever they are going to perform a task and assign which members will perform it.
+
+=== Communication
+
+Task allocation will mainly be perfomed through GitHub issues, although we will be performing regular meetings on Discord while also
+using WhatsApp for quick communication.
+
+=== Documentation
+
+All of the project's documentation, as well as the code itself, will be entirely made in english.

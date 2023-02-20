@@ -1,79 +1,40 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-- Business goals and essential features: (Requisitos de alto nivel)
-- Quality goals: (Criterios de valoración)
-- Relevant stakeholders: The developers, Brussels city hall.
+Hypothetically, we have been presented with a project by the Brussels City Council to create an application called LoMap. This application will consist of customized maps that city residents can access, where they can share different places in the city such as bars, restaurants, monuments, and so on.
 
-[role="arc42help"]
-****
-Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
+It is also proposed that this application could be extrapolated to other cities, therefore we will aim for high compatibility between the different elements of the architecture. Additionally, we will possible scalability of the project. As stakeholders, we would have the Brussels City Council, our professors who will review and evaluate the development and all the steps taken in the project, and us as students, who will seek to learn and adapt to any difficulties that may arise during development.
 
-This is an introduction LoMap_es1a...
-
-
-Otra prueba más de despliegue
 
 === Requirements Overview
 
-[role="arc42help"]
-****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
-
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
-
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
-
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
-****
+* Add different types of locations (bars, shops, restaurants, landscapes, monuments, etc.).
+* Display these places in a Map window.
+* Allow users to rate and comment on the added locations.
+* Manage the information that users can share with their friends from within the app.
+* Store the information about any location in each user's SOLID pod.
+* Certain information can be stored centrally for performance reasons, but always respecting the privacy of the users.
+* Allow users to view the places and information about them that their friends have shared.
+* Provide filtering options for the information displayed on the map (by category, friends, etc.).
 
 === Quality Goals
 
-[role="arc42help"]
-****
-.Contents
-The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. We really mean quality goals for the architecture. Don't confuse them with project goals. They are not necessarily identical.
-
-.Motivation
-You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged …
-
-.Form
-A table with quality goals and concrete scenarios, ordered by priorities
-****
+* Aesthetics and usability for users with no technical knowledge.
+* Security and privacy for users.
+* Reliability of the application during use.
+* Innovative and usable solution.
+* Proper and technical documentation to capture all decisions made by the team.
+* Quality of the code, which will be stored manually and automatically.
+* Quality of the project's testing strategy.
+* Proper project management through the use of issues, meeting minutes, record keeping and monitoring of every decision made by the team throughout the project.
+* Use of continuous integration.
+* Interoperability of data across different applications that may be developed with the same functionality.
 
 === Stakeholders
-
-[role="arc42help"]
-****
-.Contents
-Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that
-
-* should know the architecture
-* have to be convinced of the architecture
-* have to work with the architecture or with code
-* need the documentation of the architecture for their work
-* have to come up with decisions about the system or its development
-
-.Motivation
-You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.
-
-.Form
-Table with role names, person names, and their expectations with respect to the architecture and its documentation.
-****
 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+| _<Profesores>_ | _<labra@univovi.es>_ | _<Learning and proper functioning of the team during the development of the project.>_
+| _<Ayuntamiento de Bruselas>_ | _<https://www.bruxelles.be/hotel-de-ville>_ | _<Develop a project similar to Google Maps so that users can share certain places in each city.>_
 |===

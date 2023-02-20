@@ -3,15 +3,17 @@
 
 === Quality Tree
 
-TODO
+:imagesdir: images/
+image::quality_scenarios_tree.png[]
 
 === Quality Scenarios
-
+[options="header",cols="1,4,1,1"]
 |===
-| **Quality Requirement** | **Scenario** | **Priority**
-| Disponibility | When the client opens the app, a Log In/Sign Up message should appear | High
-| Escalability | The application should be built with the MVC pattern | High
-| Security | It must be communicated with the user whenever they are sharing locations with other people | Medium
-| Disponibility | Maps should load whithin a 5 second period. If they don't communicate it to the user | Medium
-| Security | If the user fails to deliver a good password when signing up, the application should inform them of a good example | Medium
+| **Quality Requirement** | **Scenario** | **Priority** | **Difficulty**
+| *Disponibility* |In the case that any errors occur within the application, it must be able to handle them properly and tell the user when something is not working | High | Low
+| *Escalability* | The application must be built with the MVC pattern in order to have the capability of adding new features without any issues | High | Low
+| *Security* | It must be communicated with the user whenever they are sharing locations with other people | High | Low
+| *Usability* | The user interface must be designed to be easy to undertand and learn | Medium | Medium
+| *Mantainability* | The architecture must be designed with code replacements in mind, as this will facilitate the fixing of errors | Medium | High
+| *Testability* | Tests must be developped in order to avoid as many bugs as possible | Medium | Low
 |===
