@@ -7,10 +7,10 @@ image:08.1DomainModel.png["Domain model"]
 
 [options="header",cols="1,4"]
 |===
-| *Term*         | *Definition*
-| User     | <definition-1>
-| Map     | <definition-2>
-| Group     | <definition-2>
-| Place     | <definition-2>
-| Opinion     | <definition-2>
+| *Term*  | *Definition*
+| User    | Represents the users of the application. A user will be able to manage from the application what information is shared with other users (contacts). To facilitate permission management, contacts can be grouped into groups.
+| Map     | Simplified graphic representation of the city of Brussels. The application will make it possible to have personalized maps of places and businesses in the city. Users will be able to add places to the map in different categories.
+| Group   | Set of users. The application user can interact with other users (contacts). Contacts are allowed to be organized into user groups (friends, relatives, etc). A user can create as many groups as he wants. A contact is allowed to be part of multiple groups.
+| Place   | Represents the physical location on the map of an element of interest to the user: a monument, a restaurant, etc. The same place can appear on different maps associated with the same user or with different users.
+| Opinion | Information linked to a place generated and managed by the user: photos, comments, score, etc.
 |===
