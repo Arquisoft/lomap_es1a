@@ -1,57 +1,61 @@
 [[section-runtime-view]]
 == Runtime View
 
+=== Logging into the application
 
-[role="arc42help"]
-****
-.Contents
-The runtime view describes concrete behavior and interactions of the system’s building blocks in form of scenarios from the following areas:
+A registered user must be able to log into the application sending a request to the Rest API:
 
-* important use cases or features: how do building blocks execute them?
-* interactions at critical external interfaces: how do building blocks cooperate with users and neighboring systems?
-* operation and administration: launch, start-up, stop
-* error and exception scenarios
+[plantuml,"Login diagram",png] 
+---- 
+actor User as "User"
+entity Application as "Application"
+database Server as "Server"
+database Pod as "User POD"
+User -> Application: User enters credentials
+User -> Application: User attempts to log in
+Application -> Server: Log in petition sent
+Server -> Pod: Log in petition sent
+Pod -> Server: Log in result returned
+Server -> Application: Log in result returned
+Application -> Application: Log in result evaluation
+Application -> Server: Personal info petition sent
+Server -> Pod: Personal info petition sent
+Pod -> Server: Personal info petition result returned
+Server -> Application: Personal info petition result returned
+Application -> User: Correct log in
+Application -> User: Personal info is shown
+----  
 
-Remark: The main criterion for the choice of possible scenarios (sequences, workflows) is their *architectural relevance*. It is *not* important to describe a large number of scenarios. You should rather document a representative selection.
+=== Adding a location
 
-.Motivation
-You should understand how (instances of) building blocks of your system perform their job and communicate at runtime.
-You will mainly capture scenarios in your documentation to communicate your architecture to stakeholders that are less willing or able to read and understand the static models (building block view, deployment view).
+The location info is stored in the PODs and can be shared with other users
 
-.Form
-There are many notations for describing scenarios, e.g.
+[plantuml,"Adding location diagram",png] 
+---- 
+actor User as "User"
+entity Application as "Application"
+database Server as "Server"
+database Pod as "User POD"
+User -> Application: Select a location
+Application -> Server: Add location petition sent
+Server -> Pod: Store location data
+Application -> User: Show info: "The location has been added succesfully"
+---- 
 
-* numbered list of steps (in natural language)
-* activity diagrams or flow charts
-* sequence diagrams
-* BPMN or EPCs (event process chains)
-* state machines
-* ...
+=== Map filtering
 
-****
+User's can visualize maps by filtering them by category, friends, etc.
 
-=== <Runtime Scenario 1>
-
-
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
-----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
-----
-=== <Runtime Scenario 2>
-
-=== ...
-
-=== <Runtime Scenario n>
+[plantuml,"Map filtering diagram",png] 
+---- 
+actor User as "User"
+entity Application as "Application"
+database Server as "Server"
+database Pod as "User POD"
+User -> Application: Send request to see map
+User -> Application: Send filtering information
+Application -> Server: Get map information
+Server -> Application: Return map information
+Application -> Application: Filter map with parameters
+Application -> User: Filtered map is shown
+---- 

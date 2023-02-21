@@ -32,9 +32,18 @@ It is also proposed that this application could be extrapolated to other cities,
 
 === Stakeholders
 
-[options="header",cols="1,2,2"]
+[options="header",cols="1,2,3"]
 |===
-|Role/Name|Contact|Expectations
-| _<Profesores>_ | _<labra@univovi.es>_ | _<Learning and proper functioning of the team during the development of the project.>_
-| _<Ayuntamiento de Bruselas>_ | _<https://www.bruxelles.be/hotel-de-ville>_ | _<Develop a project similar to Google Maps so that users can share certain places in each city.>_
+| *Role/Name* | *Contact* | *Expectations*
+
+| Students  | Andrés Ángel González Granda, Pedro Garcia-Cañal Sánchez, Adrián Alves Morales y  Marcos Caraduje Martínez | They play the role of developers, software architects and administrators. Create an architecture, develop the software and pass the course.
+| Teachers | Jose Emilio Labra Gayo, Pablo González, Irene Cid Rico y Cristian Augusto Alonso  | Play the role of client. They supply the functional requirements (what the application must do). They impose restrictions (Mandatory use of PODs). Learning and proper functioning of the team during the development of the project.
+| Users |   | Get personalized maps of places and local businesses in the city. Manage the information they share with other users.
+| Local business |   | Create their own spaces as a digital version of their physical location. Increase business opportunities by reaching a greater number of new customers.
+| Customer. Brussels City Hall | https://www.brussels.be/city-hall | Promoter of the initiative. Obtain software that meets the requirements within the term and cost stipulated in the contract.
+| Software architect | | Design an architecture after analyzing functional requirements, quality attributes, and constraints. Create a generic software solution that can be deployed and used in other cities.
+| Developers |   | Develop the software within the established deadline.
+| Administrators |   | After the deployment of the software in production, they monitor and resolve possible incidents.
+| POD provider | https://solidproject.org/users/get-a-pod | Allow data storage in a secure and decentralized way. Allow users to control which people and applications can access their data.
+| Map provider|  Pending select | It provides the base cartography in which users add places of interest to obtain personalized maps.
 |===

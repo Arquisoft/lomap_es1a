@@ -5,32 +5,35 @@
 
 The technologies that are going to be used to develop this project are:
 
+[options="header",cols="1,4"]
 |===
-| **Constraint** | **Explanation**
-| React | The React Framework will be used for making the user interface.
-| Node.js | The application's back-end will be implemented through Node.js.
+| *Constraint* | *Explanation*
+| React                   | The React Framework will be used for making the user interface.
+| Node.js                 | The application's back-end will be implemented through Node.js.
 | The SOLID specification | The application must use PODs to store user data.
-| GitHub | Employed for version control and for team coordination, with tools such as issues and branches.
-| Interactive Map | A means of implementing an interactive map must be included.
-| Docker | The web application will run on docker.
+| GitHub                  | Employed for version control and for team coordination, with tools such as issues and branches.
+| Interactive Map         | A means of implementing an interactive map must be included.
+| Docker                  | The web application will run on docker.
 |===
 
 === Organizational constraints
 
+[options="header",cols="1,4"]
 |===
-| **Constraint** | **Explanation**
-| Data | All of the data must be uniquely stored in each user's PODs, and they're the only ones with access to it.
-| Time | The application must be finished and delivered within a given timeframe.
-| Git | The use of Git must be mandatory in order to keep a good workflow.
+| *Constraint* | *Explanation*
+| Data             | All of the data must be uniquely stored in each user's PODs, and they're the only ones with access to it.
+| Time             | The application must be finished and delivered within a given timeframe.
+| Git              | The use of Git must be mandatory in order to keep a good workflow.
 | New Technologies | Most of the technologies employed in this proyect have never been used by any of us.
 |===
 
 === Conventions
 
+[options="header",cols="1,4"]
 |===
-| **Constraint** | **Explanation**
-| Language | The application, both the documentation and the code, will be entirely developed in english.
+| *Constraint* | *Explanation*
+| Language   | The application, both the documentation and the code, will be entirely developed in english.
 | TypeScript | As we are using the TypeScript programming language, it's naming conventions must be followed.
-| SOLID | The application must follow the SOLID specification.
-| Arc42 | The documentation will be written following the arc42 architecture.
+| SOLID      | The application must follow the SOLID specification.
+| Arc42      | The documentation will be written following the arc42 architecture.
 |===
