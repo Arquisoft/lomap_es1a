@@ -3,34 +3,14 @@
 
 === Business Context
 
-:imagesdir: images/
-image::3.1BusinessContextDiagram.png[]
-[role="arc42help"]
-****
-Usuarios: Ciudadanos que crean mapas personalizados sobre lugares y negocios locales de la ciudad.
-****
+image:3.1BusinessContextdiagram.png["Business Context diagram"]
+
 Users:: Citizens creating custom maps about local places and businesses in the city.
 
-[role="arc42help"]
-****
-Ayuntamiento: Ayuntamiento de la ciudad de Bruselas. Institución que promueve la creación de la aplicación.
-****
 City hall:: Brussels City Hall. Institution that promotes the creation of the application.
 
-[role="arc42help"]
-****
-Negocios locales:: Restaurantes, tiendas, bares, etc. En una fase posterior se permitira a los establecimientos crear sus propios espacios como una versión digital de su lugar físico.
-****
 Local business:: Restaurants, shops, bars, etc. In a later phase, establishments will be allowed to create their own spaces as a digital version of their physical location.
 
-[role="arc42help"]
-****
-Proveedor de mapas. Suministra la cartografía base en la que los usuarios añaden lugares de interes para obtener mapas personalizados.
-****
 Map provider:: It provides the base cartography in which users add places of interest to obtain personalized maps.
 
-[role="arc42help"]
-****
-POD: Almacén personal asociado a cada usuario. En el POD se almacenan los mapas personalizados e información relacionada con los lugares de interes. El usuario siempre tendrá el control sobre su información.
-****
 POD:: Personal store associated with each user. Custom maps and information related to places of interest are stored in the POD. The user will always have control over their information.
