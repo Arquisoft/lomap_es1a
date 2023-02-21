@@ -5,11 +5,11 @@ This glossary of terms will serve as an appendix to explain or clarify any term 
 
 
 
-[options="header"]
+[options="header",cols="1,4"]
 |===
-| Term         | Definition
-| <React>     | <Open-Source JavaScript library used for building user interfaces. Developed by Facebook (META)>
-| <Node.js>     | <Open-Source cross-platform, back-end javaScript runtime environment>
-| <MongoDB>     | <Popular Open-Source document-oriented NoSQL database commonly used in web applications>
-| <SOLID>       | <"A data decentralization project on the web led by Tim Berners-Lee based on Pods.>
+| *Term*      | *Definition*
+| MongoDB     | Popular Open-Source document-oriented NoSQL database commonly used in web applications
+| Node.js     | Open-Source cross-platform, back-end javaScript runtime environment
+| React       | Open-Source JavaScript library used for building user interfaces. Developed by Facebook (META)
+| SOLID       | A data decentralization project on the web led by Tim Berners-Lee based on Pods.
 |===
