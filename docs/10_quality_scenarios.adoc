@@ -9,7 +9,7 @@ image::quality_scenarios_tree.png[]
 === Quality Scenarios
 [options="header",cols="1,4,1,1"]
 |===
-| **Quality Requirement** | **Scenario** | **Priority** | **Difficulty**
+| *Quality Requirement* | *Scenario* | *Priority* | *Difficulty*
 | *Disponibility* |In the case that any errors occur within the application, it must be able to handle them properly and tell the user when something is not working | High | Low
 | *Escalability* | The application must be built with the MVC pattern in order to have the capability of adding new features without any issues | High | Low
 | *Security* | It must be communicated with the user whenever they are sharing locations with other people | High | Low

@@ -14,12 +14,12 @@ share them to the rest of the userbase. These PODs guarantee that the user's dat
 
 Contained Building Blocks::
 
-[cols="1,2" options="header"]
+[cols="1,3" options="header"]
 |===
-| **Name** | **Responsibility**
-| User | Client who will make use of the application.
-| POD | Stores the user's data.
-| Application | Will exchange info between user and POD.
+| *Name* | *Responsibility*
+| User        | Client who will make use of the application.
+| POD         | Stores the user's data.
+| Application | Will exchange info between user and POD.
 |===
 
 Important Interfaces::
@@ -31,12 +31,12 @@ These will be determined as the application is developed.
 The application itself will be designed with the Model-view-controller (MVC) architectural pattern. As such, webapp will
 be divided in three layers:
 
-[cols="1,2" options="header"]
+[cols="1,3" options="header"]
 |===
-| **Name** | **Description**
-| Model | Internal logic of the application, it sends info to the controller and to the PODs so it can function correctly.
-| View | What the user of the application will see.
-| Controller | Allows the model layer and the view layer to communicate with each other.
+| *Name* | *Description*
+| Model      | Internal logic of the application, it sends info to the controller and to the PODs so it can function correctly.
+| View       | What the user of the application will see.
+| Controller | Allows the model layer and the view layer to communicate with each other.
 |===
 
 === Level 3
