@@ -35,6 +35,17 @@ It is also proposed that this application could be extrapolated to other cities,
 [options="header",cols="1,2,3"]
 |===
 | *Role/Name* | *Contact* | *Expectations*
-| _Profesores_ | _labra@univovi.es_ | _Learning and proper functioning of the team during the development of the project._
+
+| Students  | Andrés Ángel González Granda - uo68216@uniovi.es 
+Pedro Garcia-Cañal Sánchez - uo264578@uniovi.es 
+Adrián Alves Morales - uo284288@uniovi.es Marcos Caraduje Martínez - uo270285@uniovi.es  |They play the role of developers, software architects and administrators. Create an architecture, develop the software and pass the course.
+| Teachers |  | Play the role of client. They supply the functional requirements (what the application must do). They impose restrictions (Mandatory use of PODs). Learning and proper functioning of the team during the development of the project.
+
 | _Ayuntamiento de Bruselas_ | _https://www.bruxelles.be/hotel-de-ville_ | _Develop a project similar to Google Maps so that users can share certain places in each city._
 |===
+
+
+ 
+
+
+ 
