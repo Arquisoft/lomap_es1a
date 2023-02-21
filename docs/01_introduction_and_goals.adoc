@@ -17,8 +17,6 @@ It is also proposed that this application could be extrapolated to other cities,
 * Allow users to view the places and information about them that their friends have shared.
 * Provide filtering options for the information displayed on the map (by category, friends, etc.).
 
-
-
 === Quality Goals
 
 * Aesthetics and usability for users with no technical knowledge.
@@ -31,8 +29,6 @@ It is also proposed that this application could be extrapolated to other cities,
 * Proper project management through the use of issues, meeting minutes, record keeping and monitoring of every decision made by the team throughout the project.
 * Use of continuous integration.
 * Interoperability of data across different applications that may be developed with the same functionality.
-
-
 
 === Stakeholders
 
