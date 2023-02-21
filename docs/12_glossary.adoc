@@ -3,13 +3,18 @@
 
 This glossary of terms will serve as an appendix to explain or clarify any term that may be used at any point in the documentation of this project that may be confusing or unfamiliar to any project stakeholder.
 
-
-
-[options="header"]
+[options="header",cols="1,4"]
 |===
-| Term         | Definition
-| <React>     | <Open-Source JavaScript library used for building user interfaces. Developed by Facebook (META)>
-| <Node.js>     | <Open-Source cross-platform, back-end javaScript runtime environment>
-| <MongoDB>     | <Popular Open-Source document-oriented NoSQL database commonly used in web applications>
-| <SOLID>       | <"A data decentralization project on the web led by Tim Berners-Lee based on Pods.>
+| *Term*      | *Definition*
+| Cloud, Cloud Computing | "The cloud" refers to servers that are accessed over the Internet, and the software and databases that run on those servers. Cloud servers are located in data centers all over the world. By using cloud computing, users and companies do not have to manage physical servers themselves or run software applications on their own machines. For more information you can visit https://en.wikipedia.org/wiki/Cloud_computing and https://www.cloudflare.com/learning/cloud/what-is-the-cloud/.
+| Git | Git is a free and open source distributed version control system designed to handle everything from small to very large projects quickly and efficiently. Learn more about Git and version control at https://git-scm.com/book/en/v2git
+| Github | Github (https://github.com) is a portal for managing applications that use the Git system. In addition to allowing you to look at the code and download the different versions of an application, the platform also acts as a social network connecting developers with users so that they can collaborate to improve the application. There are other alternatives such as gitlab (https://gitlab.com) and Bitbucket (https://bitbucket.org/).
+| Javascript | It is a programming language. It is often abbreviated as JS. For a more detailed description you can visit https://en.wikipedia.org/wiki/JavaScript. You can also check these tutorials: https://www.w3schools.com/js/ and https://javascript.info/
+| MongoDB     | Popular Open-Source document-oriented NoSQL database commonly used in web applications
+| Node.js     | Open-Source cross-platform, back-end javaScript runtime environment
+| POD         | Personal Online Datastore. A Pod is where data is stored on the Web with Solid. A user may store their data in one Pod or several Pods, and applications read and write data into the Pod depending on the authorisations granted by the user or users associated to that Pod. For more information you can visit FAQ de Solid in https://solidproject.org/faqs.
+| React       | Open-Source JavaScript library used for building user interfaces. Developed by Facebook (META)
+| SOLID       | A data decentralization project on the web led by Tim Berners-Lee based on Pods. For more information you can visit https://solidproject.org/about.
+| TypeSript | Is a free and open source high-level programming language developed and maintained by Microsoft. It is a strict syntactical superset of JavaScript and adds optional static 
+typing to the language. For more information you can visit https://www.typescriptlang.org/
 |===
