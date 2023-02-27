@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import UserList from './components/UserList';
 import  {getUsers} from './api/api';
 import {User} from './shared/shareddtypes';
+import { MapView } from './components/Map';
 import './App.css';
 
 function App(): JSX.Element {
@@ -29,6 +30,8 @@ function App(): JSX.Element {
         <EmailForm OnUserListChange={refreshUserList}/>        
         <UserList users={users}/>
         <Link href="https://github.com/arquisoft/lomap_0">Source code</Link>
+        <h1>MAPA</h1>
+        <MapView />
       </Container>
     </>
   );
