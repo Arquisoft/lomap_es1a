@@ -3,7 +3,6 @@
   display: flex;
 }
 
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -35,7 +34,10 @@
 }
 
 main {
-  padding: 10px;
+  padding-right: 2em;
+  padding-left: 6em;
+  margin: 3.5em 5em;
+  text-align: center;
 }
 
 body {

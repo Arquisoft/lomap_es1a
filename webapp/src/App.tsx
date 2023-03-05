@@ -26,7 +26,8 @@ export default function App(): JSX.Element {
   return (
     <div className="App">
       <Sidenav/>
-      <main>
+      <NavBar/>
+      <main style={{justifyContent:"center"}}>
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/explore" element={<Explore />} />

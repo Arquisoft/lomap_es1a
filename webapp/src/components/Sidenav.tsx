@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Sidenav(): JSX.Element {
 
-    const [open, setopen] = useState(false)
+    const [open, setopen] = useState(true)
 
     const toggleOpen = () => {
         setopen(!open)

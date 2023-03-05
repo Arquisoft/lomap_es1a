@@ -3,13 +3,14 @@
     transition: width 0.3s ease-in-out;
     height: 100vh;
     background-color: rgb(10,25,41);
-    padding-top: 20px;
+    padding-top: 5em;
+    position: fixed;
 }
 
 .sidenavClosed {
     composes: sidenav;
     transition: width 0.3s ease-in-out;
-    width: 60px
+    width: 4em;
 }
 
 /* Button style */
