@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  display: flex;
 }
 
 
@@ -31,4 +32,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+main {
+  padding: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }

@@ -1,45 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
-import EmailForm from './components/EmailForm';
-import Welcome from './components/Welcome';
-import UserList from './components/UserList';
-import NavBar from './components/NavBar';
-import Map from './components/Map';
-import AuthWrapper from './components/AuthWrapper';
+import NavBar from "./components/NavBar";
+import Map from "./components/Map";
+import AuthWrapper from "./components/AuthWrapper";
+import SideNav from "./components/Sidenav";
 
-import  {getUsers} from './api/api';
-import {User} from './shared/shareddtypes';
-import './App.css';
+import Explore from "./pages/Explore";
+import Home from "./pages/Home";
+import Settings from "./pages/Settings";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
 
-function App(): JSX.Element {
+import { getUsers } from "./api/api";
+import { User } from "./shared/shareddtypes";
+import "./App.css";
+import Sidenav from "./components/Sidenav";
 
-  const [users,setUsers] = useState<User[]>([]);
-
-  const refreshUserList = async () => {
-    setUsers(await getUsers());
-  }
-
-  useEffect(()=>{
-    refreshUserList();
-  },[]);
-
+export default function App(): JSX.Element {
   return (
-    <Container>
-      <NavBar/>
-      
-      <Typography variant="h3" align="center" gutterBottom>
-        Welcome to the homepage
-      </Typography>
-      <Map/>
-      
-    </Container>
+    <div className="App">
+      <Sidenav/>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/account" element={<Account />}/>
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
-
-export default App;

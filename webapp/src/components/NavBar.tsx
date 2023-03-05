@@ -54,9 +54,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+    <Box sx={{ flexGrow: 1 }} >
+      <AppBar position="static" >
+        <Toolbar >
           <IconButton
             size="large"
             edge="start"
@@ -83,12 +83,6 @@ export default function SearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {/* Esto debería ser una funcion que se encargue del login: */}
-              <Button sx={{ color: '#fff' }}>
-                Log In
-              </Button>
-          </Box>
         </Toolbar>
       </AppBar>
     </Box>

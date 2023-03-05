@@ -16,6 +16,6 @@ type MapProps = {
 
 export default function Map(props: MapProps): JSX.Element {
     return (
-        <img width="600" height="500" src={placeholder_map} alt="Map"/>
+        <img width="600" height="500" src={placeholder_map} alt="Map" />
     );
 };
