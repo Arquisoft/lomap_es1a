@@ -10,12 +10,40 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import placeholder_map from '../images/placeholder_map.png';
 
-type MapProps = {
-    // TODO: None yet
+import React from 'react';
+import mapboxgl from 'mapbox-gl';
+
+mapboxgl.accessToken = 'pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw';
+
+interface Props {
+  lng: number;
+  lat: number;
+  zoom: number;
 }
 
-export default function Map(props: MapProps): JSX.Element {
+export default class Map extends React.Component<Props> {
+  mapContainer: any;
+  map: any;
+
+  componentDidMount() {
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [this.props.lng, this.props.lat],
+      zoom: this.props.zoom
+    });
+  }
+
+  componentWillUnmount() {
+    this.map.remove();
+  }
+
+  render() {
     return (
-        <img width="600" height="500" src={placeholder_map} alt="Map" />
+      <div
+        ref={(el) => (this.mapContainer = el)}
+        style={{top:'25%', left:'25%', position: 'relative', width: '150%', height: '150%'  }}
+      />
     );
-};
+  }
+}
