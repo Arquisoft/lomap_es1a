@@ -1,0 +1,6 @@
+.navbar {
+    width: 100vw;
+    background-color: rgb(10,25,41);
+    flex-grow: 1;
+    position: static;
+}
