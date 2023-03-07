@@ -21,6 +21,7 @@ interface Props {
   zoom: number;
 }
 
+
 export default class Map extends React.Component<Props> {
   mapContainer: any;
   map: any;
@@ -33,6 +34,7 @@ export default class Map extends React.Component<Props> {
       zoom: this.props.zoom
     });
   }
+  
 
   componentWillUnmount() {
     this.map.remove();
