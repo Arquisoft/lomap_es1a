@@ -27,7 +27,7 @@ export default function App(): JSX.Element {
     <div className="App">
       <Sidenav/>
       <NavBar/>
-      <main style={{justifyContent:"center"}}>
+      <div style={{display:"flex", justifyContent:"center", width:"100vw", height:"100vh"}}>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/explore" element={<Explore />} />
@@ -35,7 +35,7 @@ export default function App(): JSX.Element {
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<Login />} />
         </Routes>
-      </main>
+      </div>
     </div>
   );
 }

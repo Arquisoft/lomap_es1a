@@ -44,7 +44,7 @@ export default class Map extends React.Component<Props> {
     return (
       <div
         ref={(el) => (this.mapContainer = el)}
-        style={{top:'25%', left:'25%', position: 'relative', width: '150%', height: '150%'  }}
+        style={{width: '35vw', height: '40vh'}}
       />
     );
   }

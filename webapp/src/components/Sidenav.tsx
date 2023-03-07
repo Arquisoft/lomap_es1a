@@ -15,6 +15,7 @@ export default function Sidenav(): JSX.Element {
     }
 
     return (
+      <div>
       <div className={open ? styles.sidenav : styles.sidenavClosed}>
         <button className={styles.menuBtn} onClick={toggleOpen}>
           {open ? (
@@ -33,6 +34,8 @@ export default function Sidenav(): JSX.Element {
                 </NavLink>
             );
         })}
+      </div>
+      <div className={open ? styles.sidenavbox : styles.sidenavboxClosed}/>
       </div>
     );
 }
