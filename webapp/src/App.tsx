@@ -29,7 +29,7 @@ export default function App(): JSX.Element {
       <NavBar/>
       <main style={{justifyContent:"center"}}>
         <Routes>
-          <Route path="/" element={<Home />}/>
+          <Route path="/" element={<Home/>}/>
           <Route path="/explore" element={<Explore />} />
           <Route path="/account" element={<Account />}/>
           <Route path="/settings" element={<Settings />} />
