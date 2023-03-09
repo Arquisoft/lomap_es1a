@@ -1,0 +1,21 @@
+.mapdiv {
+    display: flex;
+    width: 50vw;
+}
+
+.movingdiv {
+    display: flex;
+    width: 70vw;
+    height: 100vh;
+    flex-direction: row;
+}
+
+.explorearticle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+

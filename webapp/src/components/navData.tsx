@@ -4,6 +4,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccoutCircle from '@mui/icons-material/AccountCircle';
 import EmojiPeople from '@mui/icons-material/EmojiPeople';
+import InfoIcon from '@mui/icons-material/Info';
 import { AccountCircle } from '@mui/icons-material';
 
 export const navData = [
@@ -27,8 +28,14 @@ export const navData = [
         },
         {
             id: 3,
-            icon: <SettingsIcon/>,
-            text: "Settings",
-            link: "settings"
+            icon: <EmojiPeople/>,
+            text: "Friends",
+            link: "friends"
+        },
+        {
+            id: 4,
+            icon: <InfoIcon/>,
+            text: "About",
+            link: "about"
         }
     ]

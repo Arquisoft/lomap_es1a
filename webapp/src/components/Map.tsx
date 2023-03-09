@@ -19,8 +19,9 @@ interface Props {
   lng: number;
   lat: number;
   zoom: number;
+  mapWidth: string;
+  mapHeight: string;
 }
-
 
 export default class Map extends React.Component<Props> {
   mapContainer: any;
@@ -31,11 +32,11 @@ export default class Map extends React.Component<Props> {
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [this.props.lng, this.props.lat],
-      zoom: this.props.zoom
+      zoom: this.props.zoom,
+      attributionControl: false
     });
   }
   
-
   componentWillUnmount() {
     this.map.remove();
   }
@@ -44,7 +45,7 @@ export default class Map extends React.Component<Props> {
     return (
       <div
         ref={(el) => (this.mapContainer = el)}
-        style={{width: '35vw', height: '40vh'}}
+        style={{width: this.props.mapWidth, height: this.props.mapHeight}}
       />
     );
   }
