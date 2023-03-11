@@ -45,7 +45,7 @@ export default class Map extends React.Component<Props> {
     return (
       <div
         ref={(el) => (this.mapContainer = el)}
-        style={{width: this.props.mapWidth, height: this.props.mapHeight}}
+        style={{width: this.props.mapWidth, height: this.props.mapHeight, overflow:"hidden"}}
       />
     );
   }

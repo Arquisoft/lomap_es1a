@@ -1,11 +1,6 @@
-.mapdiv {
-    display: flex;
-    width: 50vw;
-}
-
 .movingdiv {
     display: flex;
-    width: 70vw;
+    width: 85vw;
     height: 100vh;
     flex-direction: row;
 }
