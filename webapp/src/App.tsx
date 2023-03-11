@@ -13,7 +13,7 @@ import SideNav from "./components/Sidenav";
 
 import Explore from "./pages/Explore";
 import Home from "./pages/Home";
-import Settings from "./pages/Settings";
+import Settings from "./pages/Friends";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
 
@@ -21,18 +21,19 @@ import { getUsers } from "./api/api";
 import { User } from "./shared/shareddtypes";
 import "./App.css";
 import Sidenav from "./components/Sidenav";
+import Friends from "./pages/Friends";
 
 export default function App(): JSX.Element {
   return (
     <div className="App">
       <Sidenav/>
       <NavBar/>
-      <div style={{display:"flex", justifyContent:"center", width:"100vw", height:"100vh"}}>
+      <div style={{width:"100vw", height:"100vh"}}>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/explore" element={<Explore />} />
           <Route path="/account" element={<Account />}/>
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/friends" element={<Friends />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>

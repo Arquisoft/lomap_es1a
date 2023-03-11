@@ -1,0 +1,32 @@
+.mapdiv {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    overflow: hidden;
+}
+
+.title {
+    text-align: center;
+    font-size: 3em;
+    margin: 0;
+}
+
+.homearticle {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: flex-end;
+}
+
+.filterDiv {
+    z-index: 15;
+    display: flex;
+    justify-content: right;
+    overflow: hidden;
+    width: 30vw;
+}
