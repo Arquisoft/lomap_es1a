@@ -9,18 +9,42 @@ import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 import styles from './addlocationform.module.css';
+import LocationController from "./LocationController";
 
 
 export default function AddLocationForm(): JSX.Element {
-  const [category, setCategory] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [category, setCategory] = React.useState("shop");
+  const [comments, setComments] = React.useState("");
 
-  const handleChange = () => {};
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const handleCategoryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCategory(event.target.value as string);
+  };
+
+  const handleCommentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComments(event.target.value);
+  };
+
+  const handleAddLocation = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const newLocation = { name, category, comments };
+    LocationController.createLocation(newLocation);
+    setName("");
+    setCategory("shop");
+    setComments("");
+  };
 
   const handleSubmit = (evt: any) => {
   }
 
   return (
-    <div className={styles.mainContainer}>
+    <form onSubmit={handleAddLocation}>
+      <div className={styles.mainContainer}>
       <TextField fullWidth id="name-field" label="Name" />
       <FormControl>
         <InputLabel id="category-select-label">Category</InputLabel>
@@ -49,5 +73,7 @@ export default function AddLocationForm(): JSX.Element {
         Add
       </Button>
     </div>
+    </form>
+    
   );
 }
