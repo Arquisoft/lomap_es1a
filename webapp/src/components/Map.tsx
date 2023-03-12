@@ -35,6 +35,29 @@ export default class Map extends React.Component<Props> {
       zoom: this.props.zoom,
       attributionControl: false
     });
+    
+    this.map.on('click', (e: any) => {
+      const popup = new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML('<div style="width: 50px; height: 50px; background-color: #F7455D;"></div>')
+        .addTo(this.map);
+
+        const marker = new mapboxgl.Marker({
+          color: '#FF0000',
+          draggable : false,
+          
+        })
+        .setLngLat(e.lngLat)
+        .setPopup(popup)
+        .addTo(this.map);
+        
+
+        this.map.flyTo({
+          center: e.lngLat,
+          zoom: 17
+        });
+        
+      });
   }
   
   componentWillUnmount() {
