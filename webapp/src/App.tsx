@@ -1,42 +1,38 @@
+import "./App.css";
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
-import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { Route, Routes } from "react-router-dom";
+import { SessionProvider, useSession } from "@inrupt/solid-ui-react";
+import { useState } from "react";
 
 import NavBar from "./components/NavBar";
-import Map from "./components/Map";
-import AuthWrapper from "./components/AuthWrapper";
-import SideNav from "./components/Sidenav";
-
+import Sidenav from "./components/Sidenav";
 import Explore from "./pages/Explore";
 import Home from "./pages/Home";
-import Settings from "./pages/Friends";
+import Friends from "./pages/Friends";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
 
-import { getUsers } from "./api/api";
-import { User } from "./shared/shareddtypes";
-import "./App.css";
-import Sidenav from "./components/Sidenav";
-import Friends from "./pages/Friends";
+
 
 export default function App(): JSX.Element {
+    //With this we can control the login status for solid
+    const { session } = useSession();
+       
   return (
-    <div className="App">
-      <Sidenav/>
-      <NavBar/>
-      <div style={{width:"100vw", height:"100vh"}}>
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/account" element={<Account />}/>
-          <Route path="/friends" element={<Friends />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </div>
-    </div>
+    <SessionProvider sessionId="lomap_es1a">
+      <>
+        <Sidenav/>
+        <NavBar/>
+        <div style={{width:"100vw", height:"100vh"}}>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/account" element={<Account />}/>
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </div>
+      </>
+    </SessionProvider>
   );
 }
