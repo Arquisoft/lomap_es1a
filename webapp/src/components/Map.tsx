@@ -11,7 +11,7 @@ import { styled } from "@mui/material/styles";
 import placeholder_map from '../images/placeholder_map.png';
 
 import React from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { Marker } from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw';
 
@@ -39,24 +39,24 @@ export default class Map extends React.Component<Props> {
     this.map.on('click', (e: any) => {
       const popup = new mapboxgl.Popup()
         .setLngLat(e.lngLat)
-        .setHTML('<div style="width: 50px; height: 50px; background-color: #F7455D;"></div>')
+        .setHTML('<form id="popup-form" style="font-size: 16px; width: 300px;"><label htmlFor="name">Nombre</label><input type="text" name="name" required /><input type="hidden" name="coordinates" value="${JSON.stringify(e.lngLat)}" /><button type="submit"> Enviar</button></form>')
         .addTo(this.map);
 
-        const marker = new mapboxgl.Marker({
-          color: '#FF0000',
-          draggable : false,
-          
-        })
+        
+      const marker = new Marker({ color: '#FF0000', draggable: false })
         .setLngLat(e.lngLat)
-        .setPopup(popup)
         .addTo(this.map);
         
 
-        this.map.flyTo({
-          center: e.lngLat,
-          zoom: 17
-        });
+      this.map.flyTo({
+        center: e.lngLat,
+        zoom: 17
+      });
         
+      });
+
+      this.map.on('dblclick', (e: any) => {
+        e.stopPropagation();
       });
   }
   
