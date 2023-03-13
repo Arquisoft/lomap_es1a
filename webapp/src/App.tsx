@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Container from '@mui/material/Container';
-import EmailForm from './components/EmailForm';
-import Welcome from './components/Welcome';
-import UserList from './components/UserList';
-import  {getUsers} from './api/api';
-import {User} from './shared/shareddtypes';
-import './App.css';
+import "./App.css";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { SessionProvider, useSession } from "@inrupt/solid-ui-react";
+import { useState } from "react";
 
-function App(): JSX.Element {
+import NavBar from "./components/NavBar";
+import Sidenav from "./components/Sidenav";
+import Explore from "./pages/Explore";
+import Home from "./pages/Home";
+import Friends from "./pages/Friends";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
 
-  const [users,setUsers] = useState<User[]>([]);
 
-  const refreshUserList = async () => {
-    setUsers(await getUsers());
-  }
 
-  useEffect(()=>{
-    refreshUserList();
-  },[]);
-
+export default function App(): JSX.Element {
+  const { session } = useSession();
+       
   return (
-    <>
-      <Container maxWidth="sm">
-        <Welcome message="ASW students"/>
-        <Box component="div" sx={{ py: 2}}>This is a basic example of a React application using Typescript. You can add your email to the list filling the form below.</Box>
-        <EmailForm OnUserListChange={refreshUserList}/>        
-        <UserList users={users}/>
-        <Link href="https://github.com/arquisoft/lomap_0">Source code</Link>
-      </Container>
-    </>
+    <SessionProvider sessionId="lomap_es1a">
+      <>
+        <Sidenav/>
+        <NavBar/>
+        <div style={{width:"100vw", height:"100vh"}}>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/account" element={<Account />}/>
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </div>
+      </>
+    </SessionProvider>
   );
 }
-
-export default App;
