@@ -15,8 +15,7 @@ import Login from "./pages/Login";
 
 
 export default function App(): JSX.Element {
-    //With this we can control the login status for solid
-    const { session } = useSession();
+  const { session } = useSession();
        
   return (
     <SessionProvider sessionId="lomap_es1a">
