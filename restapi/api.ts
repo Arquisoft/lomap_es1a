@@ -1,7 +1,7 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
+import { createLocation } from './location/LocationController';
 import { LocationModel } from './location/LocationModel';
-import { LocationController } from './location/LocationController';
 
 const api:Router = express.Router()
 
@@ -38,19 +38,7 @@ api.post(
 );
 
 api.post(
-  "/location/add",
-  async (req: Request, res: Response): Promise<Response> => {
-    const{name, category, comments} = req.body;
-
-    LocationController.createLocation(name, category, comments)
-    return res.sendStatus(200);
-  }
-);
-api.get(
-  "location/list",
-  async (req:Request, res:Response): Promise<Response> => {
-    return res.status(200).send(users);
-  }
+  "/location/add",createLocation
 )
 
 export default api;

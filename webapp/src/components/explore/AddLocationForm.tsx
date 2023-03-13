@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 import styles from './addlocationform.module.css';
-import { LocationController } from './../../../../restapi/location/LocationController';
+import axios from 'axios';
 
 
 export default function AddLocationForm(): JSX.Element {
@@ -20,9 +20,18 @@ export default function AddLocationForm(): JSX.Element {
 
   const handleChange = () => {};
 
-  const handleAddLocation = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleAddLocation = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    LocationController.createLocation(name,category,comments);
+    try {
+      const response = await axios.post('http://localhost:5000/locations', {
+        name,
+        category,
+        comments,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
     setName("");
     setCategory("shop");
     setComments("");
