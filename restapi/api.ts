@@ -1,13 +1,13 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
-import LocationController from './location';
-import LocationModel from './location';
+import { LocationModel } from './location/LocationModel';
+import { LocationController } from './location/LocationController';
 
 const api:Router = express.Router()
 
 interface User {
     name: string;
-    email: string;
+    password: string;
 }
 
 
@@ -30,8 +30,8 @@ api.post(
   ],
   async (req: Request, res: Response): Promise<Response> => {
     let name = req.body.name;
-    let email = req.body.email;
-    let user: User = {name:name,email:email}
+    let password = req.body.email;
+    let user: User = {name:name,password:password}
     users.push(user);
     return res.sendStatus(200);
   }
@@ -40,12 +40,9 @@ api.post(
 api.post(
   "/location/add",
   async (req: Request, res: Response): Promise<Response> => {
-    let id = req.body.id;
-    let longitude = req.body.longitude;
-    let latitude = req.body.latitude;
-    let category = req.body.category;
+    const{name, category, comments} = req.body;
 
-    locations.push(new LocationModel (id, longitude, latitude, category));
+    LocationController.createLocation(name, category, comments)
     return res.sendStatus(200);
   }
 );
