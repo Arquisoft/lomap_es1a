@@ -15,7 +15,7 @@ export default function Sidenav(): JSX.Element {
     }
 
     return (
-      <div>
+      <div style={{width:"0", height:"0"}}>
       <div className={open ? styles.sidenav : styles.sidenavClosed}>
         <button className={styles.menuBtn} onClick={toggleOpen}>
           {open ? (

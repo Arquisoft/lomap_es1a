@@ -19,12 +19,10 @@ export default function Login( {urlPrevia = "http://localhost:3000"}:Ilogin) {
     setIdp(event.target.value as string);
   };
 
-
     return (
     <div className="login">
-    <Container fixed>
+    <Container maxWidth="sm" className="loginContainer" style={{height:"100vh", alignItems:"center", padding:"20vh"}}>
       <FormGroup>
-                
         <InputLabel id="idpInputLabel">Select your Identity Provider: </InputLabel>
         <Select
           labelId="idpInputLabel"
