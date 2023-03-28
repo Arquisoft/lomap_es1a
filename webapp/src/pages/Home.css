@@ -27,6 +27,8 @@
     z-index: 15;
     display: flex;
     justify-content: right;
+    align-items: end;
     overflow: hidden;
-    width: 30vw;
+    width: 25em;
+    height: 10em;
 }
