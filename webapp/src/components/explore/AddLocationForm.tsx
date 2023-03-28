@@ -9,18 +9,40 @@ import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 import styles from './addlocationform.module.css';
+import axios from 'axios';
 
 
 export default function AddLocationForm(): JSX.Element {
-  const [category, setCategory] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [category, setCategory] = React.useState("shop");
+  const [comments, setComments] = React.useState("");
+
 
   const handleChange = () => {};
+
+  const handleAddLocation = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/locations', {
+        name,
+        category,
+        comments,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+    setName("");
+    setCategory("shop");
+    setComments("");
+  };
 
   const handleSubmit = (evt: any) => {
   }
 
   return (
-    <div className={styles.mainContainer}>
+    <form onSubmit={handleAddLocation}>
+      <div className={styles.mainContainer}>
       <TextField fullWidth id="name-field" label="Name" />
       <FormControl>
         <InputLabel id="category-select-label">Category</InputLabel>
@@ -49,5 +71,7 @@ export default function AddLocationForm(): JSX.Element {
         Add
       </Button>
     </div>
+    </form>
+    
   );
 }
