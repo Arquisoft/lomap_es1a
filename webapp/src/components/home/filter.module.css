@@ -1,8 +1,7 @@
 .form {
-    position: absolute;
+    position: relative;
     z-index: 20;
     width: 9em;
-    height: 4em;
 }
 
 .categoryFilter {
@@ -19,7 +18,7 @@
     position: fixed;
     align-items: center;
     width: 23em;
-    height: 5em;
+    height: 4.7em;
     z-index: 5;
     margin-top: 10vh;
     margin-right: 2vw;

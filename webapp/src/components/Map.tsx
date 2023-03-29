@@ -1,10 +1,8 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
-import React from 'react';
+import React, { useState } from 'react';
 import mapboxgl, { Marker } from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw';
-
-
 
 interface Props {
   lng: number;
@@ -12,6 +10,7 @@ interface Props {
   zoom: number;
   mapWidth: string;
   mapHeight: string;
+  onFormSelect?: (state:boolean) => void;
 }
 
 export default class Map extends React.Component<Props> {
@@ -32,6 +31,9 @@ export default class Map extends React.Component<Props> {
       this.mapMarkers.forEach((marker: any) => {
         marker.remove()
       });
+
+      if (this.props.onFormSelect != undefined)
+        this.props.onFormSelect(true);
 
       this.map.flyTo({
         center: e.lngLat,
