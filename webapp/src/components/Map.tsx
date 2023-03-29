@@ -1,6 +1,6 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useState } from 'react';
-import mapboxgl, { Marker } from 'mapbox-gl';
+import mapboxgl, { DoubleClickZoomHandler, Marker } from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw';
 
@@ -10,7 +10,7 @@ interface Props {
   zoom: number;
   mapWidth: string;
   mapHeight: string;
-  onFormSelect?: (state:boolean) => void;
+  onFormSelect?: (state: boolean, lat: number, lon: number) => void;
 }
 
 export default class Map extends React.Component<Props> {
@@ -24,8 +24,10 @@ export default class Map extends React.Component<Props> {
       style: 'mapbox://styles/mapbox/light-v11',
       center: [this.props.lng, this.props.lat],
       zoom: this.props.zoom,
-      attributionControl: false
+      attributionControl: false,
     });
+
+    this.map.doubleClickZoom.disable();
     
     this.map.on('click', (e: any) => {
       this.mapMarkers.forEach((marker: any) => {
@@ -33,7 +35,7 @@ export default class Map extends React.Component<Props> {
       });
 
       if (this.props.onFormSelect != undefined)
-        this.props.onFormSelect(true);
+        this.props.onFormSelect(true, e.lngLat.lat, e.lngLat.lng);
 
       this.map.flyTo({
         center: e.lngLat,

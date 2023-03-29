@@ -32,3 +32,12 @@
     width: 25em;
     height: 10em;
 }
+
+.formDiv {
+    width: 800px; 
+    height: 100vh ; 
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 400px;
+}

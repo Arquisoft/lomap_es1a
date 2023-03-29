@@ -10,8 +10,13 @@ export default function Home() {
 
   const [showForm, setShowForm] = useState(false);
 
-  const handleShowForm = (state: boolean) => {
+  const [formLng, setFormLng] = useState(-1);
+  const [formLat, setFormLat] = useState(-1);
+
+  const handleShowForm = (state: boolean, lat: number, lng: number) => {
     setShowForm(state)
+    setFormLng(lng);
+    setFormLat(lat);
   };
 
   return (
@@ -22,11 +27,7 @@ export default function Home() {
       <div className="filterDiv">
         <Filter />
       </div>
-      <div style={{width:"400px", height:"100vh", position:"absolute"}}>
-        {showForm ? (
-            <SideForm />
-          ) : <div></div>}
-      </div>
+      <SideForm show={showForm} lat={formLat} lon={formLng} />
     </article>
   );
 }
