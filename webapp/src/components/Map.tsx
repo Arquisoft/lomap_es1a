@@ -60,6 +60,10 @@ export default class Map extends React.Component<Props> {
         
       });
 
+      this.map.on('bdlclick', (e:any) => {
+        
+      });
+
       // this.map.on('dblclick', (e: any) => {
       //   e.togglePopup();
       // });

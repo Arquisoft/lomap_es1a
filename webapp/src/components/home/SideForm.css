@@ -14,26 +14,43 @@ body {
    position: fixed;
    top: 0;
    right: 0;
-   width: 560px;
+   width: 32em;
    z-index: 200;
    box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
    transform: translateX(100%);
    transition: transform 0.5s ease-out;
 
    display: flex;
-   align-items: center;
-}
-
-.closeButton {
-   align-self: flex-end;
+   flex-direction: column;
 }
 
 .mainForm {
    display: flex;
    flex-direction: column;
-   margin-left: 40px;
+   width: 80%;
+   align-self: center;
+   align-items: center;
 }
 
 .side-drawer.open {
    transform: translateX(0);
+}
+
+.closeButton {
+   display: flex;
+   justify-content: flex-end;
+   margin-top: 5em;
+   margin-bottom: 10em;
+}
+
+.formGroup {
+   height: 15em;
+   width: 20em;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+}
+
+.addButton {
+   width: 10em;
 }

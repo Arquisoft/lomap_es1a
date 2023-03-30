@@ -15,24 +15,6 @@
     z-index: 10;
 }
 
-.sidenavbox {
-    width: 250px;
-    transition: width 0.3s ease-in-out;
-    height: 20vh;
-    background-color: rgb(10,25,41);
-    padding-top: 5em;
-    position: relative;
-    z-index: 2;
-}
-
-.sidenavboxClosed {
-    composes: sidenavbox;
-    transition: width 0.3s ease-in-out;
-    width: 4em;
-    z-index: 2;
-}
-
-
 /* Button style */
 .sideitem {
     display: flex;
