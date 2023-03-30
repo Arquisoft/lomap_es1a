@@ -14,7 +14,7 @@ export default function Filter(): JSX.Element {
   const handleChange = () => {};
 
   return (
-    <Box className={styles.boxContainer}>
+    <div className={styles.boxContainer}>
       <FormControlLabel
           label="Friend locations"
           control={<Switch disabled />} // TODO: Friends locations debe activarse cuando el usuario esté logueado
@@ -36,6 +36,6 @@ export default function Filter(): JSX.Element {
           <MenuItem value={"other"}>Other</MenuItem>
         </Select>
       </FormControl>
-    </Box>
+    </div>
   );
 }

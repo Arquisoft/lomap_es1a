@@ -8,14 +8,13 @@ import { NavLink } from "react-router-dom";
 
 export default function Sidenav(): JSX.Element {
 
-    const [open, setopen] = useState(true)
+    const [open, setopen] = useState(false)
 
     const toggleOpen = () => {
         setopen(!open)
     }
 
     return (
-      <div style={{width:"0", height:"0"}}>
       <div className={open ? styles.sidenav : styles.sidenavClosed}>
         <button className={styles.menuBtn} onClick={toggleOpen}>
           {open ? (
@@ -34,8 +33,6 @@ export default function Sidenav(): JSX.Element {
                 </NavLink>
             );
         })}
-      </div>
-      <div className={open ? styles.sidenavbox : styles.sidenavboxClosed}/>
       </div>
     );
 }
