@@ -1,4 +1,4 @@
-import 'mapbox-gl/dist/mapbox-gl.css';
+import 'mapbox-gl/dist/mapbox-gl';
 import React, { useState } from 'react';
 import mapboxgl, { DoubleClickZoomHandler, Marker } from 'mapbox-gl';
 
