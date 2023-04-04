@@ -6,12 +6,11 @@ import { useState } from "react";
 
 import NavBar from "./components/NavBar";
 import Sidenav from "./components/Sidenav";
-import Explore from "./pages/Explore";
 import Home from "./pages/Home";
 import Friends from "./pages/Friends";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
-
+import About from "./pages/About";
 
 
 export default function App(): JSX.Element {
@@ -25,10 +24,10 @@ export default function App(): JSX.Element {
         <div style={{width:"100vw", height:"100vh"}}>
           <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/explore" element={<Explore />} />
             <Route path="/account" element={<Account />}/>
             <Route path="/friends" element={<Friends />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </div>
       </>

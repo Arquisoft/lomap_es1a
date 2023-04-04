@@ -7,6 +7,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import axios from "axios";
 import "./SideForm.css";
 import { FormGroup } from "@mui/material";
@@ -14,7 +16,7 @@ import { FormGroup } from "@mui/material";
 interface Props {
   show: boolean;
   lat?: number;
-  lon?: number;
+  lng?: number;
   setOpen: (state: boolean) => void;
 }
 
@@ -42,6 +44,11 @@ export default class SideForm extends React.Component<Props> {
           name: this.name,
           category: this.category,
           comments: this.comments,
+          lat: this.props.lat,
+          lng: this.props.lng
+          // TODO: logged user (?)
+          // TODO: is public
+          // TODO: friend user list
         });
         console.log(response.data);
       } catch (error) {
@@ -87,7 +94,7 @@ export default class SideForm extends React.Component<Props> {
             Selected coordinates
             <Typography variant="subtitle1" >
               lat: {this.props.lat == -1 ? "undefined" : this.props.lat} - lng:{" "}
-              {this.props.lon == -1 ? "undefined" : this.props.lon}
+              {this.props.lng == -1 ? "undefined" : this.props.lng}
             </Typography>
           </Typography>
           <FormGroup className={"formGroup"}>
@@ -114,6 +121,10 @@ export default class SideForm extends React.Component<Props> {
               label="Comments"
               multiline
               maxRows={4}
+            />
+            <FormControlLabel
+            label="Public"
+            control={<Switch/>}
             />
           </FormGroup>
           <Button type="submit" variant="contained" color="primary" className={"addButton"}>
