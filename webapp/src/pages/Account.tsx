@@ -1,12 +1,20 @@
-import Button from '@mui/material/Button';
+import { useSession } from "@inrupt/solid-ui-react";
+import { Navigate } from 'react-router-dom';
+import "./Account.css";
 
 export default function Account() {
-  return (
-    <div>
-      <h2>You are not logged in</h2>
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        Sign In
-      </Button>
-    </div>
-  );
+
+  const { session } = useSession();
+
+  if (session.info.isLoggedIn) {
+    return (
+      <div className='main-container'>
+        <h1>Account</h1>
+      </div>
+    );
+  }
+  else
+    return (
+      <Navigate to="/login"/>
+    );
 }

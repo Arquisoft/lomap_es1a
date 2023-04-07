@@ -33,7 +33,7 @@ export default function Home() {
       <div className="filterDiv">
         <Filter />
       </div>
-      <SideForm show={showForm} lat={formLat} lon={formLng} setOpen={closeForm} />
+      <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} />
     </article>
   );
 }
