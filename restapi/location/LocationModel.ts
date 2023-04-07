@@ -6,7 +6,7 @@ interface Location extends Document {
     longitud: Int16Array;
     latitud: Int16Array;
     category: string;
-    pod_id: mongoose.Types.ObjectId;
+    pod_id: String;
     isPublic:boolean;
     sharedUsers: mongoose.Types.ObjectId[];
 }
@@ -35,7 +35,7 @@ const locationSchema: Schema = new Schema({
     required: true
   },
   sharedUsers:{
-    type: [mongoose.Types.ObjectId],
+    type: [String],
     required:true
   }
 });

@@ -1,8 +1,6 @@
-import { Await } from "react-router-dom";
 import Location from "./LocationModel";
 
 import { Request, Response } from 'express';
-import { json } from "body-parser";
 
 
 export async function createLocation(req:Request, res:Response): Promise<void>{
@@ -27,7 +25,7 @@ export async function createLocation(req:Request, res:Response): Promise<void>{
   
 }
 
-export const getLocationsByPodId = async (req: Request, res: Response) => {
+export async function getLocationsByPodId(req: Request, res: Response) {
   const { pod_id } = req.params;
 
   try {
