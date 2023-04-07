@@ -123,7 +123,7 @@ export default class SideForm extends React.Component<Props> {
               maxRows={4}
             />
             <FormControlLabel
-            label="Public"
+            label="Private"
             control={<Switch/>}
             />
           </FormGroup>
