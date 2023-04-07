@@ -42,10 +42,10 @@ export default class SideForm extends React.Component<Props> {
       try {
         const response = await axios.post("http://localhost:5000/locations", {
           name: this.name,
+          longitud: this.props.lng,
+          latitud: this.props.lat,
           category: this.category,
           comments: this.comments,
-          lat: this.props.lat,
-          lng: this.props.lng
           // TODO: logged user (?)
           // TODO: is public
           // TODO: friend user list

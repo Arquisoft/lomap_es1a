@@ -1,15 +1,11 @@
-import mongoose, { Document, Schema} from 'mongoose'
+import mongoose, { Document, Schema, model} from 'mongoose'
 
-interface Location extends Document {
-    id: mongoose.Types.ObjectId;
-    longitud: number;
-    latitud: number;
-    category: string;
-    comments: string;
-}
 
 const locationSchema: Schema = new Schema({
-  _id: { type: mongoose.Types.ObjectId, default: mongoose.Types.ObjectId },
+  name: {
+    type: String,
+    required: true
+  },
   longitud: {
     type: String,
     required: true
@@ -28,9 +24,6 @@ const locationSchema: Schema = new Schema({
   }
 });
 
-const Location = mongoose.model<Location>('Location', locationSchema);
-
-export default Location;
-
+module.exports = model('locations', locationSchema);
 
   

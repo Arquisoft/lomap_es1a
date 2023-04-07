@@ -1,13 +1,15 @@
-import Location from "./LocationModel";
+
 
 import { Request, Response } from 'express';
+const Location = require("./LocationModel");
 
 
 export async function createLocation(req:Request, res:Response): Promise<void>{
   try{
-    const { longitud, latitud, category, comments} = req.body;
+    const {  longitud,name, latitud, category, comments} = req.body;
 
     const location = new Location({
+      name,
       longitud,
       latitud,
       category,
@@ -17,7 +19,8 @@ export async function createLocation(req:Request, res:Response): Promise<void>{
     res.status(201).json({message: 'LocationCreated', location});
   }catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
+    console.log(req.body);
+    res.status(500).json({ message: 'error error' });
   }
   
 }
