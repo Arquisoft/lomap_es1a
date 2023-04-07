@@ -5,16 +5,13 @@ import { Request, Response } from 'express';
 
 export async function createLocation(req:Request, res:Response): Promise<void>{
   try{
-    const { _id, longitud, latitud, category, pod_id, isPublic, sharedUsers} = req.body;
+    const { longitud, latitud, category, comments} = req.body;
 
     const location = new Location({
-      _id,
       longitud,
       latitud,
       category,
-      pod_id,
-      isPublic,
-      sharedUsers
+      comments
     });
     await location.save();
     res.status(201).json({message: 'LocationCreated', location});

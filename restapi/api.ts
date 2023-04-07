@@ -7,9 +7,9 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://uo270285:Password@lomapes1a.wjvvv7r.mongodb.net/?retryWrites=true&w=majority');
 module.exports = mongoose;
 
-const api:Router = express.Router()
+const router = express.Router()
 
-api.use("/locations", locationRouter);
-api.use("/users", userRouter)
+router.use("/locations", locationRouter);
+router.use("/users", userRouter);
 
-export default api;
+module.exports = router;

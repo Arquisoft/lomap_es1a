@@ -1,42 +1,30 @@
 import mongoose, { Document, Schema} from 'mongoose'
 
-
 interface Location extends Document {
     id: mongoose.Types.ObjectId;
-    longitud: Int16Array;
-    latitud: Int16Array;
+    longitud: number;
+    latitud: number;
     category: string;
-    pod_id: String;
-    isPublic:boolean;
-    sharedUsers: mongoose.Types.ObjectId[];
+    comments: string;
 }
-
 
 const locationSchema: Schema = new Schema({
   _id: { type: mongoose.Types.ObjectId, default: mongoose.Types.ObjectId },
   longitud: {
-    type: Int16Array,
-    required:true
+    type: String,
+    required: true
   },
   latitud: {
-    type: Int16Array,
-    required:true
+    type: String,
+    required: true
   },
   category: {
     type: String,
     required: true
   },
-  pod_id: {
-    type: mongoose.Types.ObjectId,
+  comments: {
+    type: String,
     required: true
-  },
-  isPublic: {
-    type: Boolean,
-    required: true
-  },
-  sharedUsers:{
-    type: [String],
-    required:true
   }
 });
 
