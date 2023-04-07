@@ -27,7 +27,7 @@ export async function createLocation(req:Request, res:Response): Promise<void>{
   
 }
 
-export const getLocationsByPodId = async (req: Request, res: Response) => {
+export async function getLocationsByPodId(req: Request, res: Response) {
   const { pod_id } = req.params;
 
   try {

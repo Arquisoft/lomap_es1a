@@ -1,7 +1,7 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
-import { createLocation } from './location/LocationController';
 import { locationRouter } from './location/LocationRouter';
+import { userRouter } from './user/UserRouter';
 
 const api:Router = express.Router()
 
@@ -37,5 +37,6 @@ api.post(
 );
 
 api.use("/locations", locationRouter);
+api.use("/users", userRouter)
 
 export default api;
