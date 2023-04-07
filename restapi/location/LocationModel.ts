@@ -1,20 +1,48 @@
-interface LocationData {
-    id: number;
-    longitude: number;
-    latitude: number;
+import mongoose, { Document, Schema} from 'mongoose'
+
+
+interface Location extends Document {
+    id: mongoose.Types.ObjectId;
+    longitud: Int16Array;
+    latitud: Int16Array;
     category: string;
-  }  
+    pod_id: String;
+    isPublic:boolean;
+    sharedUsers: mongoose.Types.ObjectId[];
+}
 
-export class LocationModel {
-    private name:string
-    private category: string;
-    private comments:string;
 
-    constructor(name:string, category: string, comments:string) {
-      this.name = name;
-      this.category = category;
-      this.comments = comments;
-    }
-  
+const locationSchema: Schema = new Schema({
+  _id: { type: mongoose.Types.ObjectId, default: mongoose.Types.ObjectId },
+  longitud: {
+    type: Int16Array,
+    required:true
+  },
+  latitud: {
+    type: Int16Array,
+    required:true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  pod_id: {
+    type: mongoose.Types.ObjectId,
+    required: true
+  },
+  isPublic: {
+    type: Boolean,
+    required: true
+  },
+  sharedUsers:{
+    type: [String],
+    required:true
   }
+});
+
+const Location = mongoose.model<Location>('Location', locationSchema);
+
+export default Location;
+
+
   
