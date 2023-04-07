@@ -1,8 +1,6 @@
-import { Await } from "react-router-dom";
 import Location from "./LocationModel";
 
 import { Request, Response } from 'express';
-import { json } from "body-parser";
 
 
 export async function createLocation(req:Request, res:Response): Promise<void>{

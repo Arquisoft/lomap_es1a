@@ -1,8 +1,6 @@
-import { Await } from "react-router-dom";
 import User from "./UserModel";
 
 import { Request, Response } from "express";
-import { json } from "body-parser";
 
 export async function createUser(req: Request, res:Response): Promise<void> {
     try{
