@@ -26,11 +26,9 @@ export default function Home() {
   };
 
   const handleShowMarkerInfo = (state: boolean, lat: number, lng: number) => {
-    if (session.info.isLoggedIn) {
-      setShowMarkerInfo(state);
-      setFormLng(lng);
-      setFormLat(lat);
-    }
+    setShowMarkerInfo(state);
+    setFormLng(lng);
+    setFormLat(lat);
   };
 
   const closeForm = (state: boolean) => {

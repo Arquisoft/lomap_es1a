@@ -33,7 +33,6 @@ export default class SideForm extends React.Component<Props> {
   }
 
   render() {
-
     let drawerClasses = "side-drawer";
 
     if (this.props.show) {
@@ -47,9 +46,19 @@ export default class SideForm extends React.Component<Props> {
             <CloseIcon />
           </Button>
         </div>
-        <form className={"mainForm"} method="post">
-          <h1>TODO</h1>
-        </form>
+        <div className={"mainForm"}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", textAlign: "center" }}
+          >
+            Selected coordinates
+            <Typography variant="subtitle1">
+              lat: {this.props.lat == -1 ? "undefined" : this.props.lat} - lng:{" "}
+              {this.props.lng == -1 ? "undefined" : this.props.lng}
+            </Typography>
+          </Typography>
+          <p>(Fetch the rest from POD)</p>
+        </div>
       </div>
     );
   }

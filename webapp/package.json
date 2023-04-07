@@ -9,6 +9,7 @@
     "@inrupt/solid-ui-react": "^2.8.2",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.5",
+    "@solid/query-ldflex": "^2.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

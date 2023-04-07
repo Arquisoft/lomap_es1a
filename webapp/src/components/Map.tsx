@@ -1,7 +1,6 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
 import mapboxgl, { Marker } from "mapbox-gl";
-import { useSession } from "@inrupt/solid-ui-react";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
