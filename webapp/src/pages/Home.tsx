@@ -16,18 +16,6 @@ export default function Home() {
   const [formLng, setFormLng] = useState(-1);
   const [formLat, setFormLat] = useState(-1);
 
-  const handleLoadMap = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-    try {
-      const response = await axios.get("http://localhost:5000/locations");
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const { session } = useSession();
 
   const handleShowForm = (state: boolean, lat: number, lng: number) => {

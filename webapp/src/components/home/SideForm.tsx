@@ -24,7 +24,8 @@ interface Props {
 interface State { 
   name: string,
   category: string,
-  comments: string
+  comments: string,
+  submitted: boolean
 };
 
 export default class SideForm extends React.Component<Props, State> {
@@ -34,7 +35,8 @@ export default class SideForm extends React.Component<Props, State> {
     this.state = {
       name: "test",
       category: "shop",
-      comments: "awao"
+      comments: "awao",
+      submitted: false
     }
   }
 
@@ -63,6 +65,7 @@ export default class SideForm extends React.Component<Props, State> {
       } catch (err:any) {
         console.log(err);
       }
+      this.setState({submitted: false})
     };
 
     let drawerClasses = "side-drawer";

@@ -2,6 +2,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
 import mapboxgl, { Marker } from "mapbox-gl";
 import axios from "axios";
+import { requestToList } from '../util/LocationParser';
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
@@ -29,9 +30,6 @@ export default class Map extends React.Component<Props> {
       zoom: this.props.zoom,
       attributionControl: false,
     });
-
-    const response = await axios.get("http://localhost:5000/locations");
-      console.log(response.data);
 
     this.map.doubleClickZoom.disable();
 
@@ -72,65 +70,17 @@ export default class Map extends React.Component<Props> {
       "bottom-right"
     );
 
-    // Example locations for testing purposes
+    this.map.on("load", async () => {
 
-    this.map.on("load", () => {
-      this.map.addSource("places", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              properties: {
-                description:
-                  '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>',
-                icon: "theatre",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [4.3075247, 50.85753],
-              },
-            },
-            {
-              type: "Feature",
-              properties: {
-                description:
-                  '<strong>Mad Men Season Five Finale Watch Party</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a <a href="http://madmens5finale.eventbrite.com/" target="_blank" title="Opens in a new window">Mad Men Season Five Finale Watch Party</a>, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>',
-                icon: "theatre",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [4.3187, 50.862966],
-              },
-            },
-            {
-              type: "Feature",
-              properties: {
-                description:
-                  '<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a <a href="http://tallulaeatbar.ticketleap.com/2012beachblanket/" target="_blank" title="Opens in a new window">Big Backyard Beach Bash and Wine Fest</a> on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.grill hot dogs.</p>',
-                icon: "bar",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [4.334786, 50.851208],
-              },
-            },
-            {
-              type: "Feature",
-              properties: {
-                description:
-                  '<strong>Parlamento Europeo</strong><p>Me encanta la política!</p>',
-                icon: "art-gallery",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [4.37433, 50.83881],
-              },
-            },
-          ],
-        },
-      });
+      const response = await axios.get("http://localhost:5000/locations");
+
+      let locations = JSON.parse(requestToList(response.data));
+
+      this.map.addSource("places", 
+      {
+        type: "geojson", data: locations
+      }
+      );
 
       // Add a layer showing the places.
       this.map.addLayer({
