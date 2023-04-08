@@ -33,9 +33,9 @@ export default class SideForm extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      name: "test",
+      name: "",
       category: "shop",
-      comments: "awao",
+      comments: "none",
       submitted: false
     }
   }
@@ -66,6 +66,7 @@ export default class SideForm extends React.Component<Props, State> {
         console.log(err);
       }
       this.setState({submitted: false})
+      this.props.setOpen(false);
     };
 
     let drawerClasses = "side-drawer";

@@ -7,13 +7,11 @@ export function requestToList(locations: any) {
     let l = JSON.stringify(locations.data)
     let parsed = JSON.parse(l)
 
-    console.log(l)
-
     for (let i = 0; i < parsed.length; i++) {
         result += '{'
         result += '"type": "Feature",'
         result += '"properties": {'
-        result += '"icon": "' + parsed[i].category + '"'
+        result += '"icon": "' + parsed[i].category + '-icon"'
         result += '},'
         result += '"geometry": {'
         result += '"type": "Point",'
@@ -25,8 +23,6 @@ export function requestToList(locations: any) {
     }
 
     result += '] }';
-
-    console.log(result)
 
     return result;
 }

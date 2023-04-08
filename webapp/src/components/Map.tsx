@@ -25,7 +25,7 @@ export default class Map extends React.Component<Props> {
   async componentDidMount() {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: "mapbox://styles/mapbox/light-v11",
+      style: "mapbox://styles/alvesit0/clg86aosh005p01o5khz3eqcw",
       center: [this.props.lng, this.props.lat],
       zoom: this.props.zoom,
       attributionControl: false,
@@ -90,9 +90,25 @@ export default class Map extends React.Component<Props> {
         layout: {
           "icon-image": ["get", "icon"],
           "icon-allow-overlap": true,
-          "icon-size": 2,
+          "icon-size": 1,
+        },
+        paint: {
+          'icon-color': [
+            'match',
+            ['get', 'icon'],
+            'shop',
+            '#FF8C00',
+            'restaurant',
+            '#FF8C00',
+            'monument',
+            '#FF8C00',
+            'other',
+            '#9ACD32',
+            '#FF0000'
+            ]
         }
       });
+
 
       this.map.on("click", "places", (e: any) => {
         // Copy coordinates array.
