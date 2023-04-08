@@ -6,7 +6,7 @@ const Location = require("./LocationModel");
 
 export async function createLocation(req:Request, res:Response): Promise<void>{
   try{
-    const {  longitud,name, latitud, category, comments} = req.body;
+    const { name, category, comments, longitud, latitud} = req.body;
 
     const location = new Location({
       name,
@@ -17,12 +17,12 @@ export async function createLocation(req:Request, res:Response): Promise<void>{
     });
     await location.save();
     res.status(201).json({message: 'LocationCreated', location});
+    console.log("Locations Created");
   }catch (err) {
     console.error(err);
     console.log(req.body);
     res.status(500).json({ message: 'error error' });
   }
-  
 }
 
 export async function getLocationsByPodId(req: Request, res: Response) {
@@ -37,4 +37,12 @@ export async function getLocationsByPodId(req: Request, res: Response) {
   }
 };
 
+export async function getAllLocations(req: Request, res: Response, next: any) {
+  try {
+    const allLocations = await Location.find({});
+    res.send({ status: "Ok", data: allLocations });
+  } catch (error: any) {
+    console.log(error);
+  }
+}
   

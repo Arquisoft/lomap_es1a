@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession } from "@inrupt/solid-ui-react";
 import Map from "../components/Map";
 import Box from '@mui/material/Box';
 import Filter from '../components/home/Filter';
 import SideForm from '../components/home/SideForm';
 import MarkerInfo from '../components/home/MarkerInfo';
+import axios from "axios";
 import "./Home.css";
 
 export default function Home() {
@@ -14,6 +15,18 @@ export default function Home() {
 
   const [formLng, setFormLng] = useState(-1);
   const [formLat, setFormLat] = useState(-1);
+
+  const handleLoadMap = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    try {
+      const response = await axios.get("http://localhost:5000/locations");
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const { session } = useSession();
 

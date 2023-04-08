@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, model} from 'mongoose'
 
-
-const locationSchema: Schema = new Schema({
+const locationSchema: Schema = new Schema(
+  {
   name: {
     type: String,
     required: true
@@ -22,8 +22,12 @@ const locationSchema: Schema = new Schema({
     type: String,
     required: true
   }
-});
+  }, 
+  {
+    collection: "Locations"
+  }
+);
 
-module.exports = model('locations', locationSchema);
+module.exports = model('Locations', locationSchema);
 
   

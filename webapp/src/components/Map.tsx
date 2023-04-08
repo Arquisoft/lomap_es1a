@@ -1,6 +1,7 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
 import mapboxgl, { Marker } from "mapbox-gl";
+import axios from "axios";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
@@ -19,8 +20,8 @@ export default class Map extends React.Component<Props> {
   mapContainer: any;
   map: any;
   mapMarkers: Array<any> = [];
-
-  componentDidMount() {
+  
+  async componentDidMount() {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/mapbox/light-v11",
@@ -28,6 +29,9 @@ export default class Map extends React.Component<Props> {
       zoom: this.props.zoom,
       attributionControl: false,
     });
+
+    const response = await axios.get("http://localhost:5000/locations");
+      console.log(response.data);
 
     this.map.doubleClickZoom.disable();
 
