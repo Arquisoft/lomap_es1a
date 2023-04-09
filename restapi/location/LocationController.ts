@@ -1,28 +1,28 @@
-import Location from "./LocationModel";
+
 
 import { Request, Response } from 'express';
+const Location = require("./LocationModel");
 
 
 export async function createLocation(req:Request, res:Response): Promise<void>{
   try{
-    const { _id, longitud, latitud, category, pod_id, isPublic, sharedUsers} = req.body;
+    const { name, category, comments, longitud, latitud} = req.body;
 
     const location = new Location({
-      _id,
+      name,
       longitud,
       latitud,
       category,
-      pod_id,
-      isPublic,
-      sharedUsers
+      comments
     });
     await location.save();
     res.status(201).json({message: 'LocationCreated', location});
+    console.log("Locations Created");
   }catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
+    console.log(req.body);
+    res.status(500).json({ message: 'error error' });
   }
-  
 }
 
 export async function getLocationsByPodId(req: Request, res: Response) {
@@ -37,4 +37,12 @@ export async function getLocationsByPodId(req: Request, res: Response) {
   }
 };
 
+export async function getAllLocations(req: Request, res: Response, next: any) {
+  try {
+    const allLocations = await Location.find({});
+    res.send({ status: "Ok", data: allLocations });
+  } catch (error: any) {
+    console.log(error);
+  }
+}
   

@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import { SelectChangeEvent } from "@mui/material";
 import axios from "axios";
 import "./SideForm.css";
 import { FormGroup } from "@mui/material";
@@ -20,46 +21,53 @@ interface Props {
   setOpen: (state: boolean) => void;
 }
 
-export default class SideForm extends React.Component<Props> {
-  name: string;
-  category: string;
-  comments: string;
+interface State { 
+  name: string,
+  category: string,
+  comments: string,
+  submitted: boolean
+};
+
+export default class SideForm extends React.Component<Props, State> {
 
   constructor(props: any) {
     super(props);
-    this.name = "";
-    this.category = "shop";
-    this.comments = "";
+    this.state = {
+      name: "",
+      category: "shop",
+      comments: "none",
+      submitted: false
+    }
   }
 
   render() {
-    const handleChange = () => {};
 
-    const handleAddLocation = async (
-      event: React.FormEvent<HTMLFormElement>
-    ) => {
-      event.preventDefault();
-      try {
-        const response = await axios.post("http://localhost:5000/locations", {
-          name: this.name,
-          category: this.category,
-          comments: this.comments,
-          lat: this.props.lat,
-          lng: this.props.lng
-          // TODO: logged user (?)
-          // TODO: is public
-          // TODO: friend user list
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-      this.name = "";
-      this.category = "shop";
-      this.comments = "";
+    const handleCategoryChange = (event: SelectChangeEvent) => {
+      this.setState({category: event.target.value as string});
     };
 
-    const handleSubmit = (evt: any) => {};
+    const handleNameChange = (event: any) => {
+      this.setState({name: event.target.value as string});
+    };
+
+    const onSubmit = async (e:any) => {
+      e.preventDefault();
+      const data = {
+        name: this.state.name,
+        category: this.state.category,
+        comments: this.state.comments,
+        latitud: this.props.lat,
+        longitud: this.props.lng
+      }
+      try {
+        const res = await axios.post('http://localhost:5000/locations', data);
+        console.log(res.data);
+      } catch (err:any) {
+        console.log(err);
+      }
+      this.setState({submitted: false})
+      this.props.setOpen(false);
+    };
 
     let drawerClasses = "side-drawer";
 
@@ -67,11 +75,6 @@ export default class SideForm extends React.Component<Props> {
       drawerClasses = "side-drawer open";
     }
 
-    // Name
-    // Category
-    // Rating
-    // Add
-    // Popover
     return (
       <div className={drawerClasses}>
         <div className={"closeButton"}>
@@ -79,11 +82,11 @@ export default class SideForm extends React.Component<Props> {
             <CloseIcon />
           </Button>
         </div>
-        <form className={"mainForm"} method="post">
+        <form className={"mainForm"} onSubmit={onSubmit}>
           <Typography
             variant="h3"
             gutterBottom
-            sx={{ fontWeight: "bold", textAlign: "center" }}
+            sx={{fontWeight: "bold", textAlign: "center" }}
           >
             Add a location
           </Typography>
@@ -98,15 +101,15 @@ export default class SideForm extends React.Component<Props> {
             </Typography>
           </Typography>
           <FormGroup className={"formGroup"}>
-            <TextField fullWidth id="name-field" label="Name" />
+            <TextField fullWidth id="name-field" label="Name" value={this.state.name} onChange={handleNameChange} />
             <FormControl>
               <InputLabel id="category-select-label">Category</InputLabel>
               <Select
                 labelId="category-select-label"
                 id="category-select"
-                value={this.category}
+                value={this.state.category}
                 label="Category"
-                onChange={handleChange}
+                onChange={handleCategoryChange}
                 fullWidth
               >
                 <MenuItem value={"shop"}>Shop</MenuItem>
@@ -115,15 +118,8 @@ export default class SideForm extends React.Component<Props> {
                 <MenuItem value={"other"}>Other</MenuItem>
               </Select>
             </FormControl>
-            <TextField
-              fullWidth
-              id="comments-field"
-              label="Comments"
-              multiline
-              maxRows={4}
-            />
             <FormControlLabel
-            label="Public"
+            label="Private"
             control={<Switch/>}
             />
           </FormGroup>

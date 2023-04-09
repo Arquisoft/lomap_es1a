@@ -8,18 +8,30 @@ import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import styles from './filter.module.css';
 
-export default function Filter(): JSX.Element {
+interface Props {
+  toggleFriends: boolean
+}
+
+export default function Filter<Props>( props:any ): JSX.Element {
   const [category, setCategory] = React.useState("");
 
   const handleChange = () => {};
 
   return (
     <div className={styles.boxContainer}>
-      <FormControlLabel
-          label="Friend locations"
-          control={<Switch disabled />} // TODO: Friends locations debe activarse cuando el usuario esté logueado
-          className={styles.friendsFilter}
-        />
+      {props.toggleFriends ? (
+            <FormControlLabel
+            label="Friend locations"
+            control={<Switch />} 
+            className={styles.friendsFilter}
+            />
+          ) : (
+            <FormControlLabel
+            label="Friend locations"
+            control={<Switch disabled />}
+            className={styles.friendsFilter}
+            />
+          )}
       <FormControl className={styles.form}>
         <InputLabel id="category-select-label">Category</InputLabel>
         <Select
