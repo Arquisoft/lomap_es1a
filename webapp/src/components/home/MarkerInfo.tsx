@@ -49,13 +49,16 @@ export default class SideForm extends React.Component<Props> {
         <div className={"mainForm"}>
           <Typography
             variant="h6"
+            component="h5"
             sx={{ fontWeight: "bold", textAlign: "center" }}
           >
             Selected coordinates
-            <Typography variant="subtitle1">
-              lat: {this.props.lat == -1 ? "undefined" : this.props.lat} - lng:{" "}
-              {this.props.lng == -1 ? "undefined" : this.props.lng}
-            </Typography>
+            <div>
+              <Typography variant="subtitle1">
+                lat: {this.props.lat == -1 ? "undefined" : this.props.lat} -
+                lng: {this.props.lng == -1 ? "undefined" : this.props.lng}
+              </Typography>
+            </div>
           </Typography>
           <p>(Fetch the rest from POD)</p>
         </div>

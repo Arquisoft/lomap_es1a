@@ -3,5 +3,22 @@
     height: auto;
     overflow: hidden;
 
-    padding: 10em 10em 0em 14em;
+    padding: 7.5em 10em 0em 14em;
+}
+
+.title {
+    margin-bottom: 0.5em;
+}
+
+.table-container {
+    max-height: 60vh;
+}
+
+.table-cell {
+    font-size: 1.5em;
+}
+
+.table-header-cell {
+    font-size: 1.5em;
+    font-weight: bold;
 }

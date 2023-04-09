@@ -15,6 +15,7 @@ interface Props {
   mapHeight: string;
   onFormSelect?: (state: boolean, lat: number, lon: number) => void;
   onIconSelect?: (state: boolean, lat: number, lon: number) => void;
+  onMapSubmit?: (map: any, markers: any[]) => void;
 }
 
 export default class Map extends React.Component<Props> {
@@ -59,6 +60,9 @@ export default class Map extends React.Component<Props> {
       marker.setPopup(popup);
     });
 
+    if (this.props.onMapSubmit != undefined) 
+      this.props.onMapSubmit(this.map, this.mapMarkers);
+
     this.map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -91,24 +95,8 @@ export default class Map extends React.Component<Props> {
           "icon-image": ["get", "icon"],
           "icon-allow-overlap": true,
           "icon-size": 1,
-        },
-        paint: {
-          'icon-color': [
-            'match',
-            ['get', 'icon'],
-            'shop',
-            '#FF8C00',
-            'restaurant',
-            '#FF8C00',
-            'monument',
-            '#FF8C00',
-            'other',
-            '#9ACD32',
-            '#FF0000'
-            ]
         }
       });
-
 
       this.map.on("click", "places", (e: any) => {
         // Copy coordinates array.
@@ -123,7 +111,7 @@ export default class Map extends React.Component<Props> {
         }
 
         this.map.flyTo({
-          center: e.lngLat,
+          center: coordinates,
           zoom: 17,
         });
 
@@ -148,6 +136,8 @@ export default class Map extends React.Component<Props> {
         this.map.getCanvas().style.cursor = "";
       });
     });
+
+
   }
 
   componentWillUnmount() {
