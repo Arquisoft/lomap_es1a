@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from "@inrupt/solid-ui-react";
 import Map from "../components/Map";
-import Box from '@mui/material/Box';
 import Filter from '../components/home/Filter';
 import SideForm from '../components/home/SideForm';
 import MarkerInfo from '../components/home/MarkerInfo';
 import { useNotifications } from 'reapop'
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
+import { Navigate } from 'react-router-dom';
+import Modal from 'react-modal';
 
 import "./Home.css";
+
+Modal.setAppElement('#root');
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  },
+  overlay: {zIndex: 15}
+};
 
 export default function Home() {
 
@@ -24,9 +39,13 @@ export default function Home() {
 
   const [selectedLocation, setSelectedLocation] = useState<any>();
 
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
+
   const { session } = useSession();
 
   const { notify } = useNotifications();
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const handleShowForm = (state: boolean, lat: number, lng: number) => {
     if (session.info.isLoggedIn) {
@@ -68,6 +87,21 @@ export default function Home() {
     setMarkers(markers);
   }
 
+  const openModal = () => {
+    if (session.info.isLoggedIn == true)
+      setIsOpen(true);
+    else
+      setRedirectToLogin(true);
+  }
+
+  const afterOpenModal = () => {
+    
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
+
   const reloadMap = async () => {
     var source = map.getSource('places');
     const response = await axios.get("http://localhost:5000/locations/");
@@ -87,7 +121,17 @@ export default function Home() {
         <Filter toggleFriends={session.info.isLoggedIn} />
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showNotification} reloadMap={reloadMap}/>
-      <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} />
+      <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal} modalIsOpen={modalIsOpen}/>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Add a review"
+      >
+        <h1>TODO: Create a form here</h1>
+      </Modal>
+      {redirectToLogin ? <Navigate to="/login" /> : ""}
     </article>
   );
 }
