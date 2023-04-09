@@ -31,8 +31,6 @@ export default function Friends() {
     } else setFriends([]);
   };
 
-  // friends.map(f => <li>{f.name} + {f.webId}</li>)
-
   if (session.info.isLoggedIn) {
     return (
       <div className="main-container">

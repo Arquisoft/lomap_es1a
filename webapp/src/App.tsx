@@ -23,7 +23,7 @@ setUpNotifications({
     dismissible: true,
     title: "Success!",
     showDismissButton: true,
-    dismissAfter: 8000,
+    dismissAfter: 5000,
   },
 });
 

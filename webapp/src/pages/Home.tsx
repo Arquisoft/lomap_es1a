@@ -22,6 +22,8 @@ export default function Home() {
   const [formLng, setFormLng] = useState(-1);
   const [formLat, setFormLat] = useState(-1);
 
+  const [selectedLocation, setSelectedLocation] = useState<any>();
+
   const { session } = useSession();
 
   const { notify } = useNotifications();
@@ -34,10 +36,19 @@ export default function Home() {
     }
   };
 
-  const handleShowMarkerInfo = (state: boolean, lat: number, lng: number) => {
+  const handleShowMarkerInfo = async (state: boolean, lat: number, lng: number, id:string) => {
     setShowMarkerInfo(state);
     setFormLng(lng);
     setFormLat(lat);
+    
+    const response = await axios.get("http://localhost:5000/locations/info/"+id);
+    console.log(response);
+    
+    let location = response.data.data;
+
+    console.log(location);
+
+    setSelectedLocation(location);
   };
 
   const closeForm = (state: boolean) => {
@@ -59,7 +70,7 @@ export default function Home() {
 
   const reloadMap = async () => {
     var source = map.getSource('places');
-    const response = await axios.get("http://localhost:5000/locations");
+    const response = await axios.get("http://localhost:5000/locations/");
     let locations = JSON.parse(requestToList(response.data));
     source.setData(locations);
     markers.forEach((marker: any) => {
@@ -76,7 +87,7 @@ export default function Home() {
         <Filter toggleFriends={session.info.isLoggedIn} />
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showNotification} reloadMap={reloadMap}/>
-      <MarkerInfo show={showMarkerInfo} lat={formLat} lng={formLng} setOpen={closeInfo} />
+      <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} />
     </article>
   );
 }

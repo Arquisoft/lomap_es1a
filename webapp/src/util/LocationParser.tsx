@@ -11,7 +11,8 @@ export function requestToList(locations: any) {
         result += '{'
         result += '"type": "Feature",'
         result += '"properties": {'
-        result += '"icon": "' + parsed[i].category + '-icon"'
+        result += '"icon": "' + parsed[i].category + '-icon",'
+        result += '"id": "' + parsed[i]._id + '"'
         result += '},'
         result += '"geometry": {'
         result += '"type": "Point",'
@@ -21,7 +22,7 @@ export function requestToList(locations: any) {
         else 
             result += '}},'
     }
-
+    
     result += '] }';
 
     return result;
