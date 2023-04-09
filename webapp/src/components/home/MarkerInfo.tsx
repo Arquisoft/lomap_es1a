@@ -12,27 +12,26 @@ import Switch from "@mui/material/Switch";
 import axios from "axios";
 import "./SideForm.css";
 import { FormGroup } from "@mui/material";
+import { requestToList } from '../../util/LocationParser';
 
 interface Props {
   show: boolean;
-  lat?: number;
-  lng?: number;
+  location: any;
   setOpen: (state: boolean) => void;
 }
 
-export default class SideForm extends React.Component<Props> {
+export default class MarkerInfo extends React.Component<Props> {
   name: string;
   category: string;
-  comments: string;
 
   constructor(props: any) {
     super(props);
     this.name = "";
     this.category = "shop";
-    this.comments = "";
   }
-
+  
   render() {
+    
     let drawerClasses = "side-drawer";
 
     if (this.props.show) {
@@ -49,13 +48,15 @@ export default class SideForm extends React.Component<Props> {
         <div className={"mainForm"}>
           <Typography
             variant="h6"
+            component="h5"
             sx={{ fontWeight: "bold", textAlign: "center" }}
           >
-            Selected coordinates
-            <Typography variant="subtitle1">
-              lat: {this.props.lat == -1 ? "undefined" : this.props.lat} - lng:{" "}
-              {this.props.lng == -1 ? "undefined" : this.props.lng}
-            </Typography>
+            {this.props.location === undefined ? "not found" : this.props.location.name }
+            <div>
+              <Typography variant="subtitle1">
+              id: {this.props.location === undefined ? "not found" : this.props.location._id }
+              </Typography>
+            </div>
           </Typography>
           <p>(Fetch the rest from POD)</p>
         </div>

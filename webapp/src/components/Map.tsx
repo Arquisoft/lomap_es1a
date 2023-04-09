@@ -14,7 +14,8 @@ interface Props {
   mapWidth: string;
   mapHeight: string;
   onFormSelect?: (state: boolean, lat: number, lon: number) => void;
-  onIconSelect?: (state: boolean, lat: number, lon: number) => void;
+  onIconSelect?: (state: boolean, lat: number, lon: number, id:string) => void;
+  onMapSubmit?: (map: any, markers: any[]) => void;
 }
 
 export default class Map extends React.Component<Props> {
@@ -42,7 +43,7 @@ export default class Map extends React.Component<Props> {
         this.props.onFormSelect(true, e.lngLat.lat, e.lngLat.lng);
 
       if (this.props.onIconSelect != undefined)
-        this.props.onIconSelect(false, e.lngLat.lat, e.lngLat.lng);
+        this.props.onIconSelect(false, e.lngLat.lat, e.lngLat.lng, "noid");
 
       this.map.flyTo({
         center: e.lngLat,
@@ -59,6 +60,9 @@ export default class Map extends React.Component<Props> {
       marker.setPopup(popup);
     });
 
+    if (this.props.onMapSubmit != undefined) 
+      this.props.onMapSubmit(this.map, this.mapMarkers);
+
     this.map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -72,7 +76,7 @@ export default class Map extends React.Component<Props> {
 
     this.map.on("load", async () => {
 
-      const response = await axios.get("http://localhost:5000/locations");
+      const response = await axios.get("http://localhost:5000/locations/");
 
       let locations = JSON.parse(requestToList(response.data));
 
@@ -91,29 +95,13 @@ export default class Map extends React.Component<Props> {
           "icon-image": ["get", "icon"],
           "icon-allow-overlap": true,
           "icon-size": 1,
-        },
-        paint: {
-          'icon-color': [
-            'match',
-            ['get', 'icon'],
-            'shop',
-            '#FF8C00',
-            'restaurant',
-            '#FF8C00',
-            'monument',
-            '#FF8C00',
-            'other',
-            '#9ACD32',
-            '#FF0000'
-            ]
         }
       });
-
 
       this.map.on("click", "places", (e: any) => {
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice();
-        const description = e.features[0].properties.description;
+        const id = e.features[0].properties.id;
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -123,7 +111,7 @@ export default class Map extends React.Component<Props> {
         }
 
         this.map.flyTo({
-          center: e.lngLat,
+          center: coordinates,
           zoom: 17,
         });
 
@@ -134,8 +122,9 @@ export default class Map extends React.Component<Props> {
         if (this.props.onFormSelect != undefined)
           this.props.onFormSelect(false, e.lngLat.lat, e.lngLat.lng);
 
+
         if (this.props.onIconSelect != undefined)
-          this.props.onIconSelect(true, e.lngLat.lat, e.lngLat.lng);
+          this.props.onIconSelect(true, e.lngLat.lat, e.lngLat.lng, id);
       });
 
       // Change the cursor to a pointer when the mouse is over the places layer.
@@ -148,6 +137,8 @@ export default class Map extends React.Component<Props> {
         this.map.getCanvas().style.cursor = "";
       });
     });
+
+
   }
 
   componentWillUnmount() {

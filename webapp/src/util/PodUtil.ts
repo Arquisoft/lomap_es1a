@@ -1,4 +1,4 @@
-import type { Friend } from "./model/UserData";
+import type { Friend } from "./UserData";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import {
   Thing, getThing,
@@ -35,7 +35,7 @@ export async function getFriends(webId:string) {
     if (friend && friend != webId)
       friends.push({
         name: name,
-        webId : friend
+        webId : friend.split("profile/card#me")[0]
       });
     
   }

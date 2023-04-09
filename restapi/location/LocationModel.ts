@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, model} from 'mongoose'
+import { Schema, model} from 'mongoose'
 
 const locationSchema: Schema = new Schema(
   {

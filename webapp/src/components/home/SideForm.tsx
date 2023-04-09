@@ -19,54 +19,56 @@ interface Props {
   lat?: number;
   lng?: number;
   setOpen: (state: boolean) => void;
+  showNotification: (name: string) => void;
+  reloadMap: () => void;
 }
 
-interface State { 
-  name: string,
-  category: string,
-  comments: string,
-  submitted: boolean
-};
+interface State {
+  name: string;
+  category: string;
+  comments: string;
+  submitted: boolean;
+}
 
 export default class SideForm extends React.Component<Props, State> {
-
   constructor(props: any) {
     super(props);
     this.state = {
       name: "",
       category: "shop",
       comments: "none",
-      submitted: false
-    }
+      submitted: false,
+    };
   }
 
   render() {
-
     const handleCategoryChange = (event: SelectChangeEvent) => {
-      this.setState({category: event.target.value as string});
+      this.setState({ category: event.target.value as string });
     };
 
     const handleNameChange = (event: any) => {
-      this.setState({name: event.target.value as string});
+      this.setState({ name: event.target.value as string });
     };
 
-    const onSubmit = async (e:any) => {
+    const onSubmit = async (e: any) => {
       e.preventDefault();
       const data = {
         name: this.state.name,
         category: this.state.category,
         comments: this.state.comments,
         latitud: this.props.lat,
-        longitud: this.props.lng
-      }
+        longitud: this.props.lng,
+      };
       try {
-        const res = await axios.post('http://localhost:5000/locations', data);
+        const res = await axios.post("http://localhost:5000/locations", data);
         console.log(res.data);
-      } catch (err:any) {
+      } catch (err: any) {
         console.log(err);
       }
-      this.setState({submitted: false})
+      this.setState({ submitted: false });
       this.props.setOpen(false);
+      this.props.showNotification(this.state.name);
+      this.props.reloadMap();
     };
 
     let drawerClasses = "side-drawer";
@@ -86,22 +88,31 @@ export default class SideForm extends React.Component<Props, State> {
           <Typography
             variant="h3"
             gutterBottom
-            sx={{fontWeight: "bold", textAlign: "center" }}
+            sx={{ fontWeight: "bold", textAlign: "center" }}
           >
             Add a location
           </Typography>
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", textAlign: "center"}}
+            component="h5"
+            sx={{ fontWeight: "bold", textAlign: "center" }}
           >
-            Selected coordinates
-            <Typography variant="subtitle1" >
-              lat: {this.props.lat == -1 ? "undefined" : this.props.lat} - lng:{" "}
-              {this.props.lng == -1 ? "undefined" : this.props.lng}
-            </Typography>
+            <div>
+              Selected coordinates
+              <Typography variant="subtitle1">
+                lat: {this.props.lat == -1 ? "undefined" : this.props.lat} -
+                lng: {this.props.lng == -1 ? "undefined" : this.props.lng}
+              </Typography>
+            </div>
           </Typography>
           <FormGroup className={"formGroup"}>
-            <TextField fullWidth id="name-field" label="Name" value={this.state.name} onChange={handleNameChange} />
+            <TextField
+              fullWidth
+              id="name-field"
+              label="Name"
+              value={this.state.name}
+              onChange={handleNameChange}
+            />
             <FormControl>
               <InputLabel id="category-select-label">Category</InputLabel>
               <Select
@@ -118,12 +129,14 @@ export default class SideForm extends React.Component<Props, State> {
                 <MenuItem value={"other"}>Other</MenuItem>
               </Select>
             </FormControl>
-            <FormControlLabel
-            label="Private"
-            control={<Switch/>}
-            />
+            <FormControlLabel label="Private" control={<Switch />} />
           </FormGroup>
-          <Button type="submit" variant="contained" color="primary" className={"addButton"}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={"addButton"}
+          >
             Add
           </Button>
         </form>
