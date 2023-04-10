@@ -20,9 +20,7 @@ import {
   
 } from "@inrupt/solid-client";
 
-
 import { FOAF, RDF} from "@inrupt/vocab-common-rdf"
-
 
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";

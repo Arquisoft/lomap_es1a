@@ -4,27 +4,12 @@ import Map from "../components/Map";
 import Filter from '../components/home/Filter';
 import SideForm from '../components/home/SideForm';
 import MarkerInfo from '../components/home/MarkerInfo';
+import AddLocationModal from '../components/home/AddLocationModal';
 import { useNotifications } from 'reapop'
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
-import { Navigate } from 'react-router-dom';
-import Modal from 'react-modal';
 
 import "./Home.css";
-
-Modal.setAppElement('#root');
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  },
-  overlay: {zIndex: 15}
-};
 
 export default function Home() {
 
@@ -36,17 +21,15 @@ export default function Home() {
 
   const [formLng, setFormLng] = useState(-1);
   const [formLat, setFormLat] = useState(-1);
-  const [id, setId] = useState("");
 
   const [selectedLocation, setSelectedLocation] = useState<any>();
 
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   const { session } = useSession();
 
   const { notify } = useNotifications();
-
-  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const handleShowForm = (state: boolean, lat: number, lng: number) => {
     if (session.info.isLoggedIn) {
@@ -79,8 +62,12 @@ export default function Home() {
     setShowMarkerInfo(state);
   }
 
-  const showNotification = (name: string) => {
+  const showAddLocationNotification = (name: string) => {
     notify('Location added: ' + name);
+  }
+
+  const showAddReviewNotification = (name: string) => {
+    notify('Review added successfully!');
   }
 
   const onMapSubmit = (map:any, markers:any[]) => {
@@ -93,10 +80,6 @@ export default function Home() {
       setIsOpen(true);
     else
       setRedirectToLogin(true);
-  }
-
-  const afterOpenModal = () => {
-    
   }
 
   const closeModal = () => {
@@ -121,18 +104,9 @@ export default function Home() {
       <div className="filterDiv">
         <Filter toggleFriends={session.info.isLoggedIn} />
       </div>
-      <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showNotification} reloadMap={reloadMap}/>
-      <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal} modalIsOpen={modalIsOpen}/>
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Add a review"
-      >
-        <h1>TODO: Create a form here</h1>
-      </Modal>
-      {redirectToLogin ? <Navigate to="/login" /> : ""}
+      <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showAddLocationNotification} reloadMap={reloadMap}/>
+      <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal}/>
+      <AddLocationModal modalIsOpen={modalIsOpen} redirectToLogin={redirectToLogin} closeModal={closeModal} showNotification={showAddReviewNotification} />
     </article>
   );
 }

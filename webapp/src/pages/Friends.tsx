@@ -39,18 +39,18 @@ export default function Friends() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell className='table-header-cell'>Name</TableCell>
-                <TableCell align="right" className='table-header-cell'>Web ID</TableCell>
+                <TableCell className='table-header-cell' style={{fontWeight:"bold", fontSize:"1.5em"}}>Name</TableCell>
+                <TableCell align="right" className='table-header-cell' style={{fontWeight:"bold", fontSize:"1.5em"}}>Web ID</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {
                 friends.map((f) =>
                   <TableRow>
-                    <TableCell className='table-cell' component="th" scope="row">
+                    <TableCell className='table-cell' component="th" scope="row" style={{fontSize:"1.5em"}}>
                       {f.name}
                     </TableCell>
-                    <TableCell className='table-cell' align="right">{f.webId}</TableCell>
+                    <TableCell className='table-cell' align="right" style={{fontSize:"1.5em"}}>{f.webId}</TableCell>
                   </TableRow>
                 )
               }
