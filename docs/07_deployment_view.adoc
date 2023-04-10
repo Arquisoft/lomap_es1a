@@ -2,7 +2,7 @@
 
 == Deployment View
 :imagesdir: images/
-image:7.1Deploydiagram.png["Deploy diagram"]
+image:Doc07.JPG["Deploy diagram"]
 
 Motivation::
 
