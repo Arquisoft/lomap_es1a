@@ -50,7 +50,7 @@ Application -> Pod: search for the reviews of that place
 Server -> Application: Return the place
 Pod-> Application: Return the reviews of that place
 Application -> User: Show the place with the review
----
+----
 
 === Map filtering
 
