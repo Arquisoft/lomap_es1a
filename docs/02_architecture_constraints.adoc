@@ -12,6 +12,9 @@ The technologies that are going to be used to develop this project are:
 | GitHub                  | Employed for version control and for team coordination, with tools such as issues and branches.
 | Interactive Map         | A means of implementing an interactive map must be included.
 | Docker                  | The web application will run on docker.
+| React                   | We are goinf to use React for the front-end
+| Typescript              | The language of the application will be typescript
+| Node.js                 | For the communication of the application we are going to use Node.js
 |===
 
 === Organizational constraints
@@ -20,9 +23,11 @@ The technologies that are going to be used to develop this project are:
 |===
 | *Constraint* | *Explanation*
 | Teamwork         | The project must be developed working as a team. 
+| Members          | The team must have a maximum of 4 members.
 | Time             | The application must be finished and delivered within a given timeframe.
 | Git              | The use of Git must be mandatory in order to keep a good workflow.
 | New Technologies | Most of the technologies employed in this proyect have never been used by any of us.
+| Meetings         | To develop the application we need to do frequent meetings
 |===
 
 === Conventions

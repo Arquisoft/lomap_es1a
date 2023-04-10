@@ -2,7 +2,7 @@
 == System Scope and Context
 
 === Business Context
-
+:imagesdir: images/
 image:3.1BusinessContextdiagram.png["Business Context diagram"]
 
 Users:: Citizens creating custom maps about local places and businesses in the city.

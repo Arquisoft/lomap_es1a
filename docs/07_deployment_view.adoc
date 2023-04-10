@@ -1,7 +1,7 @@
 [[section-deployment-view]]
 
 == Deployment View
-
+:imagesdir: images/
 image:7.1Deploydiagram.png["Deploy diagram"]
 
 Motivation::
@@ -24,4 +24,13 @@ Deployment in the cloud has advantages over an on-premises solution (software de
 * Security. Cloud platforms have hundreds of engineers dedicated exclusively to security.
 
 Mapping of Building Blocks to Infrastructure::
-To do
+Deployment
+To deploy the project we have two options, deploy it locally or through a web hosting service.
+
+
+|===
+| Type of hosting        | Characteristics
+| Local | You can throw the app with a local server in  your own computer.
+| Web service    | Used to host the application on a remote server, Servicio que sirve para alojar la aplicación en un servidor remoto, there are a lot of services to host, being able to make the application accessible to other people. 
+
+|===
