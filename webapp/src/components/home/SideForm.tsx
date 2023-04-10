@@ -13,6 +13,11 @@ import { SelectChangeEvent } from "@mui/material";
 import axios from "axios";
 import "./SideForm.css";
 import { FormGroup } from "@mui/material";
+import { useSession } from "@inrupt/solid-ui-react";
+import type { Location } from "../../util/UserData";
+import {saveLocation,pruebas} from "../../util/PodUtil";
+import { Session } from "@inrupt/solid-client-authn-browser";
+
 
 interface Props {
   show: boolean;
@@ -40,7 +45,7 @@ export default class SideForm extends React.Component<Props, State> {
       submitted: false,
     };
   }
-
+  
   render() {
     const handleCategoryChange = (event: SelectChangeEvent) => {
       this.setState({ category: event.target.value as string });
@@ -52,10 +57,11 @@ export default class SideForm extends React.Component<Props, State> {
 
     const onSubmit = async (e: any) => {
       e.preventDefault();
-      const data = {
+      const data:Location = {
         name: this.state.name,
         category: this.state.category,
-        comments: this.state.comments,
+        comments: this.state.comments, 
+        //Los comentarios se tienen que almacenar en el POD.
         latitud: this.props.lat,
         longitud: this.props.lng,
       };

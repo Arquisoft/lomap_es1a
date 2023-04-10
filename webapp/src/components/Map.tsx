@@ -41,7 +41,7 @@ export default class Map extends React.Component<Props> {
 
       if (this.props.onFormSelect != undefined)
         this.props.onFormSelect(true, e.lngLat.lat, e.lngLat.lng);
-
+        
       if (this.props.onIconSelect != undefined)
         this.props.onIconSelect(false, e.lngLat.lat, e.lngLat.lng, "noid");
 
@@ -78,7 +78,10 @@ export default class Map extends React.Component<Props> {
 
       const response = await axios.get("http://localhost:5000/locations/");
 
+      console.log ("Transformación JSON de http://localhost:5000/locations a locations");
       let locations = JSON.parse(requestToList(response.data));
+      
+      console.log("Localizaciones que se cargan en el mapa. Variable locations: ",locations);
 
       this.map.addSource("places", 
       {
@@ -89,6 +92,7 @@ export default class Map extends React.Component<Props> {
       // Add a layer showing the places.
       this.map.addLayer({
         id: "places",
+        //interactive: true,
         type: "symbol",
         source: "places",
         layout: {
@@ -99,6 +103,8 @@ export default class Map extends React.Component<Props> {
       });
 
       this.map.on("click", "places", (e: any) => {
+        console.log ("this.map.on ->evento click. evento e: ", e);
+        console.log ("e.features[0]: ", e.features[0]);
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice();
         const id = e.features[0].properties.id;
@@ -121,7 +127,6 @@ export default class Map extends React.Component<Props> {
 
         if (this.props.onFormSelect != undefined)
           this.props.onFormSelect(false, e.lngLat.lat, e.lngLat.lng);
-
 
         if (this.props.onIconSelect != undefined)
           this.props.onIconSelect(true, e.lngLat.lat, e.lngLat.lng, id);

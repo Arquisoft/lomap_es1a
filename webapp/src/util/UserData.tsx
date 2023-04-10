@@ -1,4 +1,13 @@
 export type Friend = {
-    name : String,
-    webId : String,
+    name : string,
+    webId : string,
+}
+
+export type Location = {
+    id?: string;
+    name: string,
+    category: string,
+    comments?: string,
+    latitud?: number,
+    longitud?: number
 }

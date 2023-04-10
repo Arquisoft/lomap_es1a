@@ -36,6 +36,7 @@ export default function Home() {
 
   const [formLng, setFormLng] = useState(-1);
   const [formLat, setFormLat] = useState(-1);
+  const [id, setId] = useState("");
 
   const [selectedLocation, setSelectedLocation] = useState<any>();
 
