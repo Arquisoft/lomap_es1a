@@ -16,7 +16,7 @@ export async function createLocation(req:Request, res:Response): Promise<void>{
     });
     await location.save();
     res.status(201).json({message: 'LocationCreated', location});
-    console.log("Locations Created");
+    console.log("Location created: ", location);
   }catch (err) {
     console.error(err);
     console.log(req.body);
