@@ -45,13 +45,12 @@ Here's a list of each of the application's building blocks:
 
 View::
 
- * Home page
- * Register
  * Log in
- * Create map
- * Add place
- * Add opinion
- * Explore place
+ * Map
+ * Account
+ * Friends
+ * About
+ * Category
 
 Model::
 
