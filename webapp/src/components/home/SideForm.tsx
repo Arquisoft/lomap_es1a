@@ -129,7 +129,6 @@ export default class SideForm extends React.Component<Props, State> {
                 <MenuItem value={"other"}>Other</MenuItem>
               </Select>
             </FormControl>
-            <FormControlLabel label="Private" control={<Switch />} />
           </FormGroup>
           <Button
             type="submit"

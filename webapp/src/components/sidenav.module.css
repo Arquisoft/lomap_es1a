@@ -5,14 +5,14 @@
     background-color: rgb(10,25,41);
     padding-top: 5em;
     position: fixed;
-    z-index: 10;
+    z-index: 30;
 }
 
 .sidenavClosed {
     composes: sidenav;
     transition: width 0.3s ease-in-out;
     width: 4em;
-    z-index: 10;
+    z-index: 30;
 }
 
 /* Button style */

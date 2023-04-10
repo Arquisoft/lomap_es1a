@@ -15,7 +15,7 @@ body {
    top: 0;
    right: 0;
    width: 32em;
-   z-index: 200;
+   z-index: 15;
    box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
    transform: translateX(100%);
    transition: transform 0.5s ease-out;
@@ -27,7 +27,8 @@ body {
 .mainForm {
    display: flex;
    flex-direction: column;
-   width: 80%;
+   width: 85%;
+   height: 100%;
    align-self: center;
    align-items: center;
 }
@@ -40,7 +41,7 @@ body {
    display: flex;
    justify-content: flex-end;
    margin-top: 5em;
-   margin-bottom: 10em;
+   margin-bottom: 0.2em;
 }
 
 .formGroup {
@@ -52,5 +53,17 @@ body {
 }
 
 .addButton {
-   width: 10em;
+   width: 15em;
+}
+
+.infoContainer {
+   height: 80%;
+   width: 100%;
+   border: solid;
+   border-width: 0.05em;
+   border-color:rgb(177, 177, 177);
+}
+
+.addButton {
+   margin-top: 1em;
 }

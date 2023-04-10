@@ -7,31 +7,30 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import axios from "axios";
-import "./SideForm.css";
-import { FormGroup } from "@mui/material";
-import { requestToList } from '../../util/LocationParser';
+import Modal from 'react-modal';
+import "./MarkerInfo.css";
 
 interface Props {
   show: boolean;
   location: any;
   setOpen: (state: boolean) => void;
+  openModal: () => void;
+  modalIsOpen: boolean;
 }
 
 export default class MarkerInfo extends React.Component<Props> {
   name: string;
   category: string;
 
+  state = { seen: false };
+
   constructor(props: any) {
     super(props);
     this.name = "";
     this.category = "shop";
   }
-  
+
   render() {
-    
     let drawerClasses = "side-drawer";
 
     if (this.props.show) {
@@ -47,18 +46,21 @@ export default class MarkerInfo extends React.Component<Props> {
         </div>
         <div className={"mainForm"}>
           <Typography
-            variant="h6"
-            component="h5"
+            variant="h4"
+            component="h4"
             sx={{ fontWeight: "bold", textAlign: "center" }}
+            gutterBottom
           >
-            {this.props.location === undefined ? "not found" : this.props.location.name }
-            <div>
-              <Typography variant="subtitle1">
-              id: {this.props.location === undefined ? "not found" : this.props.location._id }
-              </Typography>
-            </div>
+            {this.props.location === undefined
+              ? "not found"
+              : this.props.location.name}
           </Typography>
-          <p>(Fetch the rest from POD)</p>
+          <div className={"infoContainer"}></div>
+          <div className={"addButton"}>
+            <Button type="submit" variant="contained" color="primary" sx={{width:'100%'}} onClick={this.props.openModal}>
+              Add a review
+            </Button>
+          </div>
         </div>
       </div>
     );
