@@ -15,7 +15,6 @@ interface Props {
   location: any;
   setOpen: (state: boolean) => void;
   openModal: () => void;
-  modalIsOpen: boolean;
 }
 
 export default class MarkerInfo extends React.Component<Props> {
