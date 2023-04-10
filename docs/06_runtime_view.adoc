@@ -12,18 +12,9 @@ entity Application as "Application"
 database Server as "Server"
 database Pod as "User POD"
 User -> Application: User enters credentials
-User -> Application: User attempts to log in
-Application -> Server: Log in petition sent
-Server -> Pod: Log in petition sent
-Pod -> Server: Log in result returned
-Server -> Application: Log in result returned
+Application -> Pod: Log in petition sent
+Pod -> Application: Log in result returned
 Application -> Application: Log in result evaluation
-Application -> Server: Personal info petition sent
-Server -> Pod: Personal info petition sent
-Pod -> Server: Personal info petition result returned
-Server -> Application: Personal info petition result returned
-Application -> User: Correct log in
-Application -> User: Personal info is shown
 ----  
 
 === Adding a location
@@ -37,12 +28,29 @@ entity Application as "Application"
 database Server as "Server"
 database Pod as "User POD"
 User -> Application: Select a location 
-Application -> User: Show the point and the form
+Application-> User: Show a point in that place
+User -> Application: Clic on add a review
+Application -> User: Show a form
 User -> Application: Complete the form
 Application -> Server: Add location petition sent
-Server -> Pod: Store location data
+Server -> Pod: Store location and review data
 Application -> User: Show info: "The location has been added succesfully"
 ---- 
+
+=== See a reviews of a place in the map
+[plantuml,"Create a review in the map diagram",png] 
+---- 
+actor User as "User"
+entity Application as "Application"
+database Server as "Server"
+database Pod as "User POD"
+User -> Application: Select a location 
+Application -> Server: Ask for the place
+Application -> Pod: search for the reviews of that place
+Server -> Application: Return the place
+Pod-> Application: Return the reviews of that place
+Application -> User: Show the place with the review
+----
 
 === Map filtering
 
