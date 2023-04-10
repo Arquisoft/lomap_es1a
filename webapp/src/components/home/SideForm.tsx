@@ -11,12 +11,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { SelectChangeEvent } from "@mui/material";
 import axios from "axios";
-import "./SideForm.css";
 import { FormGroup } from "@mui/material";
 import { useSession } from "@inrupt/solid-ui-react";
 import type { Location } from "../../util/UserData";
 import {saveLocation,pruebas} from "../../util/PodUtil";
 import { Session } from "@inrupt/solid-client-authn-browser";
+import "./SideForm.css"
 
 
 interface Props {
@@ -60,7 +60,6 @@ export default class SideForm extends React.Component<Props, State> {
       const data:Location = {
         name: this.state.name,
         category: this.state.category,
-        comments: this.state.comments, 
         //Los comentarios se tienen que almacenar en el POD.
         latitud: this.props.lat,
         longitud: this.props.lng,
@@ -85,7 +84,7 @@ export default class SideForm extends React.Component<Props, State> {
 
     return (
       <div className={drawerClasses}>
-        <div className={"closeButton"}>
+        <div className={"sideform-closeButton"}>
           <Button color="inherit" onClick={() => this.props.setOpen(false)}>
             <CloseIcon />
           </Button>
@@ -111,7 +110,7 @@ export default class SideForm extends React.Component<Props, State> {
               </Typography>
             </div>
           </Typography>
-          <FormGroup className={"formGroup"}>
+          <FormGroup className={"sideform-formGroup"}>
             <TextField
               fullWidth
               id="name-field"
@@ -140,7 +139,7 @@ export default class SideForm extends React.Component<Props, State> {
             type="submit"
             variant="contained"
             color="primary"
-            className={"addButton"}
+            className={"sideform-addButton"}
           >
             Add
           </Button>

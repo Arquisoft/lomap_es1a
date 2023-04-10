@@ -20,9 +20,7 @@ import {
   
 } from "@inrupt/solid-client";
 
-
 import { FOAF, RDF} from "@inrupt/vocab-common-rdf"
-
 
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
@@ -65,7 +63,7 @@ export async function getLocation(session:Session, idLocation:string){
   return null;
 }
 
-export async function saveLocation (session:Session, location:Location){
+export async function saveLocation(session:Session, location:Location){
   const URL_VOCABULARIO = "http://w3id.org/lomap/";
 
   //Crear Dataset
@@ -75,9 +73,10 @@ export async function saveLocation (session:Session, location:Location){
   let nuevoDataset= await getOrCreateDataset(session, rutaDataset);
   console.log("nuevoDataset: ", nuevoDataset);
   
-  //Transformamos coordenadas de número a String
+  //Transformamos coordenadas y score de número a String
   const latitudeString:string  = Number(location.latitud).toString();
   const longitudeString:string = Number(location.longitud).toString();
+  const scoreString:string = location.score !== null ? Number(location.score).toString() : "";
   
   //Crear Thing
   const nuevaLocationThing = buildThing(createThing({ name: location.id }))
@@ -87,6 +86,7 @@ export async function saveLocation (session:Session, location:Location){
   .addStringNoLocale(URL_VOCABULARIO + "latitude", latitudeString)
   .addStringNoLocale(URL_VOCABULARIO + "longitude", longitudeString)
   .addStringNoLocale(URL_VOCABULARIO + "comments", location.comments !== null ? location.comments! : "") 
+  .addStringNoLocale(URL_VOCABULARIO + "score", scoreString) 
   .addUrl(RDF.type, URL_VOCABULARIO + "Location")
   .build();
   

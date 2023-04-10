@@ -36,21 +36,21 @@ body {
    transform: translateX(0);
 }
 
-.closeButton {
+.sideform-closeButton {
    display: flex;
    justify-content: flex-end;
    margin-top: 5em;
-   margin-bottom: 10em;
+   margin-bottom: 30%;
 }
 
-.formGroup {
-   height: 15em;
+.sideform-formGroup {
+   height: 30%;
    width: 20em;
    display: flex;
    flex-direction: column;
    justify-content: space-evenly;
 }
 
-.addButton {
+.sideform-addButton {
    width: 10em;
 }
