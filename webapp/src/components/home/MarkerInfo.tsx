@@ -7,6 +7,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import InfoCard from "./InfoCard";
 import Modal from 'react-modal';
 import "./MarkerInfo.css";
 
@@ -54,7 +55,11 @@ export default class MarkerInfo extends React.Component<Props> {
               ? "not found"
               : this.props.location.name}
           </Typography>
-          <div className={"infoContainer"}></div>
+          <div className={"infoContainer"}>
+            <div style={{overflow: "hidden"}}>
+              <InfoCard username="Manolo" rating={3} comments="Es un sitio muy bonito, con muchas cosas muy interesantes que me gustan mucho del lugar. Ciertamente, uno de mis lugares favoritos de la vida." />
+            </div>
+          </div>
           <div className={"addButton"}>
             <Button type="submit" variant="contained" color="primary" sx={{width:'100%'}} onClick={this.props.openModal}>
               Add a review

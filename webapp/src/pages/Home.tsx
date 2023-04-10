@@ -46,11 +46,8 @@ export default function Home() {
     setFormLat(lat);
     
     const response = await axios.get("http://localhost:5000/locations/info/"+id);
-    console.log(response);
     
     let location = response.data.data;
-
-    console.log(location);
 
     setSelectedLocation(location);
   };
