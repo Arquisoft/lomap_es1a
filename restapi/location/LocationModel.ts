@@ -1,20 +1,33 @@
-interface LocationData {
-    id: number;
-    longitude: number;
-    latitude: number;
-    category: string;
-  }  
+import { Schema, model} from 'mongoose'
 
-export class LocationModel {
-    private name:string
-    private category: string;
-    private comments:string;
-
-    constructor(name:string, category: string, comments:string) {
-      this.name = name;
-      this.category = category;
-      this.comments = comments;
-    }
-  
+const locationSchema: Schema = new Schema(
+  {
+  name: {
+    type: String,
+    required: true
+  },
+  longitud: {
+    type: String,
+    required: true
+  },
+  latitud: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  comments: {
+    type: String,
+    required: true
   }
+  }, 
+  {
+    collection: "Locations"
+  }
+);
+
+module.exports = model('Locations', locationSchema);
+
   

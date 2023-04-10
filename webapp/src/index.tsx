@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import { BrowserRouter} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import { NotificationsProvider } from 'reapop'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <NotificationsProvider>
+      <BrowserRouter>
+          <App />
+      </BrowserRouter>
+    </NotificationsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
