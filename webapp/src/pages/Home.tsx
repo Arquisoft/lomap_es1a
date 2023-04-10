@@ -15,6 +15,7 @@ export default function Home() {
 
   const [formLng, setFormLng] = useState(-1);
   const [formLat, setFormLat] = useState(-1);
+  const [id, setId] = useState("");
 
   const { session } = useSession();
 
@@ -26,10 +27,11 @@ export default function Home() {
     }
   };
 
-  const handleShowMarkerInfo = (state: boolean, lat: number, lng: number) => {
+  const handleShowMarkerInfo = (state: boolean, lat: number, lng: number, id: string) => {
     setShowMarkerInfo(state);
     setFormLng(lng);
     setFormLat(lat);
+    setId(id);
   };
 
   const closeForm = (state: boolean) => {
@@ -49,7 +51,7 @@ export default function Home() {
         <Filter toggleFriends={session.info.isLoggedIn} />
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} session={session} />
-      <MarkerInfo show={showMarkerInfo} lat={formLat} lng={formLng} setOpen={closeInfo} session={session}/>
+      <MarkerInfo show={showMarkerInfo} lat={formLat} lng={formLng} setOpen={closeInfo} session={session} id={id}/>
     </article>
   );
 }

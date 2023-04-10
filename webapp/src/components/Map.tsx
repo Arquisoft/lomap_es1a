@@ -14,7 +14,7 @@ interface Props {
   mapWidth: string;
   mapHeight: string;
   onFormSelect?: (state: boolean, lat: number, lon: number) => void;
-  onIconSelect?: (state: boolean, lat: number, lon: number) => void;
+  onIconSelect?: (state: boolean, lat: number, lon: number, id: string) => void;
 }
 
 export default class Map extends React.Component<Props> {
@@ -40,9 +40,10 @@ export default class Map extends React.Component<Props> {
 
       if (this.props.onFormSelect != undefined)
         this.props.onFormSelect(true, e.lngLat.lat, e.lngLat.lng);
-
+        
       if (this.props.onIconSelect != undefined)
-        this.props.onIconSelect(false, e.lngLat.lat, e.lngLat.lng);
+        this.props.onIconSelect(false, e.lngLat.lat, e.lngLat.lng, e.features[0].properties.id);
+
 
       this.map.flyTo({
         center: e.lngLat,
@@ -74,7 +75,10 @@ export default class Map extends React.Component<Props> {
 
       const response = await axios.get("http://localhost:5000/locations");
 
+      console.log ("Transformación JSON de http://localhost:5000/locations a locations");
       let locations = JSON.parse(requestToList(response.data));
+      
+      console.log("Localizaciones que se cargan en el mapa. Variable locations: ",locations);
 
       this.map.addSource("places", 
       {
@@ -85,6 +89,7 @@ export default class Map extends React.Component<Props> {
       // Add a layer showing the places.
       this.map.addLayer({
         id: "places",
+        //interactive: true,
         type: "symbol",
         source: "places",
         layout: {
@@ -111,6 +116,8 @@ export default class Map extends React.Component<Props> {
 
 
       this.map.on("click", "places", (e: any) => {
+        console.log ("this.map.on ->evento click. evento e: ", e);
+        console.log ("e.features[0]: ", e.features[0]);
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice();
         const description = e.features[0].properties.description;
@@ -134,8 +141,11 @@ export default class Map extends React.Component<Props> {
         if (this.props.onFormSelect != undefined)
           this.props.onFormSelect(false, e.lngLat.lat, e.lngLat.lng);
 
-        if (this.props.onIconSelect != undefined)
-          this.props.onIconSelect(true, e.lngLat.lat, e.lngLat.lng);
+        if (this.props.onIconSelect != undefined){
+          this.props.onIconSelect(true, e.lngLat.lat, e.lngLat.lng, e.features[0].properties.id);
+          console.log("this.props.onIconSelect: ",this.props.onIconSelect)
+        }
+          
       });
 
       // Change the cursor to a pointer when the mouse is over the places layer.

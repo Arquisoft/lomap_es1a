@@ -18,6 +18,7 @@ interface Props {
   show: boolean;
   lat?: number;
   lng?: number;
+  id?: string;
   setOpen: (state: boolean) => void;
   session: Session
 }
@@ -57,7 +58,14 @@ export default class SideForm extends React.Component<Props> {
             <Typography variant="subtitle1">
               lat: {this.props.lat == -1 ? "undefined" : this.props.lat} - lng:{" "}
               {this.props.lng == -1 ? "undefined" : this.props.lng}
+        
             </Typography>
+            
+            <Typography variant="subtitle1">
+               Id location: {this.props.id === undefined ? "undefined" : this.props.id}
+
+            </Typography>
+
           </Typography>
           <p>(Fetch the rest from POD)</p>
         </div>
