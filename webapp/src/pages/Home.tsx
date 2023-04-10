@@ -5,6 +5,7 @@ import Filter from '../components/home/Filter';
 import SideForm from '../components/home/SideForm';
 import MarkerInfo from '../components/home/MarkerInfo';
 import AddLocationModal from '../components/home/AddLocationModal';
+import { Navigate } from "react-router-dom";
 import { useNotifications } from 'reapop'
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
@@ -106,7 +107,8 @@ export default function Home() {
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showAddLocationNotification} reloadMap={reloadMap}/>
       <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal}/>
-      <AddLocationModal modalIsOpen={modalIsOpen} redirectToLogin={redirectToLogin} closeModal={closeModal} showNotification={showAddReviewNotification} />
+      <AddLocationModal modalIsOpen={modalIsOpen} redirectToLogin={redirectToLogin} closeModal={closeModal} showNotification={showAddReviewNotification} selectedLocation={selectedLocation} />
+      {redirectToLogin ? <Navigate to="/login"/> : ""}
     </article>
   );
 }

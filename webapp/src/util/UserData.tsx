@@ -9,5 +9,6 @@ export type Location = {
     category: string,
     comments?: string,
     latitud?: number,
-    longitud?: number
+    longitud?: number,
+    score?: number
 }

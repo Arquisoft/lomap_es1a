@@ -15,7 +15,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
 import TextField from "@mui/material/TextField";
-import { getFriends } from "../..//util/PodUtil";
+import { getFriends, saveLocation } from "../..//util/PodUtil";
 import type { Friend } from "../../util/UserData";
 
 Modal.setAppElement("#root");
@@ -43,6 +43,7 @@ const modalStyle = {
 interface Props {
   modalIsOpen: boolean;
   redirectToLogin: boolean;
+  selectedLocation: any;
   closeModal: () => void;
   showNotification: () => void;
 }
@@ -50,12 +51,22 @@ interface Props {
 export default function AddLocationModal<Props>(props: any): JSX.Element {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [comments, setComments] = useState("");
+  const [rating, setRating] = useState(-1);
 
   const label = { inputProps: { "aria-label": "Checkbox placeholder" } };
 
   useEffect(() => {
     handleFriends();
   }, [friends]);
+
+  const handleRatingChange = async (e:any) => {
+    setRating(e.target.value);
+  }
+
+  const handleCommentsChange = async (e:any) => {
+    setComments(e.target.value);
+  }
 
   const handleFriends = async () => {
     if (session.info.webId != undefined && session.info.webId != "") {
@@ -67,6 +78,15 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
   };
 
   const handleSubmit = async () => {
+    saveLocation(session, {
+        name: props.selectedLocation.name,
+        category: props.selectedLocation.category,
+        id: props.selectedLocation._id,
+        comments: comments,
+        score: rating,
+        latitud: parseFloat(props.selectedLocation.latitud),
+        longitud: parseFloat(props.selectedLocation.longitud)
+    });
     props.closeModal();
     props.showNotification();
   };
@@ -85,7 +105,7 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
         <div className="pod-form">
           <div className="rating-div">
             <h3>Rating:</h3>
-            <Rating name="size-large" defaultValue={2} size="large" />
+            <Rating name="size-large" defaultValue={2} size="large" value={rating} onChange={handleRatingChange}/>
           </div>
           <TextField
             id="comments"
@@ -94,6 +114,8 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
             multiline
             fullWidth
             rows={5}
+            value={comments}
+            onChange={handleCommentsChange}
           />
           <div className="image-div">
             <h3>Image:</h3>
