@@ -61,8 +61,4 @@ Model::
 
 Controller::
 
- * MapController
- * PlaceController
- * OpinionController
- * UserController
- * AccessController
+ * LocationController
