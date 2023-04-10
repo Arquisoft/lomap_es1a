@@ -5,7 +5,7 @@
 === Whitebox Overall System: Level 1
 
 :imagesdir: images/
-image::doc05.JPG[]
+image::doc05a.JPG[]
 
 Motivation::
 
