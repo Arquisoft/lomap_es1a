@@ -5,7 +5,7 @@
 === Whitebox Overall System: Level 1
 
 :imagesdir: images/
-image::building_block_view_1.png[]
+image::doc05.JPG[]
 
 Motivation::
 
