@@ -2,7 +2,7 @@
 == Cross-cutting Concepts
 
 === Domain model
-
+:imagesdir: images/
 image:08.1DomainModel.png["Domain model"]
 
 [options="header",cols="1,4"]
