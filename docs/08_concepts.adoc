@@ -15,15 +15,15 @@ image:08.1DomainModel.png["Domain model"]
 | Opinion | Information linked to a place generated and managed by the user: photos, comments, score, etc.
 |===
 
-===User requirements
+=== User requirements
 The application is easy to use, it is not necessary to have previous knowledge, but as is logical, if the user is already familiar with the use of maps and social media is better. 
 The only requirement is that the user need a POD account to use the application, but its not too difficult
 
 
-===Security
+=== Security
 The application is secure because we use the SOLID principles, that means that every user data will be stored in his POD, so the information will be saved externally.
 
-===Operative Concepts
+=== Operative Concepts
 The basic operations that we can do in this application are:
 * User authentication: Refers to identifying oneself in the application as a registered user through their POD.
 * Put a mark on the map: The user will be able to place a point on the map by clicking on it, and a form for that point will appear.
