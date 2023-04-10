@@ -12,12 +12,14 @@ import Switch from "@mui/material/Switch";
 import axios from "axios";
 import "./SideForm.css";
 import { FormGroup } from "@mui/material";
+import { Session } from "@inrupt/solid-client-authn-browser";
 
 interface Props {
   show: boolean;
   lat?: number;
   lng?: number;
   setOpen: (state: boolean) => void;
+  session: Session
 }
 
 export default class SideForm extends React.Component<Props> {

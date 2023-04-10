@@ -48,8 +48,8 @@ export default function Home() {
       <div className="filterDiv">
         <Filter toggleFriends={session.info.isLoggedIn} />
       </div>
-      <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} />
-      <MarkerInfo show={showMarkerInfo} lat={formLat} lng={formLng} setOpen={closeInfo} />
+      <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} session={session} />
+      <MarkerInfo show={showMarkerInfo} lat={formLat} lng={formLng} setOpen={closeInfo} session={session}/>
     </article>
   );
 }

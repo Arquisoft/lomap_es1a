@@ -13,12 +13,18 @@ import { SelectChangeEvent } from "@mui/material";
 import axios from "axios";
 import "./SideForm.css";
 import { FormGroup } from "@mui/material";
+import { useSession } from "@inrupt/solid-ui-react";
+import type { Location } from "../../util/model/UserData";
+import {saveLocation,pruebas} from "../../util/PodUtil";
+import { Session } from "@inrupt/solid-client-authn-browser";
+
 
 interface Props {
   show: boolean;
   lat?: number;
   lng?: number;
   setOpen: (state: boolean) => void;
+  session: Session
 }
 
 interface State { 
@@ -35,11 +41,11 @@ export default class SideForm extends React.Component<Props, State> {
     this.state = {
       name: "",
       category: "shop",
-      comments: "none",
+      comments: "",
       submitted: false
     }
   }
-
+  
   render() {
 
     const handleCategoryChange = (event: SelectChangeEvent) => {
@@ -50,21 +56,37 @@ export default class SideForm extends React.Component<Props, State> {
       this.setState({name: event.target.value as string});
     };
 
+    const handleCommentsChange = (event: any) => {
+      this.setState({comments: event.target.value as string});
+    };
+
     const onSubmit = async (e:any) => {
       e.preventDefault();
-      const data = {
+      const data:Location = {
         name: this.state.name,
         category: this.state.category,
-        comments: this.state.comments,
+        comments: this.state.comments, 
+        //Los comentarios se tienen que almacenar en el POD.
         latitud: this.props.lat,
         longitud: this.props.lng
       }
+      console.log("location antes de guardar en bbdd:", data);
       try {
+  
         const res = await axios.post('http://localhost:5000/locations', data);
-        console.log(res.data);
+        
+        //Obtenemos el id de la localización y lo guardamos en la localización
+        data.id = res.data.location._id;
+        console.log("location tras guardar en bbdd:", data);
+
+        //Guardamos ahora en el pod
+        const locationPod = await saveLocation(this.props.session,data);
+        console.log("location guardada en el pod como thing:", locationPod);
+
       } catch (err:any) {
         console.log(err);
       }
+
       this.setState({submitted: false})
       this.props.setOpen(false);
     };
@@ -118,6 +140,7 @@ export default class SideForm extends React.Component<Props, State> {
                 <MenuItem value={"other"}>Other</MenuItem>
               </Select>
             </FormControl>
+            <TextField fullWidth id="comments-field" label="Comments" value={this.state.comments} onChange={handleCommentsChange} />
             <FormControlLabel
             label="Private"
             control={<Switch/>}

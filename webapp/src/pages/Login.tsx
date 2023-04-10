@@ -56,11 +56,14 @@ export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
             fullWidth
             style= {{marginBottom:"0.6em"}}
           >
-            <MenuItem value={"https://login.inrupt.com"}>
-              https://login.inrupt.com (PodSpaces)
+            <MenuItem value={"https://solidcommunity.net"}>
+              https://solidcommunity.net (NSS 5.7.6)
             </MenuItem>
             <MenuItem value={"https://inrupt.net"}>
               https://inrupt.net (Solid prototype)
+            </MenuItem>
+            <MenuItem value={"https://login.inrupt.com"}>
+              https://login.inrupt.com (PodSpaces)
             </MenuItem>
           </Select>
         </FormGroup>
