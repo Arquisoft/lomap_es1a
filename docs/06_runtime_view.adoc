@@ -36,7 +36,9 @@ actor User as "User"
 entity Application as "Application"
 database Server as "Server"
 database Pod as "User POD"
-User -> Application: Select a location
+User -> Application: Select a location 
+Application -> User: Show the point and the form
+User -> Application: Complete the form
 Application -> Server: Add location petition sent
 Server -> Pod: Store location data
 Application -> User: Show info: "The location has been added succesfully"

@@ -4,6 +4,8 @@
     "docker": "^1.0.0",
     "leaflet": "^1.9.3",
     "mapbox-gl": "^2.13.0",
+    "mongod": "^2.0.0",
+    "mongodb": "^5.2.0",
     "react-leaflet": "^4.2.1",
     "react-map-gl": "^7.0.21",
     "react-map-gl-geocoder": "^2.2.0",
@@ -11,6 +13,10 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.1"
+    "@types/leaflet": "^1.9.1",
+    "@types/mongodb": "^4.0.7",
+    "jest-cucumber": "^3.0.1",
+    "jest-puppeteer": "^8.0.6",
+    "puppeteer": "^19.8.3"
   }
 }
