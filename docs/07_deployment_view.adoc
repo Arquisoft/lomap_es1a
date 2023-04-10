@@ -1,7 +1,7 @@
 [[section-deployment-view]]
 
 == Deployment View
-
+:imagesdir: images/
 image:7.1Deploydiagram.png["Deploy diagram"]
 
 Motivation::
