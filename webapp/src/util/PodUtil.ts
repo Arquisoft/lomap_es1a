@@ -1,5 +1,7 @@
-import type { Friend, Location} from "./model/UserData";
+
+import type { Friend, Location} from "./UserData";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
+
 import {
   Thing, 
   getThing,
@@ -51,7 +53,7 @@ export async function getFriends(webId:string) {
     if (friend && friend != webId)
       friends.push({
         name: name,
-        webId : friend
+        webId : friend.split("profile/card#me")[0]
       });
     
   }

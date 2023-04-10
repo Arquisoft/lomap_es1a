@@ -7,32 +7,27 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import axios from "axios";
-import "./SideForm.css";
-import { FormGroup } from "@mui/material";
-import { Session } from "@inrupt/solid-client-authn-browser";
+import Modal from 'react-modal';
+import "./MarkerInfo.css";
 
 interface Props {
   show: boolean;
-  lat?: number;
-  lng?: number;
-  id?: string;
+  location: any;
   setOpen: (state: boolean) => void;
-  session: Session
+  openModal: () => void;
+  modalIsOpen: boolean;
 }
 
-export default class SideForm extends React.Component<Props> {
+export default class MarkerInfo extends React.Component<Props> {
   name: string;
   category: string;
-  comments: string;
+
+  state = { seen: false };
 
   constructor(props: any) {
     super(props);
     this.name = "";
     this.category = "shop";
-    this.comments = "";
   }
 
   render() {
@@ -51,23 +46,21 @@ export default class SideForm extends React.Component<Props> {
         </div>
         <div className={"mainForm"}>
           <Typography
-            variant="h6"
+            variant="h4"
+            component="h4"
             sx={{ fontWeight: "bold", textAlign: "center" }}
+            gutterBottom
           >
-            Selected coordinates
-            <Typography variant="subtitle1">
-              lat: {this.props.lat == -1 ? "undefined" : this.props.lat} - lng:{" "}
-              {this.props.lng == -1 ? "undefined" : this.props.lng}
-        
-            </Typography>
-            
-            <Typography variant="subtitle1">
-               Id location: {this.props.id === undefined ? "undefined" : this.props.id}
-
-            </Typography>
-
+            {this.props.location === undefined
+              ? "not found"
+              : this.props.location.name}
           </Typography>
-          <p>(Fetch the rest from POD)</p>
+          <div className={"infoContainer"}></div>
+          <div className={"addButton"}>
+            <Button type="submit" variant="contained" color="primary" sx={{width:'100%'}} onClick={this.props.openModal}>
+              Add a review
+            </Button>
+          </div>
         </div>
       </div>
     );
