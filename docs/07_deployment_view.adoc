@@ -23,8 +23,8 @@ Deployment in the cloud has advantages over an on-premises solution (software de
 * Availability. Cloud platforms guarantee high availability that can be established through a service level agreement.
 * Security. Cloud platforms have hundreds of engineers dedicated exclusively to security.
 
-=== Mapping of Building Blocks to Infrastructure::
-==== Deployment
+Mapping of Building Blocks to Infrastructure::
+Deployment
 To deploy the project we have two options, deploy it locally or through a web hosting service.
 
 
