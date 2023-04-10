@@ -17,10 +17,6 @@ const locationSchema: Schema = new Schema(
   category: {
     type: String,
     required: true
-  },
-  comments: {
-    type: String,
-    required: true
   }
   }, 
   {

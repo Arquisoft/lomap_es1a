@@ -5,14 +5,13 @@ const Location = require("./LocationModel");
 
 export async function createLocation(req:Request, res:Response): Promise<void>{
   try{
-    const { name, category, comments, longitud, latitud} = req.body;
+    const { name, category, longitud, latitud} = req.body;
 
     const location = new Location({
       name,
       longitud,
       latitud,
-      category,
-      comments
+      category
     });
     await location.save();
     res.status(201).json({message: 'LocationCreated', location});

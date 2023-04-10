@@ -60,7 +60,6 @@ export default class SideForm extends React.Component<Props, State> {
       const data:Location = {
         name: this.state.name,
         category: this.state.category,
-        //Los comentarios se tienen que almacenar en el POD.
         latitud: this.props.lat,
         longitud: this.props.lng,
       };
