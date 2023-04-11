@@ -1,0 +1,24 @@
+.main-container {
+    width: auto;
+    height: auto;
+    overflow: hidden;
+
+    padding: 7.5em 10em 0em 14em;
+}
+
+.title {
+    margin-bottom: 0.5em;
+}
+
+.table-container {
+    max-height: 60vh;
+}
+
+.table-cell {
+    font-size: 1.5em;
+}
+
+.friends-table-header-cell {
+    font-size: 1.5em;
+    font-weight: bold;
+}

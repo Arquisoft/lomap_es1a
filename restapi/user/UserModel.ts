@@ -1,25 +1,16 @@
-class UserModel {
-  private name: string;
-  private password: string;
+import mongoose, { Document, Schema} from "mongoose";
 
-  constructor(name: string, password: string) {
-    this.name = name;
-    this.password = password;
-  }
-
-  public getName(): string {
-    return this.name;
-  }
-
-  public setName(name: string): void {
-    this.name = name;
-  }
-
-  public getPassword(): string {
-    return this.password;
-  }
-
-  public setPassword(password: string): void {
-    this.password = password;
-  }
+interface User extends Document{
+  pod_id: String
 }
+
+const userSchema: Schema = new Schema({
+  pod_id:{
+    type: String, 
+    required: true
+  }
+});
+
+const User = mongoose.model<User>('User', userSchema);
+
+export default User;

@@ -5,7 +5,7 @@
 === Whitebox Overall System: Level 1
 
 :imagesdir: images/
-image::building_block_view_1.png[]
+image::doc05b.JPG[]
 
 Motivation::
 
@@ -45,13 +45,12 @@ Here's a list of each of the application's building blocks:
 
 View::
 
- * Home page
- * Register
  * Log in
- * Create map
- * Add place
- * Add opinion
- * Explore place
+ * Map
+ * Account
+ * Friends
+ * About
+ * Category
 
 Model::
 
@@ -62,8 +61,4 @@ Model::
 
 Controller::
 
- * MapController
- * PlaceController
- * OpinionController
- * UserController
- * AccessController
+ * LocationController

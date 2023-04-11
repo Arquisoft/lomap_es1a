@@ -6,34 +6,30 @@ import AccoutCircle from '@mui/icons-material/AccountCircle';
 import EmojiPeople from '@mui/icons-material/EmojiPeople';
 import InfoIcon from '@mui/icons-material/Info';
 import { AccountCircle } from '@mui/icons-material';
+import { CombinedDataProvider, useSession, LogoutButton, Text } from "@inrupt/solid-ui-react";
+import { useNavigate } from "react-router-dom";
 
 export const navData = [
         {
             id: 0,
-            icon: <HomeIcon/>,
-            text: "Home",
+            icon: <TravelExploreIcon/>,
+            text: "Map",
             link: "/"
         },
         {
             id: 1,
-            icon: <TravelExploreIcon/>,
-            text: "Explore",
-            link: "explore"
-        },
-        {
-            id: 2,
             icon: <AccountCircle/>,
             text: "Account",
             link: "account"
         },
         {
-            id: 3,
+            id: 2,
             icon: <EmojiPeople/>,
             text: "Friends",
             link: "friends"
         },
         {
-            id: 4,
+            id: 3,
             icon: <InfoIcon/>,
             text: "About",
             link: "about"

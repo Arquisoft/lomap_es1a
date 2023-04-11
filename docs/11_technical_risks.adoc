@@ -7,3 +7,5 @@ Regarding the risks and technical debt that may hinder the implementation of the
 * The complete *unfamiliarity with the operation of SOLID and how to integrate it* into an application that will have to handle decentralized data and provided by a third-party application.
 * Having *to work as a team*, especially because we do not know each other.
 * *Time*, since we have to finish the project at a given deadline.
+* *MongoDB*, most of the team members are not familiar with MongoDB
+* When working in a group and merging code, it is possible that if two people work on the same part, some parts of the code may not be easily understood by other team members. Communication is needed so that everyone understands the parts.

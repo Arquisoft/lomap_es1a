@@ -1,24 +1,46 @@
-import { Await } from "react-router-dom";
-import { LocationModel } from "./LocationModel";
+
 
 import { Request, Response } from 'express';
-import { json } from "body-parser";
+const Location = require("./LocationModel");
 
-interface Location{
-  name:string;
-  category:string;
-  comments:string
+export async function createLocation(req:Request, res:Response): Promise<void>{
+  try{
+    const { name, category, longitud, latitud} = req.body;
+
+    const location = new Location({
+      name,
+      longitud,
+      latitud,
+      category
+    });
+    await location.save();
+    res.status(201).json({message: 'LocationCreated', location});
+    console.log("Location created: ", location);
+  }catch (err) {
+    console.error(err);
+    console.log(req.body);
+    res.status(500).json({ message: 'error error' });
+  }
 }
 
-const locations: Location[] = [];
+export async function getAllLocations(req: Request, res: Response, next: any) {
 
-export function createLocation(req:Request, res:Response):void{
-
-  const location = req.body;
-
-  const locationToAdd = {name: req.body.name, category:req.body.category, comments:req.body.comments}
-
-  location.push(locationToAdd);
+  try {
+    const allLocations = await Location.find({ });
+    res.send({ status: "Ok", data: allLocations });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).send("Error al obtener las ubicaciones");
+  }
 }
 
-  
+export async function getLocationById(req: Request, res:Response) {
+  let id = req.params.id
+  try {
+    const allLocations = await Location.findById(id);
+    res.send({ status: "Ok", dir: id, data: allLocations });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).send("Error al obtener las ubicaciones");
+  }
+}
