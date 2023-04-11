@@ -6,6 +6,13 @@ Regarding the design decisions made by the team, we have the following:
     
 * *Use of Node.js for the development, execution, and deployment of the back-end of the project*: We made this decision for similar reasons as the choice of React - it is a widely used technology with high support and is ideal for running JavaScript code quickly and easily.
 
-* *We start with the idea of using MongoDB to better adapt to what a web application requires, with a variety of data to manage*: For this, a non-relational database like MongoDB will help us have greater flexibility for storing data, since we will be storing a wide variety of data types.
+* *We are going to use MongoDB to better adapt to what a web application requires, with a variety of data to manage*: For this, a non-relational database like MongoDB will help us have greater flexibility for storing data, since we will be storing a wide variety of data types.
 
-We have many more decisions to make regarding the implementation and functionality of the application, but these decisions will be made later, and we will update this section to reference all those decisions made throughout the development of the project.
+* Use of typeScript for the language of the code, This language has great advantages in the short and long term.
+
+* For the deployment, it has not been decided how it will be done yet, as we have not discussed that yet.
+
+* To perform tests, we are going to use Puppeteer and Cucumber
+
+* We will use arc42 for documentation, which is a well-established standard.
+

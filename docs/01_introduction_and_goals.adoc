@@ -43,5 +43,5 @@ It is also proposed that this application could be extrapolated to other cities,
 | Customer. Brussels City Hall | https://www.brussels.be/city-hall | Promoter of the initiative. Obtain software that meets the requirements within the term and cost stipulated in the contract.
 | Administrators |   | After the deployment of the software in production, they monitor and resolve possible incidents.
 | POD provider | https://solidproject.org/users/get-a-pod | Allow data storage in a secure and decentralized way. Allow users to control which people and applications can access their data.
-| Map provider|  Pending select | It provides the base cartography in which users add places of interest to obtain personalized maps.
+| Map provider|  Mapbox | It provides the base cartography in which users add places of interest to obtain personalized maps.
 |===
