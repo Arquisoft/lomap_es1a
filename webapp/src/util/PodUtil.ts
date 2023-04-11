@@ -7,6 +7,7 @@ import {
   getThing,
   getSolidDataset,
   createSolidDataset,
+  getUrl,
   getUrlAll,
   getStringNoLocale, 
   createContainerAt,
@@ -24,6 +25,7 @@ import { FOAF, RDF} from "@inrupt/vocab-common-rdf"
 
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
+const URL_VOCABULARIO = "http://w3id.org/lomap/";
 
 // Returns a user profile as a Thing
 export async function getUserProfile(webID: string){
@@ -59,13 +61,30 @@ export async function getFriends(webId:string) {
 }
 
 export async function getLocation(session:Session, idLocation:string){
-  //Todo
-  return null;
+  console.log("Entrando en getLocation");
+  //Si no estamo en sesión retornamos null
+  if (!session || !session.info.isLoggedIn) return;
+  //Conseguimos la URL de almacenamiento del POD
+  const urlPOD = await getStorageURL(session);
+  //Construimos la ruta del dataset de la Location
+  const rutaDataset = urlPOD + RUTA_LOCATIONS + "/" + idLocation;
+  console.log("getLocation --> ruta location: ", rutaDataset);
+  //Pedimos el dataset de la Location al POD
+  let datasetLocation = await getDataset(session, rutaDataset);
+  if (datasetLocation === null){
+    return null;
+  }
+  console.log("getLocation --> datasetLocation: ", datasetLocation);
+  //Construimos la ruta de la Location (thing)
+  const rutaThing = rutaDataset + "#" + idLocation;
+  console.log("getLocation --> rutaThing: ", rutaThing);
+  const locationThing = await getThing(datasetLocation!, rutaThing);
+  console.log("getLocation --> locationThing: ", locationThing);
+  return locationThing;
 }
 
 export async function saveLocation(session:Session, location:Location){
-  const URL_VOCABULARIO = "http://w3id.org/lomap/";
-
+  
   //Crear Dataset
   const urlPOD = await getStorageURL(session);
   const rutaDataset = urlPOD + RUTA_LOCATIONS + "/" + location.id;
@@ -152,6 +171,7 @@ async function getOrCreateContainer(session:Session, ContainerURI:string){
   }
 }
 
+//Obtiene un dataset del pod. si no existe lo crea
 async function getOrCreateDataset(session:Session, datasetURI:string) {
   if (!session || !session.info.isLoggedIn) return;
   try {
@@ -172,12 +192,37 @@ async function getOrCreateDataset(session:Session, datasetURI:string) {
   }
 }
 
+//Obtiene un dataset del pod. si no existe devuelve null
+async function getDataset(session:Session, datasetURI:string) {
+  if (!session || !session.info.isLoggedIn) return;
+  try {
+    const fetch = session.fetch;
+    const dataset = await getSolidDataset(datasetURI, { fetch }); 
+    return dataset;
+  } catch (error:any) {
+    if (error.statusCode === 404) {
+      return null;
+    }
+  }
+}
+
 export async function pruebas (session:Session){
+  const jsonLocation = await getLocationJSON(session, "64337cca48c1302f714702ac");
+  return jsonLocation;
+  
+  //const pruebaLocation = await getLocation (session, "64337cca48c1302f714702ac");
+  //const pruebaLocation = await getLocation (session, "64337cca48c1302f7147");
+  //console.log ("pruebaLocation: ", pruebaLocation);
+  //const jsonLocation = parseLocation(session, pruebaLocation!);
+  //console.log ("jsonLocation: ", jsonLocation);
+  
+  /*const urlAlmacenamiento = await getStorageURL(session);
+  const rutaDataset = urlAlmacenamiento + RUTA_LOCATIONS + "/" + "64337cca48c1302f714702ac"+#+"64337cca48c1302f714702ac"
   const urlAlmacenamiento = await getStorageURL(session);
   const rutaDataset = urlAlmacenamiento + RUTA_LOCATIONS + "/pCD"
   console.log("ruta dataset: ", rutaDataset);
   const datasetPrueba= await getOrCreateDataset(session, rutaDataset);
-  console.log("datasetPrueba: ", datasetPrueba);
+  console.log("datasetPrueba: ", datasetPrueba);*/
 }
 
 //Si no existen en el POD crea los contenedores 
@@ -190,6 +235,49 @@ export async function createBaseContainers (session:Session){
   console.log("Crear en pod ruta " + RUTA_LOCATIONS + ". SolidDataset:", contenedorLomapLocations);
 }
 
+export async function getLocationJSON(session:Session, idLocation:string){
+  let jsonLocation = JSON.parse("{}");
+  const location = await getLocation (session, idLocation);
+  if (location !== null){
+    jsonLocation = parseLocation(session, location!); 
+  }
+  return jsonLocation;
+}
 
+async function getUserName(session:Session){
+  
+  if (!session || !session.info.isLoggedIn) return null;
+
+  const profileDataset = await getSolidDataset(session.info.webId!, {
+    fetch: session.fetch,
+  });
+  console.log("getuserName--> profileDataset", profileDataset);
+  const profileThing = await getThing(profileDataset, session.info.webId!);
+  console.log("getuserName--> profileThing", profileThing);
+  const name = await getStringNoLocale(profileThing!, FOAF.name);
+  console.log("getuserName--> name", name);
+  return name
+}
+
+async function parseLocation (session:Session, location:Thing){
+
+  console.log ("parseLocation --> location", location);
+  const comments =  getStringNoLocale(location, URL_VOCABULARIO + "comments");
+  console.log ("parseLocation --> comments", location);
+  const score = getStringNoLocale(location, URL_VOCABULARIO + "score");
+  console.log ("parseLocation --> comments", score);
+  const name = await getUserName(session);
+  console.log ("parseLocation --> name", name);
+
+  let result = "";
+  result += '{'
+  result += '"comments": "' + comments + '",'
+  result += '"score": "' + score + '",'
+  result += '"name": "' + name + '"'
+  result += '}'
+
+  let parsed = JSON.parse(result);
+  return parsed;
+}
 
 
