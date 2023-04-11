@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import styles from './filter.module.css';
 
+
 interface Props {
   toggleFriends: boolean
 }
