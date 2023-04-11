@@ -14,6 +14,7 @@ import "./MarkerInfo.css";
 interface Props {
   show: boolean;
   location: any;
+  cardList: any;
   setOpen: (state: boolean) => void;
   openModal: () => void;
 }
@@ -32,6 +33,8 @@ export default class MarkerInfo extends React.Component<Props> {
 
   render() {
     let drawerClasses = "side-drawer";
+    console.log("CARDLIST:");
+    console.log(this.props.cardList);
 
     if (this.props.show) {
       drawerClasses = "side-drawer open";
@@ -52,12 +55,16 @@ export default class MarkerInfo extends React.Component<Props> {
             gutterBottom
           >
             {this.props.location === undefined
-              ? "not found"
+              ? "Fetching data..."
               : this.props.location.name}
           </Typography>
           <div className={"infoContainer"}>
             <div style={{overflow: "hidden"}}>
-              <InfoCard username="Manolo" rating={3} comments="Es un sitio muy bonito, con muchas cosas muy interesantes que me gustan mucho del lugar. Ciertamente, uno de mis lugares favoritos de la vida." />
+              {
+                this.props.cardList.name !== undefined ?
+                <InfoCard username={this.props.cardList.name} rating={this.props.cardList.score} comments={this.props.cardList.comments} />
+                : ""
+              }
             </div>
           </div>
           <div className={"addButton"}>

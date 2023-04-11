@@ -11,6 +11,7 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
+import { getLocationJSON } from '../util/PodUtil';
 
 export default function Home() {
 
@@ -25,8 +26,9 @@ export default function Home() {
 
   const [selectedLocation, setSelectedLocation] = useState<any>();
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
+  const [cardList, setCardList] = useState<any[]>([]);
 
   const { session } = useSession();
 
@@ -50,6 +52,11 @@ export default function Home() {
     let location = response.data.data;
 
     setSelectedLocation(location);
+
+    console.log("LOCATION:")
+    console.log(location);
+
+    setCardList(await getLocationJSON(session, location._id));
   };
 
   const closeForm = (state: boolean) => {
@@ -103,7 +110,7 @@ export default function Home() {
         <Filter toggleFriends={session.info.isLoggedIn} />
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showAddLocationNotification} reloadMap={reloadMap}/>
-      <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal}/>
+      <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal} cardList={cardList}/>
       <AddLocationModal modalIsOpen={modalIsOpen} redirectToLogin={redirectToLogin} closeModal={closeModal} showNotification={showAddReviewNotification} selectedLocation={selectedLocation} />
       {redirectToLogin ? <Navigate to="/login"/> : ""}
     </article>
