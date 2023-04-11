@@ -11,7 +11,7 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
-import { getFriends } from '../util/PodUtil';
+import { getLocationJSON } from '../util/PodUtil';
 
 export default function Home() {
 
@@ -28,7 +28,7 @@ export default function Home() {
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [cardList, setCardList] = useState<any[]>();
+  const [cardList, setCardList] = useState<any[]>([]);
 
   const { session } = useSession();
 
@@ -53,8 +53,10 @@ export default function Home() {
 
     setSelectedLocation(location);
 
-    // METER EL MÉTODO AQUí CON location.id
-    setCardList(await getFriends(session.info.webId ? session.info.webId : ""));
+    console.log("LOCATION:")
+    console.log(location);
+
+    setCardList(await getLocationJSON(session, location._id));
   };
 
   const closeForm = (state: boolean) => {
