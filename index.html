@@ -479,13 +479,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_logging_into_the_application">6.1. Logging into the application</a></li>
 <li><a href="#_adding_a_location">6.2. Adding a location</a></li>
-<li><a href="#_map_filtering">6.3. Map filtering</a></li>
+<li><a href="#_see_a_reviews_of_a_place_in_the_map">6.3. See a reviews of a place in the map</a></li>
+<li><a href="#_map_filtering">6.4. Map filtering</a></li>
 </ul>
 </li>
 <li><a href="#section-deployment-view">7. Deployment View</a></li>
 <li><a href="#section-concepts">8. Cross-cutting Concepts</a>
 <ul class="sectlevel2">
 <li><a href="#_domain_model">8.1. Domain model</a></li>
+<li><a href="#_user_requirements">8.2. User requirements</a></li>
+<li><a href="#_security">8.3. Security</a></li>
+<li><a href="#_operative_concepts">8.4. Operative Concepts</a></li>
 </ul>
 </li>
 <li><a href="#section-design-decisions">9. Design Decisions</a></li>
@@ -655,16 +659,6 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <td class="tableblock halign-left valign-top"><p class="tableblock">Promoter of the initiative. Obtain software that meets the requirements within the term and cost stipulated in the contract.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Software architect</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Design an architecture after analyzing functional requirements, quality attributes, and constraints. Create a generic software solution that can be deployed and used in other cities.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Developers</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Develop the software within the established deadline.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Administrators</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">After the deployment of the software in production, they monitor and resolve possible incidents.</p></td>
@@ -676,7 +670,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Map provider</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pending select</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mapbox</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">It provides the base cartography in which users add places of interest to obtain personalized maps.</p></td>
 </tr>
 </tbody>
@@ -706,14 +700,6 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">React</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The React Framework will be used for making the user interface.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Node.js</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application&#8217;s back-end will be implemented through Node.js.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The SOLID specification</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application must use PODs to store user data.</p></td>
 </tr>
@@ -728,6 +714,18 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Docker</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The web application will run on docker.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">React</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We are goinf to use React for the front-end</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Typescript</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The language of the application will be typescript</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Node.js</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For the communication of the application we are going to use Node.js</p></td>
 </tr>
 </tbody>
 </table>
@@ -747,8 +745,12 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Data</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">All of the data must be uniquely stored in each user&#8217;s PODs, and they&#8217;re the only ones with access to it.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Teamwork</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The project must be developed working as a team.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Members</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The team must have a maximum of 4 members.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Time</p></td>
@@ -761,6 +763,10 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">New Technologies</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Most of the technologies employed in this proyect have never been used by any of us.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meetings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To develop the application we need to do frequent meetings</p></td>
 </tr>
 </tbody>
 </table>
@@ -786,10 +792,6 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TypeScript</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">As we are using the TypeScript programming language, it&#8217;s naming conventions must be followed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SOLID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application must follow the SOLID specification.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Arc42</p></td>
@@ -935,7 +937,7 @@ using WhatsApp for quick communication.</p>
 <h3 id="_whitebox_overall_system_level_1">5.1. Whitebox Overall System: Level 1</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/building_block_view_1.png" alt="building block view 1">
+<img src="./images/doc05b.JPG" alt="doc05b">
 </div>
 </div>
 <div class="dlist">
@@ -1028,25 +1030,22 @@ be divided in three layers:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Home page</p>
-</li>
-<li>
-<p>Register</p>
-</li>
-<li>
 <p>Log in</p>
 </li>
 <li>
-<p>Create map</p>
+<p>Map</p>
 </li>
 <li>
-<p>Add place</p>
+<p>Account</p>
 </li>
 <li>
-<p>Add opinion</p>
+<p>Friends</p>
 </li>
 <li>
-<p>Explore place</p>
+<p>About</p>
+</li>
+<li>
+<p>Category</p>
 </li>
 </ul>
 </div>
@@ -1075,19 +1074,7 @@ be divided in three layers:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>MapController</p>
-</li>
-<li>
-<p>PlaceController</p>
-</li>
-<li>
-<p>OpinionController</p>
-</li>
-<li>
-<p>UserController</p>
-</li>
-<li>
-<p>AccessController</p>
+<p>LocationController</p>
 </li>
 </ul>
 </div>
@@ -1108,7 +1095,7 @@ be divided in three layers:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Login%20diagram.png" alt="Login diagram" width="679" height="591">
+<img src="./images/Login%20diagram.png" alt="Login diagram" width="429" height="318">
 </div>
 </div>
 </div>
@@ -1119,12 +1106,20 @@ be divided in three layers:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Adding%20location%20diagram.png" alt="Adding location diagram" width="694" height="305">
+<img src="./images/Adding%20location%20diagram.png" alt="Adding location diagram" width="758" height="426">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_map_filtering">6.3. Map filtering</h3>
+<h3 id="_see_a_reviews_of_a_place_in_the_map">6.3. See a reviews of a place in the map</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Create%20a%20review%20in%20the%20map%20diagram.png" alt="Create a review in the map diagram" width="482" height="365">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_map_filtering">6.4. Map filtering</h3>
 <div class="paragraph">
 <p>User&#8217;s can visualize maps by filtering them by category, friends, etc.</p>
 </div>
@@ -1141,7 +1136,7 @@ be divided in three layers:</p>
 <h2 id="section-deployment-view">7. Deployment View</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><img src="./images/7.1Deploydiagram.png" alt="Deploy diagram"></span></p>
+<p><span class="image"><img src="./images/Doc07.JPG" alt="Deploy diagram"></span></p>
 </div>
 <div class="dlist">
 <dl>
@@ -1184,9 +1179,33 @@ be divided in three layers:</p>
 </dd>
 <dt class="hdlist1">Mapping of Building Blocks to Infrastructure</dt>
 <dd>
-<p>To do</p>
+<p>Deployment
+To deploy the project we have two options, deploy it locally or through a web hosting service.</p>
 </dd>
 </dl>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of hosting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Characteristics</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You can throw the app with a local server in  your own computer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to host the application on a remote server, Servicio que sirve para alojar la aplicación en un servidor remoto, there are a lot of services to host, being able to make the application accessible to other people.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>We have to decide how to build the infraestructure with dockers.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1233,6 +1252,29 @@ be divided in three layers:</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_user_requirements">8.2. User requirements</h3>
+<div class="paragraph">
+<p>The application is easy to use, it is not necessary to have previous knowledge, but as is logical, if the user is already familiar with the use of maps and social media is better.
+The only requirement is that the user need a POD account to use the application, but its not too difficult</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_security">8.3. Security</h3>
+<div class="paragraph">
+<p>The application is secure because we use the SOLID principles, that means that every user data will be stored in his POD, so the information will be saved externally.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_operative_concepts">8.4. Operative Concepts</h3>
+<div class="paragraph">
+<p>The basic operations that we can do in this application are:
+* User authentication: Refers to identifying oneself in the application as a registered user through their POD.
+* Put a mark on the map: The user will be able to place a point on the map by clicking on it, and a form for that point will appear.
+* Saving a location with data in the POD: when filling out the form and clicking on submit, that information is saved in the user&#8217;s POD.
+* Filter by categories: A function that allows the user to see specific types of locations more precisely.</p>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1252,12 +1294,21 @@ be divided in three layers:</p>
 <p><strong>Use of Node.js for the development, execution, and deployment of the back-end of the project</strong>: We made this decision for similar reasons as the choice of React - it is a widely used technology with high support and is ideal for running JavaScript code quickly and easily.</p>
 </li>
 <li>
-<p><strong>We start with the idea of using MongoDB to better adapt to what a web application requires, with a variety of data to manage</strong>: For this, a non-relational database like MongoDB will help us have greater flexibility for storing data, since we will be storing a wide variety of data types.</p>
+<p><strong>We are going to use MongoDB to better adapt to what a web application requires, with a variety of data to manage</strong>: For this, a non-relational database like MongoDB will help us have greater flexibility for storing data, since we will be storing a wide variety of data types.</p>
+</li>
+<li>
+<p>Use of typeScript for the language of the code, This language has great advantages in the short and long term.</p>
+</li>
+<li>
+<p>For the deployment, it has not been decided how it will be done yet, as we have not discussed that yet.</p>
+</li>
+<li>
+<p>To perform tests, we are going to use Puppeteer and Cucumber</p>
+</li>
+<li>
+<p>We will use arc42 for documentation, which is a well-established standard.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>We have many more decisions to make regarding the implementation and functionality of the application, but these decisions will be made later, and we will update this section to reference all those decisions made throughout the development of the project.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1292,13 +1343,13 @@ be divided in three layers:</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Disponibility</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Availability</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">In the case that any errors occur within the application, it must be able to handle them properly and tell the user when something is not working</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Escalability</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Scalability</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application must be built with the MVC pattern in order to have the capability of adding new features without any issues</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
@@ -1352,6 +1403,12 @@ be divided in three layers:</p>
 </li>
 <li>
 <p><strong>Time</strong>, since we have to finish the project at a given deadline.</p>
+</li>
+<li>
+<p><strong>MongoDB</strong>, most of the team members are not familiar with MongoDB</p>
+</li>
+<li>
+<p>When working in a group and merging code, it is possible that if two people work on the same part, some parts of the code may not be easily understood by other team members. Communication is needed so that everyone understands the parts.</p>
 </li>
 </ul>
 </div>
@@ -1444,7 +1501,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-07 09:08:52 +0100
+Last updated 2023-03-14 09:32:51 +0100
 </div>
 </div>
 </body>
