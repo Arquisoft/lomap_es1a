@@ -2,6 +2,7 @@
   "name": "restapi",
   "version": "1.0.0",
   "scripts": {
+    "prod": "ts-node ./server.ts",
     "start": "ts-node-dev ./server.ts",
     "test": "cd tests && jest --runInBand"
   },
