@@ -41,9 +41,6 @@ export async function getFriends(webId:string) {
   let friends: Friend[] = [];
 
   for (let friend of friendURLs) {
-    // This solution is very ugly, might need some fixing later...
-    if (friend.split("/profile/card").length == 1)
-      friend += "profile/card#me";
     
     let name = getStringNoLocale(
       await getUserProfile(friend),

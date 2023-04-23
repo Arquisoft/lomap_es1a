@@ -12,6 +12,7 @@
 
 .table-container {
     max-height: 60vh;
+    margin-top: 1em;
 }
 
 .table-cell {
@@ -21,4 +22,14 @@
 .friends-table-header-cell {
     font-size: 1.5em;
     font-weight: bold;
+}
+
+.table-selector {
+    display: flex;
+    justify-content: center;
+}
+
+.friend-group-user-list {
+    display: flex;
+    flex-direction: column;
 }
