@@ -3,7 +3,7 @@
     height: auto;
     overflow: hidden;
 
-    padding: 9vh 10em 0em 14em;
+    padding: 9vh 10% 0em 14%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,7 +20,8 @@
 .background-image {
     position: fixed;
     width: 100vw;
-    height: 25em;
+    height: 45%;
     box-shadow: 0 0 2px 1px black;
     object-fit: cover;
+    z-index: 0;
 }
