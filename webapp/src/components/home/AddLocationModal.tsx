@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -56,9 +56,18 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
 
   const label = { inputProps: { "aria-label": "Checkbox placeholder" } };
 
+  const handleFriends = useCallback(async () => {
+    if (session.info.webId != undefined && session.info.webId != "") {
+      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
+        return friendsPromise;
+      });
+      setFriends(aux);
+    } else setFriends([]);
+  },[session]);
+
   useEffect(() => {
     handleFriends();
-  }, [friends]);
+  }, [handleFriends]);
 
   const handleRatingChange = async (e:any) => {
     setRating(e.target.value);
@@ -67,15 +76,6 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
   const handleCommentsChange = async (e:any) => {
     setComments(e.target.value);
   }
-
-  const handleFriends = async () => {
-    if (session.info.webId != undefined && session.info.webId != "") {
-      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
-        return friendsPromise;
-      });
-      setFriends(aux);
-    } else setFriends([]);
-  };
 
   const handleSubmit = async () => {
     saveLocation(session, {
