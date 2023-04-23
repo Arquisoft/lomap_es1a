@@ -17,7 +17,7 @@ interface Ilogin {
 }
 
 export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
-  const [idp, setIdp] = useState("https://login.inrupt.com");
+  const [idp, setIdp] = useState("https://inrupt.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
 
   //const [currentUrl, setCurrentUrl] = useState("http://localhost:3000");

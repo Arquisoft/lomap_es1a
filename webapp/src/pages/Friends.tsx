@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import { ButtonGroup } from "@mui/material";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Navigate } from "react-router-dom";
 import { getFriends } from "../util/PodUtil";
@@ -9,10 +10,12 @@ import "../components/friends/FriendList";
 
 import "./Friends.css";
 import FriendList from "../components/friends/FriendList";
+import FriendGroupList from "../components/friends/FriendGroupList";
 
 export default function Friends() {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [selectedBtn, setSelectedBtn] = useState(1);
 
   useEffect(() => {
     handleFriends();
@@ -31,7 +34,23 @@ export default function Friends() {
     return (
       <div className="main-container">
         <h1 className="title">Friends</h1>
-        <FriendList friends={friends}/>
+        <div className="table-selector">
+          <ButtonGroup variant="contained" color="primary">
+            <Button
+              color={selectedBtn === 1 ? "secondary" : "primary"}
+              onClick={() => setSelectedBtn(1)}
+            >
+              Solid Friends
+            </Button>
+            <Button
+              color={selectedBtn === 2 ? "secondary" : "primary"}
+              onClick={() => setSelectedBtn(2)}
+            >
+              Friend Groups
+            </Button>
+          </ButtonGroup>
+        </div>
+        {selectedBtn == 1 ? <FriendList friends={friends} /> : <FriendGroupList />}
       </div>
     );
   } else return <Navigate to="/login" />;

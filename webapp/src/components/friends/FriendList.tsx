@@ -15,7 +15,7 @@ interface Props {
 
 function FriendList<Props>( props:any ): JSX.Element {
   return (
-    <TableContainer className="table-container" component={Paper}>
+    <TableContainer className="table-container" component={Paper} square variant="outlined">
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
