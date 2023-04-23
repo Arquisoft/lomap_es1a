@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,10 +6,11 @@ import styles from './navbar.module.css';
 import { Typography } from '@mui/material';
 import { CombinedDataProvider, useSession, LogoutButton, Text } from "@inrupt/solid-ui-react";
 import { useNavigate } from "react-router-dom";
- import {createBaseContainers} from "../../src/util/PodUtil"
+import {createBaseContainers} from "../../src/util/PodUtil"
+import ThemeSwitch from './ThemeSwitch';
+
 function Name(): JSX.Element {
   const { session } = useSession();
-  
   
   return (
     <>
@@ -33,7 +34,11 @@ function Name(): JSX.Element {
   );
 }
 
-export default function SearchAppBar(): JSX.Element {
+interface Props {
+  changeTheme: () => void;
+}
+
+export default function SearchAppBar<Props>( props:any ): JSX.Element {
   const { session } = useSession();
 
   //Inicializamos los contenedores en el pod mediante el hook useEffect
@@ -54,7 +59,7 @@ export default function SearchAppBar(): JSX.Element {
           <Typography variant="h4" component="div" sx={{ flexGrow: 0.95, textAlign: "left" }}>
             LoMap
           </Typography>
-          
+          <ThemeSwitch sx={{ m: 1 }} onClick={props.changeTheme}/>
           {session.info.isLoggedIn ? (
             <>
               <Name />
@@ -66,7 +71,6 @@ export default function SearchAppBar(): JSX.Element {
             <Button color="inherit" onClick={clickLogin}>Log in</Button>
           )
           }
-          
       </Toolbar>
     </AppBar>
   );
