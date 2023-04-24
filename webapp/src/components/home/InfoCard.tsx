@@ -1,14 +1,23 @@
-import * as React from "react";
+import {useState, useEffect} from "react";
 import noimage from '../../images/no_image.png';
+import { UrlObject, } from "url";
 import './InfoCard.css';
 
 interface Props {
     username: string,
     rating: number,
-    comments: string
+    comments: string,
+    image: File
 }
   
 export default function InfoCard<Props>( props:any ): JSX.Element {
+
+    const [imageUrl, setImageUrl] = useState("");
+    useEffect(() => {
+        if (props.image != undefined) {
+          setImageUrl(URL.createObjectURL(props.image));
+        }
+      }, [props.image]);
 
     return (
         <div className="card-container">
@@ -17,7 +26,7 @@ export default function InfoCard<Props>( props:any ): JSX.Element {
                 <h5>Rating: {props.rating}</h5>
             </div>
             <p>{props.comments}</p>
-            <img className="image-container" src={noimage}/>
+            <img className="image-container" src={props.image != undefined ? imageUrl : noimage}/>
         </div>
     );
 

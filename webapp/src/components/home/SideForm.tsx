@@ -14,7 +14,7 @@ import axios from "axios";
 import { FormGroup } from "@mui/material";
 import { useSession } from "@inrupt/solid-ui-react";
 import type { Location } from "../../util/UserData";
-import {saveLocation,pruebas} from "../../util/PodUtil";
+import {saveLocation} from "../../util/PodUtil";
 import { Session } from "@inrupt/solid-client-authn-browser";
 import "./SideForm.css"
 

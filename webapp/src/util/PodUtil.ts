@@ -1,4 +1,3 @@
-
 import type { Friend, Location} from "./UserData";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
@@ -18,11 +17,13 @@ import {
   buildThing,
   createThing,
   setThing,
-  
+  overwriteFile,
+  getFile
 } from "@inrupt/solid-client";
 
 import { FOAF, RDF} from "@inrupt/vocab-common-rdf"
 
+const RUTA_IMAGES = "images";
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
 const URL_VOCABULARIO = "http://w3id.org/lomap/";
@@ -95,6 +96,22 @@ export async function saveLocation(session:Session, location:Location){
   const latitudeString:string  = Number(location.latitud).toString();
   const longitudeString:string = Number(location.longitud).toString();
   const scoreString:string = location.score !== null ? Number(location.score).toString() : "";
+
+  getOrCreateContainer(session, getStorageURL(session) + "/" + RUTA_IMAGES)
+
+  console.log("IMAGEN:")
+  console.log(location.image)
+
+  //Almacenar imagen relacionada
+  console.log("WEBID:")
+  console.log(await getStorageURL(session) + RUTA_IMAGES + "/" + location.id + ".jpg");
+  if (location.image !== undefined) {
+    await overwriteFile(
+      await getStorageURL(session) + "lomap/" + RUTA_IMAGES + "/" + location.id + ".jpg",
+      location.image,
+      { contentType: location.image.type, fetch: fetch }
+    );
+  }
   
   //Crear Thing
   const nuevaLocationThing = buildThing(createThing({ name: location.id }))
@@ -105,11 +122,9 @@ export async function saveLocation(session:Session, location:Location){
   .addStringNoLocale(URL_VOCABULARIO + "longitude", longitudeString)
   .addStringNoLocale(URL_VOCABULARIO + "comments", location.comments !== null ? location.comments! : "") 
   .addStringNoLocale(URL_VOCABULARIO + "score", scoreString) 
+  .addStringNoLocale(URL_VOCABULARIO + "photo", location.image != null ? location.image.name : "no_image")
   .addUrl(RDF.type, URL_VOCABULARIO + "Location")
   .build();
-
-  console.log("IMAGEN:")
-  console.log(location.image)
   
   //Insertar thing en dataset
   nuevoDataset = await setThing(nuevoDataset!, nuevaLocationThing);
@@ -208,24 +223,24 @@ async function getDataset(session:Session, datasetURI:string) {
   }
 }
 
-export async function pruebas (session:Session){
-  const jsonLocation = await getLocationJSON(session, "64337cca48c1302f714702ac");
-  return jsonLocation;
-  
-  //const pruebaLocation = await getLocation (session, "64337cca48c1302f714702ac");
-  //const pruebaLocation = await getLocation (session, "64337cca48c1302f7147");
-  //console.log ("pruebaLocation: ", pruebaLocation);
-  //const jsonLocation = parseLocation(session, pruebaLocation!);
-  //console.log ("jsonLocation: ", jsonLocation);
-  
-  /*const urlAlmacenamiento = await getStorageURL(session);
-  const rutaDataset = urlAlmacenamiento + RUTA_LOCATIONS + "/" + "64337cca48c1302f714702ac"+#+"64337cca48c1302f714702ac"
-  const urlAlmacenamiento = await getStorageURL(session);
-  const rutaDataset = urlAlmacenamiento + RUTA_LOCATIONS + "/pCD"
-  console.log("ruta dataset: ", rutaDataset);
-  const datasetPrueba= await getOrCreateDataset(session, rutaDataset);
-  console.log("datasetPrueba: ", datasetPrueba);*/
-}
+//export async function pruebas (session:Session){
+//  const jsonLocation = await getLocationJSON(session, "64337cca48c1302f714702ac");
+//  return jsonLocation;
+//  
+//  //const pruebaLocation = await getLocation (session, "64337cca48c1302f714702ac");
+//  //const pruebaLocation = await getLocation (session, "64337cca48c1302f7147");
+//  //console.log ("pruebaLocation: ", pruebaLocation);
+//  //const jsonLocation = parseLocation(session, pruebaLocation!);
+//  //console.log ("jsonLocation: ", jsonLocation);
+//  
+//  /*const urlAlmacenamiento = await getStorageURL(session);
+//  const rutaDataset = urlAlmacenamiento + RUTA_LOCATIONS + "/" + "64337cca48c1302f714702ac"+#+"64337cca48c1302f714702ac"
+//  const urlAlmacenamiento = await getStorageURL(session);
+//  const rutaDataset = urlAlmacenamiento + RUTA_LOCATIONS + "/pCD"
+//  console.log("ruta dataset: ", rutaDataset);
+//  const datasetPrueba= await getOrCreateDataset(session, rutaDataset);
+//  console.log("datasetPrueba: ", datasetPrueba);*/
+//}
 
 //Si no existen en el POD crea los contenedores 
 export async function createBaseContainers (session:Session){
@@ -237,13 +252,20 @@ export async function createBaseContainers (session:Session){
   console.log("Crear en pod ruta " + RUTA_LOCATIONS + ". SolidDataset:", contenedorLomapLocations);
 }
 
-export async function getLocationJSON(session:Session, idLocation:string){
-  let jsonLocation = JSON.parse("{}");
-  const location = await getLocation (session, idLocation);
-  if (location !== null){
-    jsonLocation = parseLocation(session, location!); 
-  }
-  return jsonLocation;
+// export async function getLocationJSON(session:Session, idLocation:string){
+//   let jsonLocation = JSON.parse("{}");
+//   const location = await getLocation (session, idLocation);
+//   if (location !== null){
+//     jsonLocation = parseLocation(session, location!); 
+//   }
+//   return jsonLocation;
+// }
+
+export async function getLocationObject(session: Session, idLocation: string) {
+  const location = await getLocation(session, idLocation);
+  if (location !== null)
+    return parseLocation(session, location!);
+  else return null
 }
 
 async function getUserName(session:Session){
@@ -270,16 +292,25 @@ async function parseLocation (session:Session, location:Thing){
   console.log ("parseLocation --> comments", score);
   const name = await getUserName(session);
   console.log ("parseLocation --> name", name);
+  const category = await getStringNoLocale(location, URL_VOCABULARIO + "category");
+  console.log ("parseLocation --> category", category);
+  const id = await getStringNoLocale(location, URL_VOCABULARIO + "id_location");
+  console.log ("parseLocation --> id", id);
 
-  let result = "";
-  result += '{'
-  result += '"comments": "' + comments + '",'
-  result += '"score": "' + score + '",'
-  result += '"name": "' + name + '"'
-  result += '}'
+  const image = await getFile(await getStorageURL(session) + "lomap/" + RUTA_IMAGES + "/" + id + ".jpg", {fetch: fetch}).catch(
+    () => {
+      console.log("No image found")
+    }
+  );
 
-  let parsed = JSON.parse(result);
-  return parsed;
+  let result = {
+    name: name,
+    category: category,
+    id: id,
+    comments: comments,
+    score: score,
+    image: image
+  }
+
+  return result;
 }
-
-

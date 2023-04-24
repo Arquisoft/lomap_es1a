@@ -11,7 +11,7 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
-import { getLocationJSON } from '../util/PodUtil';
+import { getLocationObject } from '../util/PodUtil';
 
 interface Props {
   mapTheme: string;
@@ -46,7 +46,7 @@ export default function Home<Props>( props:any ): JSX.Element{
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [cardList, setCardList] = useState<any[]>([]);
+  const [cardList, setCardList] = useState<any>();
 
   const { session } = useSession();
 
@@ -74,7 +74,10 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log("LOCATION:")
     console.log(location);
 
-    setCardList(await getLocationJSON(session, location._id));
+    let cardList = await getLocationObject(session, location._id);
+
+    if (cardList != undefined)
+      setCardList(cardList);
   };
 
   const closeForm = (state: boolean) => {
