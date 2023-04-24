@@ -107,6 +107,9 @@ export async function saveLocation(session:Session, location:Location){
   .addStringNoLocale(URL_VOCABULARIO + "score", scoreString) 
   .addUrl(RDF.type, URL_VOCABULARIO + "Location")
   .build();
+
+  console.log("IMAGEN:")
+  console.log(location.image)
   
   //Insertar thing en dataset
   nuevoDataset = await setThing(nuevoDataset!, nuevaLocationThing);

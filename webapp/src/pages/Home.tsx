@@ -105,8 +105,9 @@ export default function Home<Props>( props:any ): JSX.Element{
       setRedirectToLogin(true);
   }
 
-  const closeModal = () => {
+  const closeModal = async () => {
     setIsOpen(false);
+    handleShowMarkerInfo(true, formLng, formLat, selectedLocation._id);
   }
 
   const finishedMounting = () => {
@@ -114,32 +115,32 @@ export default function Home<Props>( props:any ): JSX.Element{
   }
 
   const reloadMap = async () => {
-    if (map.getSource('places') != undefined)
-      map.removeSource('places')
+    console.log("RELOADING MAP...");
     const response = await axios.get("http://localhost:5000/locations/");
     let locations = JSON.parse(requestToList(response.data));
-    console.log("LOCATIONS")
-    console.log(locations)
-    map.addSource('places', 
-    {
-      type: "geojson", data: locations
-    });
-    map.addLayer({
-      id: "places",
-      type: "symbol",
-      source: "places",
-      layout: {
-        "icon-image": ["get", "icon"],
-        "icon-allow-overlap": true,
-        "icon-size": 1,
-      }
-    });
-    var source = map.getSource('places');
-    source.setData(locations);
-    markers.forEach((marker: any) => {
-      marker.remove();
-    });
-  }
+    if (map.getSource("places") == undefined) {
+      map.addSource("places", {
+        type: "geojson",
+        data: locations,
+      });
+      map.addLayer({
+        id: "places",
+        type: "symbol",
+        source: "places",
+        layout: {
+          "icon-image": ["get", "icon"],
+          "icon-allow-overlap": true,
+          "icon-size": 1,
+        },
+      });
+    }
+    var source = map.getSource("places");
+      source.setData(locations);
+      markers.forEach((marker: any) => {
+        marker.remove();
+      });
+    map.removeSource("places");
+  };
 
   return (
     <article className="homearticle">
