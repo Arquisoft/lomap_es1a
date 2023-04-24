@@ -14,7 +14,7 @@ import "./MarkerInfo.css";
 interface Props {
   show: boolean;
   location: any;
-  cardList: any;
+  cardList?: any;
   setOpen: (state: boolean) => void;
   openModal: () => void;
 }
@@ -33,8 +33,6 @@ export default class MarkerInfo extends React.Component<Props> {
 
   render() {
     let drawerClasses = "side-drawer";
-    console.log("CARDLIST:");
-    console.log(this.props.cardList);
 
     if (this.props.show) {
       drawerClasses = "side-drawer open";
@@ -61,15 +59,15 @@ export default class MarkerInfo extends React.Component<Props> {
           <div className={"infoContainer"}>
             <div style={{overflow: "hidden"}}>
               {
-                this.props.cardList.name !== undefined ?
-                <InfoCard username={this.props.cardList.name} rating={this.props.cardList.score} comments={this.props.cardList.comments} />
+                this.props.cardList !== undefined ?
+                <InfoCard username={this.props.cardList.name} rating={this.props.cardList.score} comments={this.props.cardList.comments} image={this.props.cardList.image} />
                 : ""
               }
             </div>
           </div>
           <div className={"addButton"}>
             <Button type="submit" variant="contained" color="primary" sx={{width:'100%'}} onClick={this.props.openModal}>
-              Add a review
+              Add info
             </Button>
           </div>
         </div>

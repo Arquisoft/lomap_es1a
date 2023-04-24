@@ -11,7 +11,7 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
-import { getLocationJSON } from '../util/PodUtil';
+import { getLocationObject } from '../util/PodUtil';
 
 interface Props {
   mapTheme: string;
@@ -46,7 +46,7 @@ export default function Home<Props>( props:any ): JSX.Element{
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [cardList, setCardList] = useState<any[]>([]);
+  const [cardList, setCardList] = useState<any>();
 
   const { session } = useSession();
 
@@ -74,7 +74,10 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log("LOCATION:")
     console.log(location);
 
-    setCardList(await getLocationJSON(session, location._id));
+    let cardList = await getLocationObject(session, location._id);
+
+    if (cardList != undefined)
+      setCardList(cardList);
   };
 
   const closeForm = (state: boolean) => {
@@ -105,8 +108,9 @@ export default function Home<Props>( props:any ): JSX.Element{
       setRedirectToLogin(true);
   }
 
-  const closeModal = () => {
+  const closeModal = async () => {
     setIsOpen(false);
+    handleShowMarkerInfo(true, formLng, formLat, selectedLocation._id);
   }
 
   const finishedMounting = () => {
@@ -114,32 +118,32 @@ export default function Home<Props>( props:any ): JSX.Element{
   }
 
   const reloadMap = async () => {
-    if (map.getSource('places') != undefined)
-      map.removeSource('places')
+    console.log("RELOADING MAP...");
     const response = await axios.get("http://localhost:5000/locations/");
     let locations = JSON.parse(requestToList(response.data));
-    console.log("LOCATIONS")
-    console.log(locations)
-    map.addSource('places', 
-    {
-      type: "geojson", data: locations
-    });
-    map.addLayer({
-      id: "places",
-      type: "symbol",
-      source: "places",
-      layout: {
-        "icon-image": ["get", "icon"],
-        "icon-allow-overlap": true,
-        "icon-size": 1,
-      }
-    });
-    var source = map.getSource('places');
-    source.setData(locations);
-    markers.forEach((marker: any) => {
-      marker.remove();
-    });
-  }
+    if (map.getSource("places") == undefined) {
+      map.addSource("places", {
+        type: "geojson",
+        data: locations,
+      });
+      map.addLayer({
+        id: "places",
+        type: "symbol",
+        source: "places",
+        layout: {
+          "icon-image": ["get", "icon"],
+          "icon-allow-overlap": true,
+          "icon-size": 1,
+        },
+      });
+    }
+    var source = map.getSource("places");
+      source.setData(locations);
+      markers.forEach((marker: any) => {
+        marker.remove();
+      });
+    map.removeSource("places");
+  };
 
   return (
     <article className="homearticle">
