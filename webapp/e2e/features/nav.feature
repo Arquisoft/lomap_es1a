@@ -7,9 +7,4 @@ Feature: Navegación en la página principal
     Given Estoy en la página principal
     When hago clic en Map
     Then debería ir a la pagina principal
-    When hago clic en account
-    Then debería estar en la sección Account
-    When hago clic en Friends
-    Then debería estar en la sección Friends
-    When hago clic en About
-    Then debería estar en la sección About
+

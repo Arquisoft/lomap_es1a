@@ -2,7 +2,7 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import puppeteer from "puppeteer";
 
 
-const feature = loadFeature('./features/nav.feature');
+const feature = loadFeature('./features/friends.feature');
 
 defineFeature(feature, test => {
   let page: puppeteer.Page;
@@ -12,7 +12,7 @@ defineFeature(feature, test => {
     jest.setTimeout(60000);
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
-      : await puppeteer.launch({ headless: true, slowMo: 50 });
+      : await puppeteer.launch({ headless: false, slowMo: 50 });
     page = await browser.newPage();
   
     await page.goto("http://localhost:3000").catch(() => {});
@@ -22,22 +22,21 @@ defineFeature(feature, test => {
     browser.close();
   });
 
-  test('Navegar por las diferentes secciones', ({ given, when, then }) => {
+  test('Navegar por la seccion de Friends', ({ given, when, then }) => {
     given('Estoy en la página principal', async () => {
       await page.goto('http://localhost:3000');
     });
 
-    when('hago clic en Map', async () => {
-      const loginButton = await page.$('[href="/"]');
-      if (loginButton !== null) {
-        await loginButton.click();
+    when('Hago clic en el icono de Friends', async () => {
+      const friendsButton = await page.$('[href="/friends"]');
+      if (friendsButton !== null) {
+        await friendsButton.click();
       }
     });
 
-    then('debería ir a la pagina principal', async () => {
+    then('Debería ir a la pagina de Friends', async () => {
       const url = await page.url();
-      expect(url).toBe('http://localhost:3000/');
+      expect(url).toBe('http://localhost:3000/friends');
     });
-  });
-  
-});
+
+})});
