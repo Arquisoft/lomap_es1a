@@ -73,7 +73,7 @@ export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
           onError={console.log}
         >
           <div style={{display:"flex", justifyContent:"center"}}>
-            <Button variant="contained" color="primary" style={{ width:"8em"}} >
+            <Button id ="login" variant="contained" color="primary" style={{ width:"8em"}} >
               Login
             </Button>
           </div>

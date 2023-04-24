@@ -14,7 +14,7 @@ defineFeature(feature, test => {
     jest.setTimeout(60000);
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
-      : await puppeteer.launch({ headless: false, slowMo: 50 });
+      : await puppeteer.launch({ headless: true, slowMo: 50 });
     page = await browser.newPage();
   
     await page.goto("http://localhost:3000").catch(() => {});
