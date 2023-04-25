@@ -68,7 +68,7 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
 
   useEffect(() => {
     handleFriends();
-  }, [friends]);
+  }, [handleFriends]);
 
   const handleRatingChange = async (e:any) => {
     setRating(e.target.value);
