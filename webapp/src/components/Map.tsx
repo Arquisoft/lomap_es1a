@@ -83,9 +83,10 @@ export default class Map extends React.Component<Props> {
 
     this.map.on("load", async () => {
 
-      const response = await axios.get("http://localhost:5000/locations/");
+      const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+      const response = await axios.get(apiEndPoint + 'locations/');
 
-      console.log ("Transformación JSON de http://localhost:5000/locations a locations");
+      console.log ("Transformación JSON de " + apiEndPoint + "locations a locations");
       let locations = JSON.parse(requestToList(response.data));
       
       console.log("Localizaciones que se cargan en el mapa. Variable locations: ",locations);

@@ -64,7 +64,8 @@ export default class SideForm extends React.Component<Props, State> {
         longitud: this.props.lng,
       };
       try {
-        const res = await axios.post("http://localhost:5000/locations", data);
+        const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+        const res = await axios.post(apiEndPoint+'locations', data);
         console.log(res.data);
       } catch (err: any) {
         console.log(err);
