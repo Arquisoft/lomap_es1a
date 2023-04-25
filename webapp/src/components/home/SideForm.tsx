@@ -14,7 +14,7 @@ import axios from "axios";
 import { FormGroup } from "@mui/material";
 import { useSession } from "@inrupt/solid-ui-react";
 import type { Location } from "../../util/UserData";
-import {saveLocation,pruebas} from "../../util/PodUtil";
+import {saveLocation} from "../../util/PodUtil";
 import { Session } from "@inrupt/solid-client-authn-browser";
 import "./SideForm.css"
 
@@ -64,7 +64,8 @@ export default class SideForm extends React.Component<Props, State> {
         longitud: this.props.lng,
       };
       try {
-        const res = await axios.post("http://localhost:5000/locations", data);
+        const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+        const res = await axios.post(apiEndPoint+'locations', data);
         console.log(res.data);
       } catch (err: any) {
         console.log(err);

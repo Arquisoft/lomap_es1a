@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -52,13 +52,23 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
   const [comments, setComments] = useState("");
-  const [rating, setRating] = useState(-1);
+  const [rating, setRating] = useState<number>(0);
+  const [image, setImage] = useState<File>();
 
   const label = { inputProps: { "aria-label": "Checkbox placeholder" } };
 
+  const handleFriends = useCallback(async () => {
+    if (session.info.webId != undefined && session.info.webId != "") {
+      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
+        return friendsPromise;
+      });
+      setFriends(aux);
+    } else setFriends([]);
+  },[session]);
+
   useEffect(() => {
     handleFriends();
-  }, [friends]);
+  }, [handleFriends]);
 
   const handleRatingChange = async (e:any) => {
     setRating(e.target.value);
@@ -68,27 +78,25 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
     setComments(e.target.value);
   }
 
-  const handleFriends = async () => {
-    if (session.info.webId != undefined && session.info.webId != "") {
-      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
-        return friendsPromise;
-      });
-      setFriends(aux);
-    } else setFriends([]);
-  };
+  const handleImageUpload = async (e:any) => {
+    setImage(e.target.files[0]);
+  }
 
   const handleSubmit = async () => {
-    saveLocation(session, {
+    await saveLocation(session, {
         name: props.selectedLocation.name,
         category: props.selectedLocation.category,
         id: props.selectedLocation._id,
         comments: comments,
         score: rating,
         latitud: parseFloat(props.selectedLocation.latitud),
-        longitud: parseFloat(props.selectedLocation.longitud)
-    });
-    props.closeModal();
-    props.showNotification();
+        longitud: parseFloat(props.selectedLocation.longitud),
+        image: image
+    }).then(() => {
+      props.closeModal();
+      props.showNotification();
+    }
+    );
   };
 
   return (
@@ -119,10 +127,16 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
           />
           <div className="image-div">
             <h3>Image:</h3>
-            <Button variant="contained" component="label">
-              Upload File
-              <input type="file" hidden />
-            </Button>
+            <div style={{display:"flex", alignItems:"center"}}>
+              <Typography
+              variant="subtitle1">
+                {image == undefined ? "No image selected" : image.name}
+              </Typography>
+              <Button variant="contained" component="label" style={{marginLeft:"0.5em"}}>
+                Upload File
+                <input type="file" onChange={handleImageUpload} hidden />
+              </Button>
+            </div>
           </div>
         </div>
         <div className="friend-list">

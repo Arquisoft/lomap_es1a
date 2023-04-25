@@ -11,4 +11,5 @@ export type Location = {
     latitud?: number,
     longitud?: number,
     score?: number
+    image?: File
 }

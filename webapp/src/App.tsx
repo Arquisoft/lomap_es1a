@@ -16,6 +16,8 @@ import NotificationsSystem, {
   setUpNotifications,
   useNotifications,
 } from "reapop";
+import { useTheme, createTheme, ThemeProvider } from "@mui/material/styles";
+import { green, purple } from '@mui/material/colors';
 
 setUpNotifications({
   defaultProps: {
@@ -27,17 +29,42 @@ setUpNotifications({
   },
 });
 
+const darkTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#121212",
+      contrastText: "#fff"
+    }
+  },
+});
+
+const lightTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#0a1929"
+    }
+  }
+})
+
 export default function App(): JSX.Element {
   const { notifications, dismissNotification } = useNotifications();
+  const [theme, setTheme] = useState('light')
+
+
+
+  const changeTheme = () => {
+    theme == 'light' ? setTheme('dark') : setTheme('light');
+  }
 
   return (
     <SessionProvider sessionId="lomap_es1a">
       <>
+        <ThemeProvider theme={theme == 'light' ? lightTheme : darkTheme}>
         <Sidenav />
-        <NavBar />
+        <NavBar changeTheme={changeTheme} />
         <div style={{ width: "100vw", height: "100vh" }}>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home mapTheme={theme}/>} />
             <Route path="/account" element={<Account />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/login" element={<Login />} />
@@ -49,6 +76,7 @@ export default function App(): JSX.Element {
           dismissNotification={(id) => dismissNotification(id)}
           theme={atalhoTheme}
         />
+        </ThemeProvider>
       </>
     </SessionProvider>
   );

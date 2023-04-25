@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import { ButtonGroup } from "@mui/material";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Navigate } from "react-router-dom";
 import { getFriends } from "../util/PodUtil";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from '@mui/material/Paper';
+
 import type { Friend } from "../util/UserData";
+import "../components/friends/FriendList";
 
 import "./Friends.css";
+import FriendList from "../components/friends/FriendList";
+import FriendGroupList from "../components/friends/FriendGroupList";
 
 export default function Friends() {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [selectedBtn, setSelectedBtn] = useState(1);
 
   useEffect(() => {
     handleFriends();
@@ -35,28 +34,23 @@ export default function Friends() {
     return (
       <div className="main-container">
         <h1 className="title">Friends</h1>
-        <TableContainer className="table-container" component={Paper}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell className='table-header-cell' style={{fontWeight:"bold", fontSize:"1.5em"}}>Name</TableCell>
-                <TableCell align="right" className='table-header-cell' style={{fontWeight:"bold", fontSize:"1.5em"}}>Web ID</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                friends.map((f) =>
-                  <TableRow>
-                    <TableCell className='table-cell' component="th" scope="row" style={{fontSize:"1.5em"}}>
-                      {f.name}
-                    </TableCell>
-                    <TableCell className='table-cell' align="right" style={{fontSize:"1.5em"}}>{f.webId}</TableCell>
-                  </TableRow>
-                )
-              }
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <div className="table-selector">
+          <ButtonGroup variant="contained" color="primary">
+            <Button
+              color={selectedBtn === 1 ? "secondary" : "primary"}
+              onClick={() => setSelectedBtn(1)}
+            >
+              Solid Friends
+            </Button>
+            <Button
+              color={selectedBtn === 2 ? "secondary" : "primary"}
+              onClick={() => setSelectedBtn(2)}
+            >
+              Friend Groups
+            </Button>
+          </ButtonGroup>
+        </div>
+        {selectedBtn == 1 ? <FriendList friends={friends} /> : <FriendGroupList />}
       </div>
     );
   } else return <Navigate to="/login" />;
