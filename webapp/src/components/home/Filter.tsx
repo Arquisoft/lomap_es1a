@@ -8,15 +8,16 @@ import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import styles from './filter.module.css';
 
-
 interface Props {
   toggleFriends: boolean
 }
 
 export default function Filter<Props>( props:any ): JSX.Element {
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = React.useState("Show all");
 
-  const handleChange = () => {};
+  const handleChange = (event: any) => {
+    setCategory(event.target.value as string);
+  };
 
   return (
     <div className={styles.boxContainer}>
@@ -43,6 +44,7 @@ export default function Filter<Props>( props:any ): JSX.Element {
           onChange={handleChange}
           className={styles.categoryFilter}
         >
+          <MenuItem value={"all"}>Show all</MenuItem>
           <MenuItem value={"shop"}>Shop</MenuItem>
           <MenuItem value={"restaurant"}>Restaurant</MenuItem>
           <MenuItem value={"monument"}>Monument</MenuItem>
