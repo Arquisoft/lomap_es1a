@@ -14,6 +14,8 @@ interface Props {
   zoom: number;
   mapWidth: string;
   mapHeight: string;
+  mapTheme: string;
+  finishedMounting?: () => void;
   onFormSelect?: (state: boolean, lat: number, lon: number) => void;
   onIconSelect?: (state: boolean, lat: number, lon: number, id:string) => void;
   onMapSubmit?: (map: any, markers: any[]) => void;
@@ -25,13 +27,17 @@ export default class Map extends React.Component<Props> {
   mapMarkers: Array<any> = [];
   
   async componentDidMount() {
+
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: "mapbox://styles/alvesit0/clg86aosh005p01o5khz3eqcw",
+      style: this.props.mapTheme == 'light' ? "mapbox://styles/alvesit0/clg86aosh005p01o5khz3eqcw" : "mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5",
       center: [this.props.lng, this.props.lat],
       zoom: this.props.zoom,
       attributionControl: false,
     });
+
+    if (this.props.onMapSubmit != undefined) 
+      this.props.onMapSubmit(this.map, this.mapMarkers);
 
     this.map.doubleClickZoom.disable();
 
@@ -132,6 +138,7 @@ export default class Map extends React.Component<Props> {
 
         if (this.props.onIconSelect != undefined)
           this.props.onIconSelect(true, e.lngLat.lat, e.lngLat.lng, id);
+        
       });
 
       // Change the cursor to a pointer when the mouse is over the places layer.
@@ -143,9 +150,11 @@ export default class Map extends React.Component<Props> {
       this.map.on("mouseleave", "places", () => {
         this.map.getCanvas().style.cursor = "";
       });
+
     });
 
-
+    if (this.props.finishedMounting != undefined)
+      this.props.finishedMounting();
   }
 
   componentWillUnmount() {

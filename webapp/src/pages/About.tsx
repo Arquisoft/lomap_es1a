@@ -26,7 +26,7 @@ export default function About() {
                 Save your favourite locations and share them with your friends!
               </Typography>
             </Container>
-            <Typography variant="h6" align="center" color="black" style={{ marginTop:"12vh"}}>
+            <Typography variant="h6" align="center" color="black" style={{ marginTop:"8%"}}>
               Developped for the 2022-2023 Software Architecture course by:
             </Typography>
             <Typography variant="h5" component="p" align="center" color="black" style={{ marginTop:"1vh"}} sx={{ fontWeight: "bold"}} gutterBottom>

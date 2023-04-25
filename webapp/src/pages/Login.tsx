@@ -17,7 +17,7 @@ interface Ilogin {
 }
 
 export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
-  const [idp, setIdp] = useState("https://login.inrupt.com");
+  const [idp, setIdp] = useState("https://solidcommunity.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
 
   //const [currentUrl, setCurrentUrl] = useState("http://localhost:3000");
@@ -73,7 +73,7 @@ export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
           onError={console.log}
         >
           <div style={{display:"flex", justifyContent:"center"}}>
-            <Button variant="contained" color="primary" style={{ width:"8em"}} >
+            <Button id ="login" variant="contained" color="primary" style={{ width:"8em"}} >
               Login
             </Button>
           </div>

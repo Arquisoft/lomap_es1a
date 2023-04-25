@@ -11,12 +11,30 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
-import { getLocationJSON } from '../util/PodUtil';
+import { getLocationObject } from '../util/PodUtil';
 
-export default function Home() {
+interface Props {
+  mapTheme: string;
+}
+
+export default function Home<Props>( props:any ): JSX.Element{
 
   const [map, setMap] = useState<any>([]);
   const [markers, setMarkers] = useState<any[]>([]);
+  const [mountFinished, setMountFinished] = useState(false);
+
+  useEffect(() => {
+    console.log("CURRENT MAP:")
+    console.log(props.mapTheme)
+    console.log(mountFinished)
+    if (mountFinished) {
+      if (props.mapTheme == 'light')
+        map.setStyle("mapbox://styles/alvesit0/clg86aosh005p01o5khz3eqcw");
+      else
+        map.setStyle("mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5");
+    }
+    reloadMap();
+  }, [props.mapTheme]);
 
   const [showForm, setShowForm] = useState(false);
   const [showMarkerInfo, setShowMarkerInfo] = useState(false);
@@ -28,7 +46,7 @@ export default function Home() {
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [cardList, setCardList] = useState<any[]>([]);
+  const [cardList, setCardList] = useState<any>();
 
   const { session } = useSession();
 
@@ -56,7 +74,10 @@ export default function Home() {
     console.log("LOCATION:")
     console.log(location);
 
-    setCardList(await getLocationJSON(session, location._id));
+    let cardList = await getLocationObject(session, location._id);
+
+    if (cardList != undefined)
+      setCardList(cardList);
   };
 
   const closeForm = (state: boolean) => {
@@ -87,26 +108,52 @@ export default function Home() {
       setRedirectToLogin(true);
   }
 
-  const closeModal = () => {
+  const closeModal = async () => {
     setIsOpen(false);
+    handleShowMarkerInfo(true, formLng, formLat, selectedLocation._id);
+  }
+
+  const finishedMounting = () => {
+    setMountFinished(true);
   }
 
   const reloadMap = async () => {
+    console.log("RELOADING MAP...");
     var source = map.getSource('places');
+    
     const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/'
     const response = await axios.get(apiEndPoint + "locations/");
     console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint)
+    
     let locations = JSON.parse(requestToList(response.data));
-    source.setData(locations);
-    markers.forEach((marker: any) => {
-      marker.remove();
-    });
-  }
+    if (map.getSource("places") == undefined) {
+      map.addSource("places", {
+        type: "geojson",
+        data: locations,
+      });
+      map.addLayer({
+        id: "places",
+        type: "symbol",
+        source: "places",
+        layout: {
+          "icon-image": ["get", "icon"],
+          "icon-allow-overlap": true,
+          "icon-size": 1,
+        },
+      });
+    }
+    var source = map.getSource("places");
+      source.setData(locations);
+      markers.forEach((marker: any) => {
+        marker.remove();
+      });
+    map.removeSource("places");
+  };
 
   return (
     <article className="homearticle">
       <div className="mapdiv">
-        <Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' onFormSelect={handleShowForm} onIconSelect={handleShowMarkerInfo} onMapSubmit={onMapSubmit}/>
+        <Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' onFormSelect={handleShowForm} onIconSelect={handleShowMarkerInfo} onMapSubmit={onMapSubmit} finishedMounting={finishedMounting} mapTheme={props.mapTheme}/>
       </div>
       <div className="filterDiv">
         <Filter toggleFriends={session.info.isLoggedIn} />
