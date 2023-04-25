@@ -20,7 +20,10 @@ export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
   const [idp, setIdp] = useState("https://solidcommunity.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
 
-  useEffect(() => {setUrlRedirect(window.location.href);}, [setUrlRedirect]);
+  useEffect(() => {
+    console.log ("Login.tsx - useEffects - window.location.origin:", window.location.origin );
+    setUrlRedirect(window.location.origin);
+  }, [setUrlRedirect]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setIdp(event.target.value as string);
