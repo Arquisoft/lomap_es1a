@@ -1,9 +1,12 @@
 name: Docker for lomap_es1a
 
 on:
+  pull_request:
+    branches:
+      - develop
   push:
     branches: 
-      -pruebasdocker
+      - pruebasDocker
 
 jobs:
   docker-push-webapp:

@@ -14,4 +14,3 @@ ENV REACT_APP_API_URI=$API_URI
 #Execute npm run prod to run the server
 CMD ["npm", "start"]
 #CMD [ "npm", "run", "prod" ]
-
