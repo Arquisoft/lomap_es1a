@@ -16,7 +16,7 @@ interface Ilogin {
   urlPrevia?: string;
 }
 
-export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
+export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
   const [idp, setIdp] = useState("https://solidcommunity.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
 

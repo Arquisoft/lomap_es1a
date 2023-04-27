@@ -45,8 +45,11 @@ export default function SearchAppBar<Props>( props:any ): JSX.Element {
   useEffect(() => {
     if (!session || !session.info.isLoggedIn) return;
     (async () => {  
-      await createBaseContainers(session);
+      console.log("NavBar.txx -- useEffect()");
       console.log("Iniciando contenedores en el POD tras login:");
+      await createBaseContainers(session);
+      console.log("NavBar.txx -- useEffect()");
+      console.log("Después de iniciar contenedores en el POD tras login:");
     })();
   }, [session, session.info.isLoggedIn]);
 
