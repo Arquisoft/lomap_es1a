@@ -33,7 +33,7 @@ export default function Home<Props>( props:any ): JSX.Element{
       else
         map.setStyle("mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5");
     }
-    reloadMap();
+    reloadMap("");
   }, [props.mapTheme]);
 
   const [showForm, setShowForm] = useState(false);
@@ -117,9 +117,10 @@ export default function Home<Props>( props:any ): JSX.Element{
     setMountFinished(true);
   }
 
-  const reloadMap = async () => {
+  const reloadMap = async (category:string ) => {
     console.log("RELOADING MAP...");
-    const response = await axios.get("http://localhost:5000/locations/");
+
+    const response = await axios.get("http://localhost:5000/locations/" +  category);
     let locations = JSON.parse(requestToList(response.data));
     if (map.getSource("places") == undefined) {
       map.addSource("places", {
@@ -151,7 +152,7 @@ export default function Home<Props>( props:any ): JSX.Element{
         <Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' onFormSelect={handleShowForm} onIconSelect={handleShowMarkerInfo} onMapSubmit={onMapSubmit} finishedMounting={finishedMounting} mapTheme={props.mapTheme}/>
       </div>
       <div className="filterDiv">
-        <Filter toggleFriends={session.info.isLoggedIn} />
+        <Filter toggleFriends={session.info.isLoggedIn} reloadMap={reloadMap}/>
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showAddLocationNotification} reloadMap={reloadMap}/>
       <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal} cardList={cardList}/>

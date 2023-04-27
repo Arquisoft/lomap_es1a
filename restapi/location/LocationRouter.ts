@@ -13,7 +13,7 @@ const Location = require("./LocationModel");
 const locationRouter = Router();
 
 locationRouter.post('/', createLocation);
-locationRouter.get('/', getAllLocations);
+locationRouter.get('/all', getAllLocations);
 locationRouter.get('/info/:id', getLocationById);
 locationRouter.get('/shops', getShops);
 locationRouter.get('/restaurants', getRestaurants);

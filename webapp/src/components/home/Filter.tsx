@@ -7,16 +7,22 @@ import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import styles from './filter.module.css';
+import axios from "axios";
 
 interface Props {
   toggleFriends: boolean
+  reloadMap: (category:string) => void 
 }
 
 export default function Filter<Props>( props:any ): JSX.Element {
   const [category, setCategory] = React.useState("Show all");
 
-  const handleChange = (event: any) => {
-    setCategory(event.target.value as string);
+  const handleChange = async (event: any) => {
+    const category = event.target.value as string;
+    
+    props.reloadMap(category);
+
+    setCategory(category);
   };
 
   return (
