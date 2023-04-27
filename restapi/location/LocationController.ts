@@ -95,4 +95,3 @@ export async function getOthers(req: Request, res:Response) {
 }
 
 
-
