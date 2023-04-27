@@ -24,6 +24,7 @@ export default function Home<Props>( props:any ): JSX.Element{
   const [mountFinished, setMountFinished] = useState(false);
 
   useEffect(() => {
+    console.log("Home.tsx -- useEffect (Despliegue de rama pruebas docker?)");
     console.log("CURRENT MAP:")
     console.log(props.mapTheme)
     console.log(mountFinished)
