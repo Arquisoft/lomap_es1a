@@ -3,6 +3,7 @@ import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
 import {
   Thing, 
+  getThingAll,
   getThing,
   getSolidDataset,
   createSolidDataset,
@@ -10,6 +11,7 @@ import {
   getUrlAll,
   getStringNoLocale, 
   createContainerAt,
+  getContainedResourceUrlAll,
   saveSolidDatasetAt,
   SolidDataset,
   addUrl,
@@ -81,6 +83,30 @@ export async function getLocation(session:Session, idLocation:string){
   const locationThing = await getThing(datasetLocation!, rutaThing);
   console.log("getLocation --> locationThing: ", locationThing);
   return locationThing;
+}
+
+//Devuelve una lista con todas las locations del Pod del usuario que inició sesión
+async function getAllLocations(session:Session){
+  console.log("Entrando en getAllLocations");
+  //Si no estamo en sesión retornamos null
+  if (!session || !session.info.isLoggedIn) return;
+  //Conseguimos la URL de almacenamiento del POD
+  const urlPOD = await getStorageURL(session);
+  //Construimos la ruta del contenedor de las locations 
+  const rutaContenedor = urlPOD + RUTA_LOCATIONS;
+  console.log("getAllLocations --> rutaContenedor: ", rutaContenedor);
+  //Pedimos el dataset al POD
+  let contenedorLocations = await getDataset(session, rutaContenedor);
+  if (contenedorLocations === null){
+    return null;
+  }
+  console.log("getAllLocations --> datasetLocation: ", contenedorLocations);
+  
+  const listaLocations = await getContainedResourceUrlAll(contenedorLocations!);
+  
+  console.log("getAllLocations --> lista: ", listaLocations);
+
+  return listaLocations;
 }
 
 export async function saveLocation(session:Session, location:Location){
@@ -250,6 +276,7 @@ export async function createBaseContainers (session:Session){
   console.log("Crear en pod ruta " + RUTA_LOMAP + ". SolidDataset:", contenedorLomap);
   const contenedorLomapLocations:SolidDataset = await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOCATIONS);
   console.log("Crear en pod ruta " + RUTA_LOCATIONS + ". SolidDataset:", contenedorLomapLocations);
+  //Añadir aqui la carpeta para las imagenes??
 }
 
 // export async function getLocationJSON(session:Session, idLocation:string){
@@ -266,6 +293,25 @@ export async function getLocationObject(session: Session, idLocation: string) {
   if (location !== null)
     return parseLocation(session, location!);
   else return null
+}
+
+export async function getAllLocationsObject(session: Session) {
+  console.log ("PodUtil.ts -- getAllLocationsObject")
+  const listaLocations = await getAllLocations(session);
+  console.log ("PodUtil.ts -- getAllLocationsObject -- listaLocations", listaLocations);
+  if (listaLocations == undefined || listaLocations == null) return null;
+  let listaObjectsLocations  = []; 
+  for (let elemento of listaLocations) { 
+    let idLocation = elemento.substring(elemento.lastIndexOf("/")+1);
+    console.log("idLocation", idLocation);
+    
+    let locationObject = await getLocationObject(session,idLocation);
+    if (locationObject !== null){
+      listaObjectsLocations.push(locationObject);
+    }
+  }
+  return listaObjectsLocations;
+
 }
 
 async function getUserName(session:Session){
