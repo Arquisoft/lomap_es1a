@@ -120,14 +120,16 @@ export default function Home<Props>( props:any ): JSX.Element{
 
   const reloadMap = async () => {
     console.log("RELOADING MAP...");
-    var source = map.getSource('places');
+    //var source = map.getSource('places');
     
-    const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+    const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/';
     const response = await axios.get(apiEndPoint + "locations/");
-    console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint)
+    console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint);
+    console.log("Home.tsx - reloadMap - response:",response);
     
     let locations = JSON.parse(requestToList(response.data));
-    if (map.getSource("places") == undefined) {
+    console.log("Home.tsx - reloadMap - locations:",locations);
+    /*if (map.getSource("places") == undefined) {
       map.addSource("places", {
         type: "geojson",
         data: locations,
@@ -148,7 +150,7 @@ export default function Home<Props>( props:any ): JSX.Element{
       markers.forEach((marker: any) => {
         marker.remove();
       });
-    map.removeSource("places");
+    map.removeSource("places");*/
   };
 
   return (
