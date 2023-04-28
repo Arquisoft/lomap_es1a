@@ -11,7 +11,7 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
-import { getLocationObject } from '../util/PodUtil';
+import { getLocationObject, getAllLocationsObject} from '../util/PodUtil';
 
 interface Props {
   mapTheme: string;
@@ -76,6 +76,10 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log(location);
 
     let cardList = await getLocationObject(session, location._id);
+    console.log ("Home.tsx -- handleShowMarkerInfo -- cardList", cardList);
+    //Pruebas .Llamo aqui a obtener toda la lista de locations
+    let locations = await getAllLocationsObject(session);
+    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Lista de todas las localizaciones", locations);
 
     if (cardList != undefined)
       setCardList(cardList);
