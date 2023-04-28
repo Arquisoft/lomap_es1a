@@ -24,7 +24,7 @@ export default function Home<Props>( props:any ): JSX.Element{
   const [mountFinished, setMountFinished] = useState(false);
 
   useEffect(() => {
-    console.log("Home.tsx -- useEffect (Despliegue de rama pruebas docker?)");
+    console.log("Home.tsx -- useEffect");
     console.log("CURRENT MAP:")
     console.log(props.mapTheme)
     console.log(mountFinished)
@@ -129,7 +129,8 @@ export default function Home<Props>( props:any ): JSX.Element{
     
     let locations = JSON.parse(requestToList(response.data));
     console.log("Home.tsx - reloadMap - locations:",locations);
-    /*if (map.getSource("places") == undefined) {
+    
+    if (map.getSource("places") == undefined) {
       map.addSource("places", {
         type: "geojson",
         data: locations,
@@ -150,7 +151,7 @@ export default function Home<Props>( props:any ): JSX.Element{
       markers.forEach((marker: any) => {
         marker.remove();
       });
-    map.removeSource("places");*/
+    map.removeSource("places");
   };
 
   return (
