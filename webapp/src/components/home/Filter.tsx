@@ -51,10 +51,10 @@ export default function Filter<Props>( props:any ): JSX.Element {
           className={styles.categoryFilter}
         >
           <MenuItem value={"all"}>Show all</MenuItem>
-          <MenuItem value={"shop"}>Shop</MenuItem>
-          <MenuItem value={"restaurant"}>Restaurant</MenuItem>
-          <MenuItem value={"monument"}>Monument</MenuItem>
-          <MenuItem value={"other"}>Other</MenuItem>
+          <MenuItem value={"shops"}>Shop</MenuItem>
+          <MenuItem value={"restaurants"}>Restaurant</MenuItem>
+          <MenuItem value={"monuments"}>Monument</MenuItem>
+          <MenuItem value={"others"}>Other</MenuItem>
         </Select>
       </FormControl>
     </div>
