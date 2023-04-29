@@ -11,7 +11,7 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
-import { getLocationObject } from '../util/PodUtil';
+import { getLocationObject, getAllLocationsObject} from '../util/PodUtil';
 
 interface Props {
   mapTheme: string;
@@ -24,6 +24,7 @@ export default function Home<Props>( props:any ): JSX.Element{
   const [mountFinished, setMountFinished] = useState(false);
 
   useEffect(() => {
+    console.log("Home.tsx -- useEffect");
     console.log("CURRENT MAP:")
     console.log(props.mapTheme)
     console.log(mountFinished)
@@ -75,6 +76,10 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log(location);
 
     let cardList = await getLocationObject(session, location._id);
+    console.log ("Home.tsx -- handleShowMarkerInfo -- cardList", cardList);
+    //Pruebas .Llamo aqui a obtener toda la lista de locations
+    let locations = await getAllLocationsObject(session);
+    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Lista de todas las localizaciones", locations);
 
     if (cardList != undefined)
       setCardList(cardList);
@@ -119,13 +124,16 @@ export default function Home<Props>( props:any ): JSX.Element{
 
   const reloadMap = async () => {
     console.log("RELOADING MAP...");
-    var source = map.getSource('places');
+    //var source = map.getSource('places');
     
-    const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+    const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/';
     const response = await axios.get(apiEndPoint + "locations/");
-    console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint)
+    console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint);
+    console.log("Home.tsx - reloadMap - response:",response);
     
     let locations = JSON.parse(requestToList(response.data));
+    console.log("Home.tsx - reloadMap - locations:",locations);
+    
     if (map.getSource("places") == undefined) {
       map.addSource("places", {
         type: "geojson",

@@ -16,14 +16,19 @@ interface Ilogin {
   urlPrevia?: string;
 }
 
-export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
+export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
   const [idp, setIdp] = useState("https://solidcommunity.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
 
   useEffect(() => {
+    console.log ("Antes setUrlRedirect");
     console.log ("Login.tsx - useEffects - window.location.origin:", window.location.origin );
+    console.log ("Login.tsx - useEffects - urlRedirect:", urlRedirect );
     setUrlRedirect(window.location.origin);
-  }, [setUrlRedirect]);
+    console.log ("Después setUrlRedirect");
+    console.log ("Login.tsx - useEffects - window.location.origin:", window.location.origin );
+    console.log ("Login.tsx - useEffects - urlRedirect:", urlRedirect );
+  }, [urlRedirect]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setIdp(event.target.value as string);
