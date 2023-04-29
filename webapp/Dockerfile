@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18.15.0
 LABEL org.opencontainers.image.source https://github.com/arquisoft/lomap_es1a
 COPY . /app
 WORKDIR /app
