@@ -44,9 +44,6 @@ export async function getFriends(webId:string) {
   let friends: Friend[] = [];
 
   for (let friend of friendURLs) {
-    if (friend.split("/profile/card").length == 1)
-      friend += "profile/card#me";
-    
     let name = getStringNoLocale(
       await getUserProfile(friend),
       FOAF.name
@@ -55,7 +52,8 @@ export async function getFriends(webId:string) {
     if (friend && friend != webId)
       friends.push({
         name: name,
-        webId : friend.split("profile/card#me")[0]
+        webId : friend
+        //webId : friend.split("profile/card#me")[0]
       });
     
   }
@@ -314,13 +312,15 @@ export async function getAllLocationsObject(session: Session) {
 
 }
 
-async function getUserName(session:Session){
+export async function getUserName(session:Session){
   
   if (!session || !session.info.isLoggedIn) return null;
 
+  console.log ("PodUtil.ts -- getUserName -- session.info.webId: ",session.info.webId );
   const profileDataset = await getSolidDataset(session.info.webId!, {
     fetch: session.fetch,
   });
+
   console.log("getuserName--> profileDataset", profileDataset);
   const profileThing = await getThing(profileDataset, session.info.webId!);
   console.log("getuserName--> profileThing", profileThing);

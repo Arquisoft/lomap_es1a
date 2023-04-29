@@ -11,7 +11,7 @@ import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
 import "./Home.css";
-import { getLocationObject, getAllLocationsObject} from '../util/PodUtil';
+import { getLocationObject, getAllLocationsObject, getUserName, getFriends} from '../util/PodUtil';
 
 interface Props {
   mapTheme: string;
@@ -77,10 +77,17 @@ export default function Home<Props>( props:any ): JSX.Element{
 
     let cardList = await getLocationObject(session, location._id);
     console.log ("Home.tsx -- handleShowMarkerInfo -- cardList", cardList);
-    //Pruebas .Llamo aqui a obtener toda la lista de locations
-    let locations = await getAllLocationsObject(session);
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Lista de todas las localizaciones", locations);
+    //Pruebas varias de los métodos del pod. 
+    //1 Llamo aqui a obtener toda la lista de locations
+    //let locations = await getAllLocationsObject(session);
+    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Lista de todas las localizaciones", locations);
+    //2. Conseguir el nombre de usuario del pod
+    let userName = await getUserName(session);
+    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getUserName", userName);
+    let friends = await getFriends(session.info.webId!);
+    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getFriends", friends);
 
+  
     if (cardList != undefined)
       setCardList(cardList);
   };
