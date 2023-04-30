@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
 import Paper from '@mui/material/Paper';
 import ListItemText from '@mui/material/ListItemText';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -29,8 +24,13 @@ function FriendGroupList() {
     setOpen2(!open2);
   };
 
+  const handleSubmit = () => {
+
+  }
+
   return (
-    <List component={Paper} variant="outlined" square style={{marginTop:"1em", maxHeight:"60vh"}}>
+    <div>
+    <List component={Paper} variant="outlined" square style={{marginTop:"1em", maxHeight:"55vh", height:"55vh"}}>
       <ListItemButton>
         <ListItemText disableTypography primary="Friend group 1" onClick={handleClick1} style={{fontWeight:"bold", fontSize:"1.5em"}}/>
         {open1 ? <ExpandLess /> : <ExpandMore />}
@@ -78,6 +78,18 @@ function FriendGroupList() {
         </List>
       </Collapse>
     </List>
+    <div className="add-friend-group-button">
+      <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ width: "30%" }}
+          onClick={handleSubmit}
+        >
+          Create Friend Group
+        </Button>
+    </div>
+    </div>
   )
 }
 
