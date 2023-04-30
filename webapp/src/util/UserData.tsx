@@ -5,6 +5,7 @@ export type Friend = {
 
 export type Group = {
     name: string,
+    webId?: string,
     members: Friend[]
 }
 

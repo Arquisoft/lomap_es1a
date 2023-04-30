@@ -7,20 +7,23 @@ import {
   getThing,
   getSolidDataset,
   createSolidDataset,
+  addUrl,
   getUrl,
+  setUrl,
   getUrlAll,
   getStringNoLocale, 
+  setStringNoLocale,
   createContainerAt,
   getContainedResourceUrlAll,
   saveSolidDatasetAt,
   SolidDataset,
-  addUrl,
   addStringNoLocale,
   buildThing,
   createThing,
   setThing,
   overwriteFile,
-  getFile
+  getFile,
+  removeThing
 } from "@inrupt/solid-client";
 
 import { FOAF, RDF, VCARD} from "@inrupt/vocab-common-rdf"
@@ -362,7 +365,7 @@ async function parseLocation (session:Session, location:Thing){
 }
 
 
-//Devuelve una lista con todas las locations del Pod del usuario que inició sesión
+//Devuelve una lista con todos los grupos del Pod del usuario que inició sesión
 export async function getAllGroups(session:Session){
   console.log("Entrando en getAllGroups");
   //Si no estamo en sesión retornamos null
@@ -404,7 +407,8 @@ async function parseGroup (group:Thing){
   }
   
   let result:Group = {
-    name: name!=null? name : "",
+    name: name != null ? name : "",
+    webId: group.url, 
     members: listaMembers
   }
  
@@ -428,3 +432,66 @@ export async function getAllGroupsObject(session: Session) {
   return listaObjectsGroup;
 }
 
+export async function saveGroup(session:Session, group:Group){
+  //Conseguimos el dataset de los grupos
+  const urlPOD = await getStorageURL(session);
+  const rutaDataset = urlPOD + RUTA_GROUPS; 
+  let groupsDataset = await getSolidDataset(
+    rutaDataset,
+    { fetch: fetch }
+  );
+
+  //Crear Thing a partir del objeto grupo
+  let nuevoGrupoThing = createThing({ name: group.name });
+  nuevoGrupoThing = setStringNoLocale(nuevoGrupoThing,VCARD.fn,group.name);
+  nuevoGrupoThing = setUrl(nuevoGrupoThing,RDF.type, VCARD.Group);
+  for (let member of group.members) {
+    nuevoGrupoThing = addUrl(nuevoGrupoThing,VCARD.hasMember,member.webId);
+  }
+  
+
+  //Actualizamos el dataset con el nuevo Grupo
+  groupsDataset = setThing(groupsDataset,nuevoGrupoThing);
+
+  //Guardar el dataset modificado en el POD
+  const datasetGuardado = await saveSolidDatasetAt(
+    rutaDataset,
+    groupsDataset,
+    { fetch: fetch }
+  );
+    
+  //Devolvemos el nuevo grupo Guardado
+  const urlNuevoGrupoGuardado = rutaDataset + "#" + group.name;
+  const nuevoGrupoGuardado:Thing|null = await getThing(datasetGuardado, urlNuevoGrupoGuardado);
+  if (nuevoGrupoGuardado == null)
+    return null;
+  const nuevoObjectGroupGuardado:Group = await parseGroup(nuevoGrupoGuardado);
+  return nuevoObjectGroupGuardado;
+}
+
+export async function deleteGroup(session:Session, group:Group){
+  //Conseguimos el dataset de los grupos
+  const urlPOD = await getStorageURL(session);
+  const rutaDataset = urlPOD + RUTA_GROUPS; 
+  let groupsDataset = await getSolidDataset(
+    rutaDataset,
+    { fetch: fetch }
+  );
+
+  //Borramos el grupo de groupsDataset
+  
+  //Generamoss el webId a partir del nombre del grupo (webId es campo opcional)
+  //Construimos la ruta del dataset de los grupos
+  const webidGrupo = urlPOD + RUTA_GROUPS + "#" + group.name;
+  groupsDataset = await removeThing(groupsDataset,webidGrupo);
+  
+  //Guardar el dataset modificado en el POD
+  await saveSolidDatasetAt(
+    rutaDataset,
+    groupsDataset,
+    { fetch: fetch }
+  );
+    
+  //Devolvemos la lista de grupos tras el borrado
+  return await getAllGroupsObject(session);
+}
