@@ -69,6 +69,8 @@ export async function getLocation(session:Session, idLocation:string){
   if (!session || !session.info.isLoggedIn) return;
   //Conseguimos la URL de almacenamiento del POD
   const urlPOD = await getStorageURL(session);
+  console.log("URL POD:")
+  console.log(urlPOD);
   //Construimos la ruta del dataset de la Location
   const rutaDataset = urlPOD + RUTA_LOCATIONS + "/" + idLocation;
   console.log("getLocation --> ruta location: ", rutaDataset);
@@ -494,4 +496,76 @@ export async function deleteGroup(session:Session, group:Group){
     
   //Devolvemos la lista de grupos tras el borrado
   return await getAllGroupsObject(session);
+}
+
+// Obtiene la información, añadida por los amigos del usuario, sobre una localización dada
+export async function getLocationsFromFriends(session:Session, idLocation:string){
+  console.log("Entrando en getFriendLocationsLocation");
+  //Si no estamos en sesión retornamos null
+  if (!session || !session.info.isLoggedIn) return;
+
+  const friends = await getFriends(session.info.webId != undefined ? session.info.webId : "");
+  let locationList:any = [];
+
+  friends.forEach(async (friend) => {
+    //Conseguimos la URL de almacenamiento del POD
+    const urlPOD = friend.webId.split("profile/card#me")[0];
+    //Construimos la ruta del dataset de la Location
+    const rutaDataset = urlPOD + RUTA_LOCATIONS + "/" + idLocation;
+    console.log("getFriendLocation --> ruta location: ", rutaDataset);
+
+    //Pedimos el dataset de la Location al POD
+    let datasetLocation = await getDataset(session, rutaDataset);
+    if (datasetLocation === null){
+      return null;
+    }
+
+    console.log("getFriendLocation --> datasetLocation: ", datasetLocation);
+    //Construimos la ruta de la Location (thing)
+    const rutaThing = rutaDataset + "#" + idLocation;
+    console.log("getFriendLocation --> rutaThing: ", rutaThing);
+    const locationThing = await getThing(datasetLocation!, rutaThing);
+    console.log("getFriendLocation --> locationThing: ", locationThing);
+
+    if (locationThing !== null) {
+      locationList.push(await parseFriendLocation(friend, locationThing));
+    } 
+  });
+
+  console.log("LOCATION LIST")
+  console.log(locationList);
+  
+  return locationList;
+}
+
+async function parseFriendLocation(friend:Friend, location:Thing){
+
+  console.log ("parseLocation --> location", location);
+  const comments =  getStringNoLocale(location, URL_VOCABULARIO + "comments");
+  console.log ("parseLocation --> comments", location);
+  const score = getStringNoLocale(location, URL_VOCABULARIO + "score");
+  console.log ("parseLocation --> comments", score);
+  const name = friend.name;
+  console.log ("parseLocation --> name", name);
+  const category = await getStringNoLocale(location, URL_VOCABULARIO + "category");
+  console.log ("parseLocation --> category", category);
+  const id = await getStringNoLocale(location, URL_VOCABULARIO + "id_location");
+  console.log ("parseLocation --> id", id);
+
+  const image = await getFile(await friend.webId.split("profile/card#me")[0] + "lomap/" + RUTA_IMAGES + "/" + id + ".jpg", {fetch: fetch}).catch(
+    () => {
+      console.log("No image found")
+    }
+  );
+
+  let result = {
+    name: name,
+    category: category,
+    id: id,
+    comments: comments,
+    score: score,
+    image: image
+  }
+
+  return result;
 }

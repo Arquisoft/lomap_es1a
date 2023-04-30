@@ -14,7 +14,7 @@ import "./MarkerInfo.css";
 interface Props {
   show: boolean;
   location: any;
-  cardList?: any;
+  cardList: any;
   setOpen: (state: boolean) => void;
   openModal: () => void;
 }
@@ -38,6 +38,8 @@ export default class MarkerInfo extends React.Component<Props> {
       drawerClasses = "side-drawer open";
     }
 
+    console.log(this.props.cardList)
+
     return (
       <div className={drawerClasses}>
         <div className={"closeButton"}>
@@ -58,9 +60,11 @@ export default class MarkerInfo extends React.Component<Props> {
           </Typography>
           <div className={"infoContainer"}>
             <div style={{overflow: "hidden"}}>
-              {
+            {
                 this.props.cardList !== undefined ?
-                <InfoCard username={this.props.cardList.name} rating={this.props.cardList.score} comments={this.props.cardList.comments} image={this.props.cardList.image} />
+                this.props.cardList.map((location:any) => 
+                  <InfoCard username={location.name} rating={location.score} comments={location.comments} image={location.image} />
+                )
                 : ""
               }
             </div>

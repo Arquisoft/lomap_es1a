@@ -9,7 +9,7 @@ import { Navigate } from "react-router-dom";
 import { useNotifications } from 'reapop'
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
-import {initPodForLomap, saveGroup, deleteGroup} from "../../src/util/PodUtil"
+import {initPodForLomap, saveGroup, deleteGroup, getLocationsFromFriends} from "../../src/util/PodUtil"
 import type { Friend, Group, Location} from "../../src/util/UserData";
 
 import "./Home.css";
@@ -35,7 +35,7 @@ export default function Home<Props>( props:any ): JSX.Element{
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [cardList, setCardList] = useState<any>();
+  const [cardList, setCardList] = useState<any>([]);
 
   const { notify } = useNotifications();
 
@@ -86,10 +86,51 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log("LOCATION:")
     console.log(location);
 
-    let cardList = await getLocationObject(session, location._id);
-    console.log ("Home.tsx -- handleShowMarkerInfo -- cardList", cardList);
+    let newCardList:any[] = [];
+    newCardList.push(await getLocationObject(session, location._id));
+    let friendCardList:any[] = await getLocationsFromFriends(session, location._id);
+    console.log("LOCATIONS FROM FRIENDS")
+    console.log(friendCardList);
+    console.log(newCardList)
+    friendCardList.map((location:any) => {
+      newCardList.push(location);
+      console.log(newCardList)
+    })
+
+    console.log("NEWCARDLIST")
+    console.log(newCardList)
+
+    if (newCardList != undefined)
+      setCardList(newCardList);
+      
+
+    // console.log("LOCATION:")
+    // console.log(location);
+// 
+    // let cardList:any[] = [];
+    // cardList.push(await getLocationObject(session, location._id))
+    // const locationA = await getLocationObject(session, location._id);
+    // console.log(locationA);
+// 
+    // console.log ("Home.tsx -- handleShowMarkerInfo -- cardList", cardList);
+  // 
+    // console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas PODS ");
+    // console.log("##### ADD FRIENDS: #####")
+    // const friendLocations = await getLocationsFromFriends(session, location._id);
+    // console.log(friendLocations[0].category);
+    // friendLocations.forEach((location:any) => {
+    //   cardList.push(location);
+    // });
+    // 
+    // console.log("FIRST ELEMENT")
+    // console.log(cardList);
+    // if (cardList[0] != null)
+    //   console.log(cardList[0]);
+// 
+    // if (cardList != undefined)
+    //   setCardList(cardList);
+
     
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas PODS ");
     //Pruebas varias de los métodos del pod. 
     //1 Llamo aqui a obtener toda la lista de locations
     //let locations = await getAllLocationsObject(session);
@@ -126,8 +167,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Grupos despues de borrar : ",gruposDespuesBorrar);
     */
     
-    if (cardList != undefined)
-      setCardList(cardList);
+
   };
 
   const closeForm = (state: boolean) => {
