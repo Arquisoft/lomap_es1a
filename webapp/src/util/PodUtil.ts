@@ -1,4 +1,4 @@
-import type { Friend, Location} from "./UserData";
+import type { Friend, Group, Location} from "./UserData";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
 import {
@@ -23,12 +23,13 @@ import {
   getFile
 } from "@inrupt/solid-client";
 
-import { FOAF, RDF} from "@inrupt/vocab-common-rdf"
+import { FOAF, RDF, VCARD} from "@inrupt/vocab-common-rdf"
 
 const RUTA_IMAGES = "images";
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
 const URL_VOCABULARIO = "http://w3id.org/lomap/";
+const RUTA_GROUPS = RUTA_LOMAP + "/groups.ttl";
 
 // Returns a user profile as a Thing
 export async function getUserProfile(webID: string){
@@ -329,6 +330,14 @@ export async function getUserName(session:Session){
   return name
 }
 
+export async function getUserNameFromWebId(webId:string){
+  if (typeof webId == 'undefined' || !webId || webId.length === 0 || webId === "")
+    return "";
+  const profileThing = await getUserProfile(webId);
+  const name = await getStringNoLocale(profileThing!, FOAF.name);
+  return name;
+}
+
 async function parseLocation (session:Session, location:Thing){
 
   console.log ("parseLocation --> location", location);
@@ -360,3 +369,75 @@ async function parseLocation (session:Session, location:Thing){
 
   return result;
 }
+
+
+//Devuelve una lista con todas las locations del Pod del usuario que inició sesión
+export async function getAllGroups(session:Session){
+  console.log("Entrando en getAllGroups");
+  //Si no estamo en sesión retornamos null
+  if (!session || !session.info.isLoggedIn) return;
+  //Conseguimos la URL de almacenamiento del POD
+  const urlPOD = await getStorageURL(session);
+  //Construimos la ruta del dataset de los grupos
+  const urlDatasetGroups = urlPOD + RUTA_GROUPS ;
+  //Pedimos el dataset al POD
+  let listGroups:Thing[] = [];
+  let datasetLocations:SolidDataset | null | undefined;
+  try {
+    console.log("Dentro del try ");
+    const fetch = session.fetch;
+
+    datasetLocations = await getSolidDataset(urlDatasetGroups, {fetch});
+    console.log("---- datasetLocations: ",datasetLocations);
+
+  } catch (error:any) {
+    console.log("Dentro del catch ");
+    console.log ("error: ",error);
+    if (error.statusCode === 404) {  
+      return listGroups;
+    }
+  }
+  listGroups = await getThingAll(datasetLocations!);
+  console.log("getAllGroups --> lista Grupos: ", listGroups);
+  return listGroups;
+}
+
+async function parseGroup (group:Thing){
+  const name:string|null =  getStringNoLocale(group, VCARD.fn);
+  const members:string[] = getUrlAll(group, VCARD.hasMember);
+  
+  let listaMembers:Friend[] = [];
+  for (let member of members) {
+    let nameFriend:string|null = await getUserNameFromWebId(member);
+    let friend:Friend = {
+      name: nameFriend!=null? nameFriend : "",
+      webId: member
+    } 
+    listaMembers.push(friend);
+  }
+  
+  let result:Group = {
+    name: name!=null? name : "",
+    members: listaMembers
+  }
+ 
+  return result;
+}
+
+export async function getAllGroupsObject(session: Session) {
+  console.log ("PodUtil.ts -- getAllGroupsObject")
+  const listaGroups = await getAllGroups(session);
+  let listaObjectsGroup:Group[]  = []; 
+
+  if (listaGroups == undefined || listaGroups == null) 
+    return listaObjectsGroup;
+  
+  for (let elemento of listaGroups) { 
+    let groupObject = await parseGroup(elemento);  
+    if (groupObject !== null){
+      listaObjectsGroup.push(groupObject);
+    }
+  }
+  return listaObjectsGroup;
+}
+
