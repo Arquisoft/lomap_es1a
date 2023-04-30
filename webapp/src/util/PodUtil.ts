@@ -1,32 +1,37 @@
-import type { Friend, Location} from "./UserData";
+import type { Friend, Group, Location} from "./UserData";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
 import {
   Thing, 
+  getThingAll,
   getThing,
   getSolidDataset,
   createSolidDataset,
+  addUrl,
   getUrl,
+  setUrl,
   getUrlAll,
   getStringNoLocale, 
+  setStringNoLocale,
   createContainerAt,
+  getContainedResourceUrlAll,
   saveSolidDatasetAt,
   SolidDataset,
-  addUrl,
   addStringNoLocale,
   buildThing,
   createThing,
   setThing,
   overwriteFile,
-  getFile
+  getFile,
+  removeThing
 } from "@inrupt/solid-client";
 
-import { FOAF, RDF} from "@inrupt/vocab-common-rdf"
-
-const RUTA_IMAGES = "images";
+import { FOAF, RDF, VCARD} from "@inrupt/vocab-common-rdf"
+const URL_VOCABULARIO = "http://w3id.org/lomap/";
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
-const URL_VOCABULARIO = "http://w3id.org/lomap/";
+const RUTA_IMAGES = RUTA_LOMAP + "/images";
+const RUTA_GROUPS = RUTA_LOMAP + "/groups.ttl";
 
 // Returns a user profile as a Thing
 export async function getUserProfile(webID: string){
@@ -42,9 +47,6 @@ export async function getFriends(webId:string) {
   let friends: Friend[] = [];
 
   for (let friend of friendURLs) {
-    if (friend.split("/profile/card").length == 1)
-      friend += "profile/card#me";
-    
     let name = getStringNoLocale(
       await getUserProfile(friend),
       FOAF.name
@@ -53,7 +55,8 @@ export async function getFriends(webId:string) {
     if (friend && friend != webId)
       friends.push({
         name: name,
-        webId : friend.split("profile/card#me")[0]
+        webId : friend
+        //webId : friend.split("profile/card#me")[0]
       });
     
   }
@@ -81,6 +84,30 @@ export async function getLocation(session:Session, idLocation:string){
   const locationThing = await getThing(datasetLocation!, rutaThing);
   console.log("getLocation --> locationThing: ", locationThing);
   return locationThing;
+}
+
+//Devuelve una lista con todas las locations del Pod del usuario que inició sesión
+async function getAllLocations(session:Session){
+  console.log("Entrando en getAllLocations");
+  //Si no estamo en sesión retornamos null
+  if (!session || !session.info.isLoggedIn) return;
+  //Conseguimos la URL de almacenamiento del POD
+  const urlPOD = await getStorageURL(session);
+  //Construimos la ruta del contenedor de las locations 
+  const rutaContenedor = urlPOD + RUTA_LOCATIONS;
+  console.log("getAllLocations --> rutaContenedor: ", rutaContenedor);
+  //Pedimos el dataset al POD
+  let contenedorLocations = await getDataset(session, rutaContenedor);
+  if (contenedorLocations === null){
+    return null;
+  }
+  console.log("getAllLocations --> datasetLocation: ", contenedorLocations);
+  
+  const listaLocations = await getContainedResourceUrlAll(contenedorLocations!);
+  
+  console.log("getAllLocations --> lista: ", listaLocations);
+
+  return listaLocations;
 }
 
 export async function saveLocation(session:Session, location:Location){
@@ -171,20 +198,6 @@ async function getOrCreateContainer(session:Session, ContainerURI:string){
   } catch (error: any) {
    
     return error;
-    /*
-    console.log("Ver que error da al intentar crear un container que ya existe")
-    console.log("error.statusCode: ",error.statusCode);
-    console.log("error: ",error);
-    ------
-    if (error.statusCode === 404) {
-      
-      const todoList = await saveSolidDatasetAt(
-        indexUrl,
-        createSolidDataset(),
-        {
-          fetch,
-        }
-      );*/
   }
 }
 
@@ -242,14 +255,21 @@ async function getDataset(session:Session, datasetURI:string) {
 //  console.log("datasetPrueba: ", datasetPrueba);*/
 //}
 
-//Si no existen en el POD crea los contenedores 
-export async function createBaseContainers (session:Session){
+//Si no existen en el Pod crea los contenedores (directorios) y los dataset necesarios para la aplciación
+export async function initPodForLomap (session:Session){
   const urlAlmacenamiento = await getStorageURL(session);
-  console.log("Ruta base del POD: ", urlAlmacenamiento);
-  const contenedorLomap:SolidDataset = await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOMAP);
-  console.log("Crear en pod ruta " + RUTA_LOMAP + ". SolidDataset:", contenedorLomap);
-  const contenedorLomapLocations:SolidDataset = await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOCATIONS);
-  console.log("Crear en pod ruta " + RUTA_LOCATIONS + ". SolidDataset:", contenedorLomapLocations);
+  console.log("initPodForLomap -- Ruta base del POD: ", urlAlmacenamiento);
+  //Por defecto se crean con permisos de lectura para todo el mundo.
+  await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOMAP);
+  console.log("initPodForLomap -- Comprobar en pod ruta " + RUTA_LOMAP + ".");
+  await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOCATIONS);
+  console.log("initPodForLomap -- Comprobar en pod ruta " + RUTA_LOCATIONS + ".");
+  await getOrCreateContainer(session,urlAlmacenamiento + RUTA_IMAGES);
+  console.log("initPodForLomap -- Comprobar en pod ruta " + RUTA_IMAGES + ".");
+  await getOrCreateDataset(session, urlAlmacenamiento + RUTA_GROUPS);
+  console.log("initPodForLomap -- Comprobar en pod recurso " + RUTA_GROUPS + ".");
+  //Crar Aquí lo de los grupos vacío.
+
 }
 
 // export async function getLocationJSON(session:Session, idLocation:string){
@@ -268,19 +288,48 @@ export async function getLocationObject(session: Session, idLocation: string) {
   else return null
 }
 
-async function getUserName(session:Session){
+export async function getAllLocationsObject(session: Session) {
+  console.log ("PodUtil.ts -- getAllLocationsObject")
+  const listaLocations = await getAllLocations(session);
+  console.log ("PodUtil.ts -- getAllLocationsObject -- listaLocations", listaLocations);
+  if (listaLocations == undefined || listaLocations == null) return null;
+  let listaObjectsLocations  = []; 
+  for (let elemento of listaLocations) { 
+    let idLocation = elemento.substring(elemento.lastIndexOf("/")+1);
+    console.log("idLocation", idLocation);
+    
+    let locationObject = await getLocationObject(session,idLocation);
+    if (locationObject !== null){
+      listaObjectsLocations.push(locationObject);
+    }
+  }
+  return listaObjectsLocations;
+
+}
+
+export async function getUserName(session:Session){
   
   if (!session || !session.info.isLoggedIn) return null;
 
+  console.log ("PodUtil.ts -- getUserName -- session.info.webId: ",session.info.webId );
   const profileDataset = await getSolidDataset(session.info.webId!, {
     fetch: session.fetch,
   });
+
   console.log("getuserName--> profileDataset", profileDataset);
   const profileThing = await getThing(profileDataset, session.info.webId!);
   console.log("getuserName--> profileThing", profileThing);
   const name = await getStringNoLocale(profileThing!, FOAF.name);
   console.log("getuserName--> name", name);
   return name
+}
+
+export async function getUserNameFromWebId(webId:string){
+  if (typeof webId == 'undefined' || !webId || webId.length === 0 || webId === "")
+    return "";
+  const profileThing = await getUserProfile(webId);
+  const name = await getStringNoLocale(profileThing!, FOAF.name);
+  return name;
 }
 
 async function parseLocation (session:Session, location:Thing){
@@ -313,4 +362,136 @@ async function parseLocation (session:Session, location:Thing){
   }
 
   return result;
+}
+
+
+//Devuelve una lista con todos los grupos del Pod del usuario que inició sesión
+export async function getAllGroups(session:Session){
+  console.log("Entrando en getAllGroups");
+  //Si no estamo en sesión retornamos null
+  if (!session || !session.info.isLoggedIn) return;
+  //Conseguimos la URL de almacenamiento del POD
+  const urlPOD = await getStorageURL(session);
+  //Construimos la ruta del dataset de los grupos
+  const urlDatasetGroups = urlPOD + RUTA_GROUPS ;
+  //Pedimos el dataset al POD
+  let listGroups:Thing[] = [];
+  let datasetLocations:SolidDataset | null | undefined;
+  try {
+    //Si no existe el dataset 
+    const fetch = session.fetch;
+    datasetLocations = await getSolidDataset(urlDatasetGroups, {fetch});
+  } catch (error:any) {
+    //Si no existe el dataset de los grupos devolvemos una lista vacía.
+    if (error.statusCode === 404) {  
+      return listGroups;
+    }
+  }
+  listGroups = await getThingAll(datasetLocations!);
+  console.log("getAllGroups --> lista Grupos: ", listGroups);
+  return listGroups;
+}
+
+async function parseGroup (group:Thing){
+  const name:string|null =  getStringNoLocale(group, VCARD.fn);
+  const members:string[] = getUrlAll(group, VCARD.hasMember);
+  
+  let listaMembers:Friend[] = [];
+  for (let member of members) {
+    let nameFriend:string|null = await getUserNameFromWebId(member);
+    let friend:Friend = {
+      name: nameFriend!=null? nameFriend : "",
+      webId: member
+    } 
+    listaMembers.push(friend);
+  }
+  
+  let result:Group = {
+    name: name != null ? name : "",
+    webId: group.url, 
+    members: listaMembers
+  }
+ 
+  return result;
+}
+
+export async function getAllGroupsObject(session: Session) {
+  console.log ("PodUtil.ts -- getAllGroupsObject")
+  const listaGroups = await getAllGroups(session);
+  let listaObjectsGroup:Group[]  = []; 
+
+  if (listaGroups == undefined || listaGroups == null) 
+    return listaObjectsGroup;
+  
+  for (let elemento of listaGroups) { 
+    let groupObject = await parseGroup(elemento);  
+    if (groupObject !== null){
+      listaObjectsGroup.push(groupObject);
+    }
+  }
+  return listaObjectsGroup;
+}
+
+export async function saveGroup(session:Session, group:Group){
+  //Conseguimos el dataset de los grupos
+  const urlPOD = await getStorageURL(session);
+  const rutaDataset = urlPOD + RUTA_GROUPS; 
+  let groupsDataset = await getSolidDataset(
+    rutaDataset,
+    { fetch: fetch }
+  );
+
+  //Crear Thing a partir del objeto grupo
+  let nuevoGrupoThing = createThing({ name: group.name });
+  nuevoGrupoThing = setStringNoLocale(nuevoGrupoThing,VCARD.fn,group.name);
+  nuevoGrupoThing = setUrl(nuevoGrupoThing,RDF.type, VCARD.Group);
+  for (let member of group.members) {
+    nuevoGrupoThing = addUrl(nuevoGrupoThing,VCARD.hasMember,member.webId);
+  }
+  
+
+  //Actualizamos el dataset con el nuevo Grupo
+  groupsDataset = setThing(groupsDataset,nuevoGrupoThing);
+
+  //Guardar el dataset modificado en el POD
+  const datasetGuardado = await saveSolidDatasetAt(
+    rutaDataset,
+    groupsDataset,
+    { fetch: fetch }
+  );
+    
+  //Devolvemos el nuevo grupo Guardado
+  const urlNuevoGrupoGuardado = rutaDataset + "#" + group.name;
+  const nuevoGrupoGuardado:Thing|null = await getThing(datasetGuardado, urlNuevoGrupoGuardado);
+  if (nuevoGrupoGuardado == null)
+    return null;
+  const nuevoObjectGroupGuardado:Group = await parseGroup(nuevoGrupoGuardado);
+  return nuevoObjectGroupGuardado;
+}
+
+export async function deleteGroup(session:Session, group:Group){
+  //Conseguimos el dataset de los grupos
+  const urlPOD = await getStorageURL(session);
+  const rutaDataset = urlPOD + RUTA_GROUPS; 
+  let groupsDataset = await getSolidDataset(
+    rutaDataset,
+    { fetch: fetch }
+  );
+
+  //Borramos el grupo de groupsDataset
+  
+  //Generamoss el webId a partir del nombre del grupo (webId es campo opcional)
+  //Construimos la ruta del dataset de los grupos
+  const webidGrupo = urlPOD + RUTA_GROUPS + "#" + group.name;
+  groupsDataset = await removeThing(groupsDataset,webidGrupo);
+  
+  //Guardar el dataset modificado en el POD
+  await saveSolidDatasetAt(
+    rutaDataset,
+    groupsDataset,
+    { fetch: fetch }
+  );
+    
+  //Devolvemos la lista de grupos tras el borrado
+  return await getAllGroupsObject(session);
 }
