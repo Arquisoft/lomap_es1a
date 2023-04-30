@@ -259,13 +259,13 @@ export async function initPodForLomap (session:Session){
   console.log("initPodForLomap -- Ruta base del POD: ", urlAlmacenamiento);
   //Por defecto se crean con permisos de lectura para todo el mundo.
   await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOMAP);
-  console.log("initPodForLomap -- Crear en pod ruta " + RUTA_LOMAP + ".");
+  console.log("initPodForLomap -- Comprobar en pod ruta " + RUTA_LOMAP + ".");
   await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOCATIONS);
-  console.log("initPodForLomap -- Crear en pod ruta " + RUTA_LOCATIONS + ".");
+  console.log("initPodForLomap -- Comprobar en pod ruta " + RUTA_LOCATIONS + ".");
   await getOrCreateContainer(session,urlAlmacenamiento + RUTA_IMAGES);
-  console.log("initPodForLomap -- Crear en pod ruta " + RUTA_IMAGES + ".");
+  console.log("initPodForLomap -- Comprobar en pod ruta " + RUTA_IMAGES + ".");
   await getOrCreateDataset(session, urlAlmacenamiento + RUTA_GROUPS);
-  console.log("initPodForLomap -- Crear en pod recurso " + RUTA_GROUPS + ".");
+  console.log("initPodForLomap -- Comprobar en pod recurso " + RUTA_GROUPS + ".");
   //Crar Aquí lo de los grupos vacío.
 
 }

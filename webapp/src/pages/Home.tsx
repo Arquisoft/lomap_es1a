@@ -36,7 +36,7 @@ export default function Home<Props>( props:any ): JSX.Element{
         map.setStyle("mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5");
     }
     reloadMap();
-    //Configuramos 
+    //Cuando se inicia sesión en un POD comprobamos si ya están creados los contenedores y los dataset necesarios para LOMAP
     console.log("Home.tsx -- useEffect() -- session", session);
     console.log("Home.tsx -- useEffect() -- session.info.isLoggedIn; ", session.info.isLoggedIn);
     if (!session || !session.info.isLoggedIn) return;
