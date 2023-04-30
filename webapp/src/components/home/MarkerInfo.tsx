@@ -38,8 +38,6 @@ export default class MarkerInfo extends React.Component<Props> {
       drawerClasses = "side-drawer open";
     }
 
-    console.log(this.props.cardList)
-
     return (
       <div className={drawerClasses}>
         <div className={"closeButton"}>
@@ -63,9 +61,11 @@ export default class MarkerInfo extends React.Component<Props> {
             {
                 this.props.cardList !== undefined ?
                 this.props.cardList.map((location:any) => 
-                  <InfoCard username={location.name} rating={location.score} comments={location.comments} image={location.image} />
+                  location !== undefined && location !== null ?
+                  <InfoCard key={this.props.cardList} username={location.name} rating={location.score} comments={location.comments} image={location.image} />
+                  : ""
                 )
-                : ""
+                : <p>Fetching data...</p>
               }
             </div>
           </div>
