@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSession } from "@inrupt/solid-ui-react";
 import { LoginButton } from "@inrupt/solid-ui-react";
+import {initPodForLomap} from "../../src/util/PodUtil"
 import Typography from "@mui/material/Typography";
 import {
   Button,
@@ -16,13 +18,16 @@ interface Ilogin {
   urlPrevia?: string;
 }
 
-export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
+export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
   const [idp, setIdp] = useState("https://solidcommunity.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
+  
 
-  //const [currentUrl, setCurrentUrl] = useState("http://localhost:3000");
-  //let urlNavegador = window.location.href;
-  //useEffect(() => {setCurrentUrl(window.location.href);}, [setCurrentUrl]);
+  useEffect(() => {
+    console.log("Login.tsx -- useEffect()");
+    console.log("Login.tsx -- useEffect() -- windows.location.origin", window.location.origin);
+    setUrlRedirect(window.location.origin);
+  }, [urlRedirect]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setIdp(event.target.value as string);
@@ -73,7 +78,7 @@ export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
           onError={console.log}
         >
           <div style={{display:"flex", justifyContent:"center"}}>
-            <Button variant="contained" color="primary" style={{ width:"8em"}} >
+            <Button id ="login" variant="contained" color="primary" style={{ width:"8em"}} >
               Login
             </Button>
           </div>
