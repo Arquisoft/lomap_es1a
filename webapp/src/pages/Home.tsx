@@ -130,8 +130,8 @@ export default function Home<Props>( props:any ): JSX.Element{
     let testGetPublicAccess:boolean | undefined = await getPublicAccessRead (session,
       "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d");
     console.log ("testgetPublicAccess: ", testGetPublicAccess);*/
-    
-    //Desactivamos el permiso de lectura pública
+    /*
+    //Desactivamos el permiso de lectura pública. Dataset sin acl creada
     let testSetPublicAccess = await setPublicAccessRead (session,
       "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d", false);
     console.log ("Desactivado permiso de lectura pública: ", testSetPublicAccess);
@@ -139,6 +139,17 @@ export default function Home<Props>( props:any ): JSX.Element{
     let testGetPublicAccess = await getPublicAccessRead (session,
       "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d");
     console.log ("Debería ser falso tras desactivarlo. testGetPublicAccess: ", testGetPublicAccess);  
+      */
+
+    //Activamos el permiso de lectura pública. Dataset con acl creada
+    let testSetPublicAccess = await setPublicAccessRead (session,
+      "https://aagonzalez.inrupt.net/lomap/locations/64329bd1f09bf1a2f06cb193", true);
+    console.log ("Desactivado permiso de lectura pública: ", testSetPublicAccess);
+    //Volvemos a consultar el valor
+    let testGetPublicAccess = await getPublicAccessRead (session,
+      "https://aagonzalez.inrupt.net/lomap/locations/64329bd1f09bf1a2f06cb193");
+    console.log ("Debería ser falso tras desactivarlo. testGetPublicAccess: ", testGetPublicAccess);  
+    
 
     if (cardList != undefined)
       setCardList(cardList);
