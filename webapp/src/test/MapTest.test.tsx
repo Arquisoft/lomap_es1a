@@ -1,6 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Map from '../components/Map';
+
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+
+configure({adapter: new Adapter()});
 
 describe('Map component', () => {
   it('renders the map container', () => {

@@ -1,12 +1,18 @@
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
-import mapboxgl, { Marker } from "mapbox-gl";
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
+import mapboxgl, { Marker } from "mapbox-gl";
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
+
+// The following is required to stop "npm build" from transpiling mapbox code. Notice the exclamation point in the import.
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+// mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 interface Props {
   lng: number;
