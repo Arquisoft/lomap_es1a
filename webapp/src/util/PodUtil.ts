@@ -2,6 +2,7 @@ import type { Friend, Group, Location} from "./UserData";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
 import {
+  Access,
   AclDataset,
   addStringNoLocale,
   addUrl,
@@ -11,8 +12,10 @@ import {
   createContainerAt,
   createSolidDataset,
   createThing,
+  getAgentResourceAccess,
   getContainedResourceUrlAll,
   getFile,
+  getGroupResourceAccess,
   getPublicAccess,
   getResourceAcl,
   getSolidDataset,
@@ -30,6 +33,7 @@ import {
   saveAclFor,
   saveSolidDatasetAt,
   setAgentResourceAccess,
+  setGroupResourceAccess,
   setPublicResourceAccess,
   setStringNoLocale,
   setThing,
@@ -379,6 +383,7 @@ async function parseLocation (session:Session, location:Thing){
   return result;
 }
 
+//GRUPOS
 
 //Devuelve una lista con todos los grupos del Pod del usuario que inició sesión
 export async function getAllGroups(session:Session){
@@ -511,6 +516,8 @@ export async function deleteGroup(session:Session, group:Group){
   return await getAllGroupsObject(session);
 }
 
+///// PERMISOS
+
 // Conseguiemos la lista de control de acceso (ACL) propia del dataset, si esta disponible,
 // o iniciamos una nueva, si es posible.
 async function getDatasetACL(myDatasetWithAcl:SolidDataset & WithServerResourceInfo & WithAcl){  
@@ -537,31 +544,19 @@ async function getDatasetACL(myDatasetWithAcl:SolidDataset & WithServerResourceI
 
 //Control de permisos. Consultar acceso público de lectura.
 export async function getPublicAccessRead(session: Session, resource: string){
-  console.log ("   ---> getPublicAccessRead <--- ");
+  //console.log ("   ---> getPublicAccessRead <--- ");
+  if (!session || !session.info.isLoggedIn) 
+    return;
   const fetch = session.fetch;
-  const myDatasetWithAcl = await getSolidDatasetWithAcl(resource, { fetch });
-  console.log ("   ---> getPublicAccessRead -- myDatasetWithAcl: ",myDatasetWithAcl);
-  const publicAccess = getPublicAccess(myDatasetWithAcl);
-  console.log ("   ---> getPublicAccessRead -- publicAccess: ",publicAccess);
+  const myDatasetWithAcl: SolidDataset & WithServerResourceInfo & WithAcl = await getSolidDatasetWithAcl(resource, { fetch });
+  //console.log ("   ---> getPublicAccessRead -- myDatasetWithAcl: ",myDatasetWithAcl);
+  const publicAccess: Access | null = getPublicAccess(myDatasetWithAcl);
+  //console.log ("   ---> getPublicAccessRead -- publicAccess: ",publicAccess);
   if (publicAccess !== null)
     return publicAccess.read;
   else
     return false;
 }
-/*
-//Control de permisos. Consultar acceso público de lectura.
-export async function getPublicAccessRead(session: Session, resource: string){
-  console.log ("   ---> getPublicAccessRead <--- ");
-  const fetch = session.fetch;
-  const myDatasetWithAcl = await getSolidDataset(resource, { fetch });
-  console.log ("   ---> getPublicAccessRead -- myDatasetWithAcl: ",myDatasetWithAcl);
-  const publicAccess = getPublicAccess(myDatasetWithAcl);
-  console.log ("   ---> getPublicAccessRead -- publicAccess: ",publicAccess);
-  if (publicAccess !== null)
-    return publicAccess.read;
-  else
-    return false;
-}*/
 
 //Control de permisos. Establecer acceso público de lectura.
 export async function setPublicAccessRead(session: Session, resource: string, permiso:boolean){
@@ -569,18 +564,18 @@ export async function setPublicAccessRead(session: Session, resource: string, pe
   if (!session || !session.info.isLoggedIn) return;
   const fetch = session.fetch;
   // Buscar el SolidDataset y sus ACLs asociadas , si están disponibles.
-  console.log ("Antes de getSolidDatasetWithAcl") ;
+  //console.log ("Antes de getSolidDatasetWithAcl") ;
   const myDatasetWithAcl:SolidDataset & WithServerResourceInfo & WithAcl = await getSolidDatasetWithAcl(resource, { fetch });
-  console.log ("Despues de getSolidDatasetWithAcl") ;
-  console.log ("Despues de getSolidDatasetWithAcl. myDatasetWithAcl: ", myDatasetWithAcl) ;
+  //console.log ("Despues de getSolidDatasetWithAcl") ;
+  //console.log ("Despues de getSolidDatasetWithAcl. myDatasetWithAcl: ", myDatasetWithAcl) ;
   // Conseguiemos la lista de control de acceso (ACL) propia del dataset, si esta disponible,
   // o iniciamos una nueva, si es posible.
-  console.log ("Antes de llamar a getDatasetACL") ;
+  //console.log ("Antes de llamar a getDatasetACL") ;
   const datasetAcl:AclDataset = await getDatasetACL(myDatasetWithAcl);
-  console.log ("Despues de llamar a getDatasetACL. datasetAcl recuperada: ", datasetAcl) ;
+  //console.log ("Despues de llamar a getDatasetACL. datasetAcl recuperada: ", datasetAcl) ;
+  
   // Actualizamos la ACL
-
-  // Nos asignamos acceso completo a nosotros mismos. No eliminar.
+  //    Mantenemos siempre el acceso completo para nuestro usuario.
   let updatedAcl: AclDataset & WithResourceInfo = setAgentResourceAccess(
     datasetAcl,
     session.info.webId!,
@@ -591,18 +586,105 @@ export async function setPublicAccessRead(session: Session, resource: string, pe
     datasetAcl,
     { read: permiso, append: false, write: false, control: false },
   );
-  console.log ("ACL actualizada. updatedAcl: ",updatedAcl)  ;
   // Guardamos la ACL modificada . Se utiliza el comentario para evitar el error.
   // @ts-ignore
   await saveAclFor(myDatasetWithAcl,updatedAcl, { fetch });
-  console.log("Despues de saveAclFor");
   
   //Comprobamos. Volvemos a pedir la acl después de grabarla
   const publicAccess = getPublicAccess(myDatasetWithAcl);
   return publicAccess?.read === permiso;
 }  
   
+export async function getUserRead(session: Session, resource: string, userId: string){
+  //console.log ("   ---> getUserRead <--- ");
+  if (!session || !session.info.isLoggedIn) 
+    return;
+  const fetch = session.fetch;
+  const myDatasetWithAcl: SolidDataset & WithServerResourceInfo & WithAcl = await getSolidDatasetWithAcl(resource, { fetch });
+  const datasetAcl: AclDataset = await getDatasetACL(myDatasetWithAcl);
+  const userAccess: Access | null = getAgentResourceAccess(datasetAcl, userId);
+  if (userAccess !== null)
+    return userAccess.read;
+  else
+    return false;
+}
 
+export async function setUserRead(session: Session, resource: string, userId: string, permiso:boolean){
+  //console.log ("   ---> getUserRead <--- ");
+  if (!session || !session.info.isLoggedIn) 
+    return;
+  const fetch = session.fetch;
+  //Obtenemos el dataset
+  const myDatasetWithAcl:SolidDataset & WithServerResourceInfo & WithAcl = await getSolidDatasetWithAcl(resource, { fetch });
+  //Obtenemos la ACL
+  const datasetAcl:AclDataset = await getDatasetACL(myDatasetWithAcl);
+  // Actualizamos la ACL
+  //    Mantenemos siempre el acceso completo para nuestro usuario.
+  let updatedAcl: AclDataset & WithResourceInfo = setAgentResourceAccess(
+    datasetAcl,
+    session.info.webId!,
+    { read: true, append: true, write: true, control: true }
+  );
+  //    Concedemos el permiso de lectura al usuario
+  updatedAcl = setAgentResourceAccess(
+    datasetAcl,
+    userId,
+    { read: permiso, append: false, write: false, control: false },
+  );
+  // Guardamos la ACL modificada . Se utiliza el comentario para evitar el error.
+  // @ts-ignore
+  await saveAclFor(myDatasetWithAcl,updatedAcl, { fetch });
+  
+  //Comprobamos. Volvemos a pedir la acl después de grabarla
+  const userReadAccess:Access = getAgentResourceAccess(datasetAcl, userId);
+  return userReadAccess.read === permiso;
+}
+
+export async function getGroupRead(session: Session, resource: string, groupId: string){
+  //console.log ("   ---> getUserRead <--- ");
+  if (!session || !session.info.isLoggedIn) 
+    return;
+  const fetch = session.fetch;
+  const myDatasetWithAcl: SolidDataset & WithServerResourceInfo & WithAcl = await getSolidDatasetWithAcl(resource, { fetch });
+  const datasetAcl: AclDataset = await getDatasetACL(myDatasetWithAcl);
+
+  const groupAccess: Access | null = getGroupResourceAccess(datasetAcl, groupId);
+  if (groupAccess !== null)
+    return groupAccess.read;
+  else
+    return false;
+}
+
+export async function setGroupRead(session: Session, resource: string, groupId: string, permiso:boolean){
+  //console.log ("   ---> getUserRead <--- ");
+  if (!session || !session.info.isLoggedIn) 
+    return;
+  const fetch = session.fetch;
+  //Obtenemos el dataset
+  const myDatasetWithAcl:SolidDataset & WithServerResourceInfo & WithAcl = await getSolidDatasetWithAcl(resource, { fetch });
+  //Obtenemos la ACL
+  const datasetAcl:AclDataset = await getDatasetACL(myDatasetWithAcl);
+  // Actualizamos la ACL
+  //    Mantenemos siempre el acceso completo para nuestro usuario.
+  let updatedAcl: AclDataset & WithResourceInfo = setGroupResourceAccess(
+    datasetAcl,
+    session.info.webId!,
+    { read: true, append: true, write: true, control: true }
+  );
+  //    Concedemos el permiso de lectura al usuario
+  updatedAcl = setGroupResourceAccess(
+    datasetAcl,
+    groupId,
+    { read: permiso, append: false, write: false, control: false },
+  );
+  // Guardamos la ACL modificada . Se utiliza el comentario para evitar el error.
+  // @ts-ignore
+  await saveAclFor(myDatasetWithAcl,updatedAcl, { fetch });
+  
+  //Comprobamos. Volvemos a pedir la acl después de grabarla
+  const userGroupAccess:Access = getGroupResourceAccess(datasetAcl, groupId);
+  return userGroupAccess.read === permiso;
+}
 
 /* Demasiado bonito para ser cierto. No funciona (experimental)
 //Control de permisos. Consultar acceso público de lectura.

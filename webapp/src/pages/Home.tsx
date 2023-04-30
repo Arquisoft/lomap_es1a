@@ -141,9 +141,9 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log ("Debería ser falso tras desactivarlo. testGetPublicAccess: ", testGetPublicAccess);  
       */
 
-    //Activamos el permiso de lectura pública. Dataset con acl creada
+    //Desactivamos el permiso de lectura pública. Dataset con acl creada
     let testSetPublicAccess = await setPublicAccessRead (session,
-      "https://aagonzalez.inrupt.net/lomap/locations/64329bd1f09bf1a2f06cb193", true);
+      "https://aagonzalez.inrupt.net/lomap/locations/64329bd1f09bf1a2f06cb193", false);
     console.log ("Desactivado permiso de lectura pública: ", testSetPublicAccess);
     //Volvemos a consultar el valor
     let testGetPublicAccess = await getPublicAccessRead (session,
