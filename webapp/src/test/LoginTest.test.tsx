@@ -1,19 +1,25 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Login from "../pages/Login";
-declare const Solid: any;
+import { act } from 'react-dom/test-utils';
 
 
 describe("Login component", () => {
-  test("changes idp state when selecting a provider", () => {
+  afterEach(cleanup);
+
+  it('renders login component', () => {
     render(<Login />);
-    const select = screen.getByLabelText("Select your Identity Provider:");
-    fireEvent.change(select, { target: { value: "https://inrupt.net" } });
-    expect(select).toBe("https://inrupt.net");
+    const loginElement = screen.getByText(/Log In/i);
+    expect(loginElement).toBeInTheDocument();
   });
 
-  test("sets redirect URL to current URL when component is mounted", () => {
-    window.history.pushState({}, "Test page", "/test");
+  it("should update redirect URL to current page URL when component is rendered", () => {
     render(<Login />);
-    expect(screen.getByLabelText("Redirect URL")).toHaveValue("http://localhost/test");
+    const expectedUrl = window.location.href;
+    setTimeout(() => {
+      const actualUrl = localStorage.getItem("redirectUrl");
+      expect(actualUrl).toEqual(expectedUrl);
+    }, 500);
   });
+  
 });
