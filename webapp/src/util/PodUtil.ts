@@ -2,28 +2,44 @@ import type { Friend, Group, Location} from "./UserData";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
 import {
-  Thing, 
-  getThingAll,
-  getThing,
-  getSolidDataset,
-  createSolidDataset,
-  addUrl,
-  getUrl,
-  setUrl,
-  getUrlAll,
-  getStringNoLocale, 
-  setStringNoLocale,
-  createContainerAt,
-  getContainedResourceUrlAll,
-  saveSolidDatasetAt,
-  SolidDataset,
+  AclDataset,
   addStringNoLocale,
+  addUrl,
   buildThing,
+  createAcl,
+  createAclFromFallbackAcl,
+  createContainerAt,
+  createSolidDataset,
   createThing,
-  setThing,
-  overwriteFile,
+  getContainedResourceUrlAll,
   getFile,
-  removeThing
+  getPublicAccess,
+  getResourceAcl,
+  getSolidDataset,
+  getSolidDatasetWithAcl,
+  getStringNoLocale, 
+  getThing,
+  getThingAll,
+  getUrl,
+  getUrlAll,
+  hasAccessibleAcl,
+  hasFallbackAcl,
+  hasResourceAcl,
+  overwriteFile,
+  removeThing,
+  saveAclFor,
+  saveSolidDatasetAt,
+  setAgentResourceAccess,
+  setPublicResourceAccess,
+  setStringNoLocale,
+  setThing,
+  setUrl,
+  SolidDataset,
+  Thing, 
+  universalAccess,
+  WithAcl,
+  WithResourceInfo,
+  WithServerResourceInfo
 } from "@inrupt/solid-client";
 
 import { FOAF, RDF, VCARD} from "@inrupt/vocab-common-rdf"
@@ -36,13 +52,12 @@ const RUTA_GROUPS = RUTA_LOMAP + "/groups.ttl";
 // Returns a user profile as a Thing
 export async function getUserProfile(webID: string){
     let profile = webID.split("#")[0];
-    let dataSet = await getSolidDataset(profile, { fetch: fetch });
+    let dataSet:SolidDataset = await getSolidDataset(profile, { fetch: fetch });
     return getThing(dataSet, webID) as Thing;
 }
 
 // Returns all friends as a list
 export async function getFriends(webId:string) {
-  
   let friendURLs = getUrlAll(await getUserProfile(webId), FOAF.knows);
   let friends: Friend[] = [];
 
@@ -495,3 +510,142 @@ export async function deleteGroup(session:Session, group:Group){
   //Devolvemos la lista de grupos tras el borrado
   return await getAllGroupsObject(session);
 }
+
+// Conseguiemos la lista de control de acceso (ACL) propia del dataset, si esta disponible,
+// o iniciamos una nueva, si es posible.
+async function getDatasetACL(myDatasetWithAcl:SolidDataset & WithServerResourceInfo & WithAcl){  
+  console.log ("   ---> getDatasetACL <--- ");
+  let resourceAcl:AclDataset;
+  if (!hasResourceAcl(myDatasetWithAcl)) { 
+    if (!hasAccessibleAcl(myDatasetWithAcl)) {
+      throw new Error(
+        "The current user does not have permission to change access rights to this folder."
+      );
+    }
+    if (!hasFallbackAcl(myDatasetWithAcl)) {
+      // Initialise a new empty ACL
+      resourceAcl = createAcl(myDatasetWithAcl);
+    } else {
+      resourceAcl = createAclFromFallbackAcl(myDatasetWithAcl);
+    }
+  } else {
+    resourceAcl = getResourceAcl(myDatasetWithAcl);
+  }
+  console.log("   ---> getDatasetACL -- resourceAcl: ",resourceAcl);
+  return resourceAcl;
+}
+
+//Control de permisos. Consultar acceso público de lectura.
+export async function getPublicAccessRead(session: Session, resource: string){
+  console.log ("   ---> getPublicAccessRead <--- ");
+  const fetch = session.fetch;
+  const myDatasetWithAcl = await getSolidDatasetWithAcl(resource, { fetch });
+  console.log ("   ---> getPublicAccessRead -- myDatasetWithAcl: ",myDatasetWithAcl);
+  const publicAccess = getPublicAccess(myDatasetWithAcl);
+  console.log ("   ---> getPublicAccessRead -- publicAccess: ",publicAccess);
+  if (publicAccess !== null)
+    return publicAccess.read;
+  else
+    return false;
+}
+/*
+//Control de permisos. Consultar acceso público de lectura.
+export async function getPublicAccessRead(session: Session, resource: string){
+  console.log ("   ---> getPublicAccessRead <--- ");
+  const fetch = session.fetch;
+  const myDatasetWithAcl = await getSolidDataset(resource, { fetch });
+  console.log ("   ---> getPublicAccessRead -- myDatasetWithAcl: ",myDatasetWithAcl);
+  const publicAccess = getPublicAccess(myDatasetWithAcl);
+  console.log ("   ---> getPublicAccessRead -- publicAccess: ",publicAccess);
+  if (publicAccess !== null)
+    return publicAccess.read;
+  else
+    return false;
+}*/
+
+//Control de permisos. Establecer acceso público de lectura.
+export async function setPublicAccessRead(session: Session, resource: string, permiso:boolean){
+  console.log ("   >---> setPublicAccessRead <---< ");
+  if (!session || !session.info.isLoggedIn) return;
+  const fetch = session.fetch;
+  // Buscar el SolidDataset y sus ACLs asociadas , si están disponibles.
+  console.log ("Antes de getSolidDatasetWithAcl") ;
+  const myDatasetWithAcl:SolidDataset & WithServerResourceInfo & WithAcl = await getSolidDatasetWithAcl(resource, { fetch });
+  console.log ("Despues de getSolidDatasetWithAcl") ;
+  console.log ("Despues de getSolidDatasetWithAcl. myDatasetWithAcl: ", myDatasetWithAcl) ;
+  // Conseguiemos la lista de control de acceso (ACL) propia del dataset, si esta disponible,
+  // o iniciamos una nueva, si es posible.
+  console.log ("Antes de llamar a getDatasetACL") ;
+  const datasetAcl:AclDataset = await getDatasetACL(myDatasetWithAcl);
+  console.log ("Despues de llamar a getDatasetACL. datasetAcl recuperada: ", datasetAcl) ;
+  // Actualizamos la ACL
+
+  // Nos asignamos acceso completo a nosotros mismos. No eliminar.
+  let updatedAcl: AclDataset & WithResourceInfo = setAgentResourceAccess(
+    datasetAcl,
+    session.info.webId!,
+    { read: true, append: true, write: true, control: true }
+  );
+
+  updatedAcl = setPublicResourceAccess(
+    datasetAcl,
+    { read: permiso, append: false, write: false, control: false },
+  );
+  console.log ("ACL actualizada. updatedAcl: ",updatedAcl)  ;
+  // Guardamos la ACL modificada . Se utiliza el comentario para evitar el error.
+  // @ts-ignore
+  await saveAclFor(myDatasetWithAcl,updatedAcl, { fetch });
+  console.log("Despues de saveAclFor");
+  
+  //Comprobamos. Volvemos a pedir la acl después de grabarla
+  const publicAccess = getPublicAccess(myDatasetWithAcl);
+  return publicAccess?.read === permiso;
+}  
+  
+
+
+/* Demasiado bonito para ser cierto. No funciona (experimental)
+//Control de permisos. Consultar acceso público de lectura.
+export function getPublicAccessRead(session: Session, resource: string){
+  if (!session || !session.info.isLoggedIn) 
+    return false;
+  universalAccess.getPublicAccess(
+    resource,                   // Resource
+    { fetch: session.fetch }   // fetch function from authenticated session
+  ).then((returnedAccess) => {
+    if (returnedAccess === null) {
+      console.log("PodUtil -- getPublicAccess -- No se pueden cargar los detalles de acceso público del recurso " + resource + ".");
+      return false;
+    } else {
+      console.log("PodUtil -- getPublicAccess -- Detalles de acceso público del recurso " + resource + ".");
+      console.log("Acceso público retornado: ", JSON.stringify(returnedAccess));
+      //Devolvemos el permiso de lectura pública del recurso. 
+      return returnedAccess.controlRead;
+    }
+  });
+}
+
+//Control de permisos. Establecer acceso público de lectura.
+export function setPublicAccessRead(session: Session, resource: string, permiso:boolean){
+  if (!session || !session.info.isLoggedIn) 
+    return false;
+    universalAccess.setPublicAccess(
+      resource,                   // Resource
+      {read: permiso},            // Permiso de lectura
+      { fetch: session.fetch }    // fetch function from authenticated session
+    ).then((returnedAccess) => {
+      if (returnedAccess === null) {
+        console.log("PodUtil -- setPublicAccess -- No se pueden modificar los detalles de acceso público del recurso " + resource + ".");
+        return false;
+      } else {
+        console.log("PodUtil -- setPublicAccess -- Detalles de acceso público del recurso " + resource + ".");
+        console.log("PodUtil -- Acceso público modificado: ", JSON.stringify(returnedAccess));
+        //Devolvemos true si la operación se realizó correctamente
+        if (returnedAccess.controlRead === permiso)
+          return true;
+        else
+          return false;
+      }
+    });
+}
+*/

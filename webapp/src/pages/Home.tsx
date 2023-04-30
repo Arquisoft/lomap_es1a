@@ -9,7 +9,7 @@ import { Navigate } from "react-router-dom";
 import { useNotifications } from 'reapop'
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
-import {initPodForLomap, saveGroup, deleteGroup} from "../../src/util/PodUtil"
+import {initPodForLomap, saveGroup, deleteGroup,getPublicAccessRead, setPublicAccessRead} from "../../src/util/PodUtil"
 import type { Friend, Group, Location} from "../../src/util/UserData";
 
 import "./Home.css";
@@ -125,7 +125,21 @@ export default function Home<Props>( props:any ): JSX.Element{
     let gruposDespuesBorrar = await deleteGroup(session, pruebaGrupoNuevo);
     console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Grupos despues de borrar : ",gruposDespuesBorrar);
     */
+
+    /*console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getPublicAccessRead");
+    let testGetPublicAccess:boolean | undefined = await getPublicAccessRead (session,
+      "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d");
+    console.log ("testgetPublicAccess: ", testGetPublicAccess);*/
     
+    //Desactivamos el permiso de lectura pública
+    let testSetPublicAccess = await setPublicAccessRead (session,
+      "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d", false);
+    console.log ("Desactivado permiso de lectura pública: ", testSetPublicAccess);
+    //Volvemos a consultar el valor
+    let testGetPublicAccess = await getPublicAccessRead (session,
+      "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d");
+    console.log ("Debería ser falso tras desactivarlo. testGetPublicAccess: ", testGetPublicAccess);  
+
     if (cardList != undefined)
       setCardList(cardList);
   };
