@@ -24,11 +24,10 @@ import {
 } from "@inrupt/solid-client";
 
 import { FOAF, RDF, VCARD} from "@inrupt/vocab-common-rdf"
-
-const RUTA_IMAGES = "images";
+const URL_VOCABULARIO = "http://w3id.org/lomap/";
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
-const URL_VOCABULARIO = "http://w3id.org/lomap/";
+const RUTA_IMAGES = RUTA_LOMAP + "/images";
 const RUTA_GROUPS = RUTA_LOMAP + "/groups.ttl";
 
 // Returns a user profile as a Thing
