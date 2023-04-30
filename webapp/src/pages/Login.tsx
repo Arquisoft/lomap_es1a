@@ -57,13 +57,13 @@ export default function Login({ urlPrevia = "http://localhost:3000" }: Ilogin) {
             fullWidth
             style= {{marginBottom:"0.6em"}}
           >
-            <MenuItem value={"https://solidcommunity.net"}>
+            <MenuItem id="solidcommunity" value={"https://solidcommunity.net"}>
               https://solidcommunity.net (NSS 5.7.6)
             </MenuItem>
-            <MenuItem value={"https://inrupt.net"}>
+            <MenuItem id="inrupt" value={"https://inrupt.net"}>
               https://inrupt.net (Solid prototype)
             </MenuItem>
-            <MenuItem value={"https://login.inrupt.com"}>
+            <MenuItem id="podspaces" value={"https://login.inrupt.com"}>
               https://login.inrupt.com (PodSpaces)
             </MenuItem>
           </Select>
