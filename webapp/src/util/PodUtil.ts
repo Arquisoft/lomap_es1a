@@ -196,20 +196,6 @@ async function getOrCreateContainer(session:Session, ContainerURI:string){
   } catch (error: any) {
    
     return error;
-    /*
-    console.log("Ver que error da al intentar crear un container que ya existe")
-    console.log("error.statusCode: ",error.statusCode);
-    console.log("error: ",error);
-    ------
-    if (error.statusCode === 404) {
-      
-      const todoList = await saveSolidDatasetAt(
-        indexUrl,
-        createSolidDataset(),
-        {
-          fetch,
-        }
-      );*/
   }
 }
 
@@ -267,15 +253,21 @@ async function getDataset(session:Session, datasetURI:string) {
 //  console.log("datasetPrueba: ", datasetPrueba);*/
 //}
 
-//Si no existen en el POD crea los contenedores 
-export async function createBaseContainers (session:Session){
+//Si no existen en el Pod crea los contenedores (directorios) y los dataset necesarios para la aplciación
+export async function initPodForLomap (session:Session){
   const urlAlmacenamiento = await getStorageURL(session);
-  console.log("Ruta base del POD: ", urlAlmacenamiento);
-  const contenedorLomap:SolidDataset = await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOMAP);
-  console.log("Crear en pod ruta " + RUTA_LOMAP + ". SolidDataset:", contenedorLomap);
-  const contenedorLomapLocations:SolidDataset = await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOCATIONS);
-  console.log("Crear en pod ruta " + RUTA_LOCATIONS + ". SolidDataset:", contenedorLomapLocations);
-  //Añadir aqui la carpeta para las imagenes??
+  console.log("initPodForLomap -- Ruta base del POD: ", urlAlmacenamiento);
+  //Por defecto se crean con permisos de lectura para todo el mundo.
+  await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOMAP);
+  console.log("initPodForLomap -- Crear en pod ruta " + RUTA_LOMAP + ".");
+  await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOCATIONS);
+  console.log("initPodForLomap -- Crear en pod ruta " + RUTA_LOCATIONS + ".");
+  await getOrCreateContainer(session,urlAlmacenamiento + RUTA_IMAGES);
+  console.log("initPodForLomap -- Crear en pod ruta " + RUTA_IMAGES + ".");
+  await getOrCreateDataset(session, urlAlmacenamiento + RUTA_GROUPS);
+  console.log("initPodForLomap -- Crear en pod recurso " + RUTA_GROUPS + ".");
+  //Crar Aquí lo de los grupos vacío.
+
 }
 
 // export async function getLocationJSON(session:Session, idLocation:string){
@@ -384,15 +376,11 @@ export async function getAllGroups(session:Session){
   let listGroups:Thing[] = [];
   let datasetLocations:SolidDataset | null | undefined;
   try {
-    console.log("Dentro del try ");
+    //Si no existe el dataset 
     const fetch = session.fetch;
-
     datasetLocations = await getSolidDataset(urlDatasetGroups, {fetch});
-    console.log("---- datasetLocations: ",datasetLocations);
-
   } catch (error:any) {
-    console.log("Dentro del catch ");
-    console.log ("error: ",error);
+    //Si no existe el dataset de los grupos devolvemos una lista vacía.
     if (error.statusCode === 404) {  
       return listGroups;
     }

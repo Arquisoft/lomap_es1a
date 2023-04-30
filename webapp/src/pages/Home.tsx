@@ -9,6 +9,7 @@ import { Navigate } from "react-router-dom";
 import { useNotifications } from 'reapop'
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
+import {initPodForLomap} from "../../src/util/PodUtil"
 
 import "./Home.css";
 import { getLocationObject, getAllLocationsObject, getUserName, getFriends, getAllGroups, getAllGroupsObject} from '../util/PodUtil';
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export default function Home<Props>( props:any ): JSX.Element{
-
+  const { session } = useSession();
   const [map, setMap] = useState<any>([]);
   const [markers, setMarkers] = useState<any[]>([]);
   const [mountFinished, setMountFinished] = useState(false);
@@ -35,7 +36,15 @@ export default function Home<Props>( props:any ): JSX.Element{
         map.setStyle("mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5");
     }
     reloadMap();
-  }, [props.mapTheme]);
+    //Configuramos 
+    console.log("Home.tsx -- useEffect() -- session", session);
+    console.log("Home.tsx -- useEffect() -- session.info.isLoggedIn; ", session.info.isLoggedIn);
+    if (!session || !session.info.isLoggedIn) return;
+    (async () => {  
+      console.log("Home.tsx -- Crear contenedores y dataset en el POD tras login si no existen");
+      await initPodForLomap(session);
+    })();
+  }, [props.mapTheme, session, session.info.isLoggedIn]);
 
   const [showForm, setShowForm] = useState(false);
   const [showMarkerInfo, setShowMarkerInfo] = useState(false);
@@ -48,8 +57,6 @@ export default function Home<Props>( props:any ): JSX.Element{
   const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [cardList, setCardList] = useState<any>();
-
-  const { session } = useSession();
 
   const { notify } = useNotifications();
 
