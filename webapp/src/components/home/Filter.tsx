@@ -11,12 +11,18 @@ import styles from './filter.module.css';
 
 interface Props {
   toggleFriends: boolean
+  reloadMap: (category:string) => void;
 }
 
 export default function Filter<Props>( props:any ): JSX.Element {
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = React.useState("Show all");
 
-  const handleChange = () => {};
+  const handleChange = (event:any) => {
+    
+    let category = (event.target.value as string);
+    props.reloadMap(category);
+    
+  };
 
   return (
     <div className={styles.boxContainer}>
@@ -43,10 +49,11 @@ export default function Filter<Props>( props:any ): JSX.Element {
           onChange={handleChange}
           className={styles.categoryFilter}
         >
-          <MenuItem value={"shop"}>Shop</MenuItem>
-          <MenuItem value={"restaurant"}>Restaurant</MenuItem>
-          <MenuItem value={"monument"}>Monument</MenuItem>
-          <MenuItem value={"other"}>Other</MenuItem>
+          <MenuItem value={""}>Show all</MenuItem>
+          <MenuItem value={"shops"}>Shop</MenuItem>
+          <MenuItem value={"restaurants"}>Restaurant</MenuItem>
+          <MenuItem value={"monuments"}>Monument</MenuItem>
+          <MenuItem value={"others"}>Other</MenuItem>
         </Select>
       </FormControl>
     </div>
