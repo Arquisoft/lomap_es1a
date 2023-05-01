@@ -17,16 +17,9 @@ import {
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import "./../../pages/Friends.css";
 
-import type { Friend, Group } from "../../util/UserData";
+import type { Group } from "../../util/UserData";
 
-interface Props {
-  modalIsOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-  showNotification: () => void;
-}
-
-function FriendGroupList<Props>(props: any): JSX.Element {
+function FriendGroupList(props: any): JSX.Element {
   const { session } = useSession();
 
   const [openRow, setOpenRow] = useState<boolean[]>([]);
