@@ -410,6 +410,36 @@ export async function getAllLocationsObject(session: Session) {
 
 }
 
+// Obtiene una lista con los identificadores de todas las localizaciones de los amigos
+export async function getListLocationFromFriends(session:Session){
+  let listaIdsLocalizaciones = new Set<string>();
+  //Si no estamo en sesión retornamos un array vacío
+  if (!session || !session.info.isLoggedIn) 
+    return listaIdsLocalizaciones;
+  //Recupamos la lista de todos los amigos
+  let friends:Friend[] = await getFriends(session.info.webId!);
+  //Para cada amigo recuperamos sus localizaciones
+  for (let friend of friends) { 
+    //Conseguimos la URL de almacenamiento del POD del amigo
+    const urlPodFriend = friend.webId.split("profile/card#me")[0];
+    //Construimos la ruta del contenedor de las locations 
+    const rutaContenedor = urlPodFriend + RUTA_LOCATIONS;
+    //Pedimos el dataset al POD
+    let contenedorLocations = await getDataset(session, rutaContenedor);
+    if (contenedorLocations !== null){
+      //Obtenemos la lista de las localizaciones
+      const listaLocations: string[] = await getContainedResourceUrlAll(contenedorLocations!);
+      for (let elemento of listaLocations){ 
+        //Obtenemos la id de la localización
+        let idLocation:string = elemento.substring(elemento.lastIndexOf("/")+1);
+        //La añadimos al set
+        listaIdsLocalizaciones.add(idLocation);
+      }  
+    }
+  }
+  return Array.from( listaIdsLocalizaciones);
+}
+
 export async function getUserName(session:Session){
   console.log ("PodUtil.ts -- getUserName");
   if (!session || !session.info.isLoggedIn) 
