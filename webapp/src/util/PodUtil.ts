@@ -47,7 +47,7 @@ import { FOAF, RDF, VCARD} from "@inrupt/vocab-common-rdf"
 const URL_VOCABULARIO = "http://w3id.org/lomap/";
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
-const RUTA_IMAGES = RUTA_LOMAP + "/images";
+const RUTA_IMAGES = "images";
 const RUTA_GROUPS = RUTA_LOMAP + "/groups.ttl";
 
 // Returns a user profile as a Thing
@@ -200,7 +200,7 @@ async function parseFriendLocation(friend:Friend, location:Thing){
   return result;
 }
 
-export async function saveLocation(session:Session, location:Location){
+export async function saveLocation(session:Session, location:Location, allowedUsers:any[]){
   console.log("PodUtil -- saveLocation --> Parametros llamada: location: ", location);
   //Crear Dataset
   const urlPOD = await getStorageURL(session);
@@ -260,6 +260,12 @@ export async function saveLocation(session:Session, location:Location){
     
   //Devolvemos la nueva location guardada en el pod
   const rutaNuevaLocationGuardada = rutaDataset + "#" + location.id
+
+  // Asignamos los permisos a los usuarios de la lista
+  for (var i = 0; i < allowedUsers.length; i++) {
+    await setUserRead(session, rutaNuevaLocationGuardada, allowedUsers[i], true)
+  }
+
   const nuevaLocationGuardada = await getThing(datasetGuardado, rutaNuevaLocationGuardada);
   return nuevaLocationGuardada;
 }

@@ -1,7 +1,8 @@
 .card-container {
     width: 90%;
-    height: 20em;
     padding: 0 5%;
+    border: 0.02em grey;
+    border-style: solid none;
 }
 
 .card-header {
@@ -10,9 +11,16 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 0;
+}
+
+.text-container {
+    margin-bottom: 1.5em;
 }
 
 .image-container {
-    width: 100%;
-    height: 50%;
+    display: flex;
+    justify-content: center;
+    height: 12em;
+    margin-bottom: 1.5em;
 }
