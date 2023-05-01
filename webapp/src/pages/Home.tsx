@@ -35,7 +35,7 @@ export default function Home<Props>( props:any ): JSX.Element{
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [cardList, setCardList] = useState<any>();
+  const [cardList, setCardList] = useState<any>([]);
 
   const { notify } = useNotifications();
 
@@ -52,7 +52,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     }
     reloadMap();
 
-  }, [map, mountFinished, props.mapTheme]);
+  }, [props.mapTheme]);
 
   useEffect(() => {
     //Cuando se inicia sesión en un POD comprobamos si ya están creados los contenedores y los dataset necesarios para LOMAP
@@ -73,6 +73,7 @@ export default function Home<Props>( props:any ): JSX.Element{
   };
 
   const handleShowMarkerInfo = async (state: boolean, lat: number, lng: number, id:string) => {
+    setCardList(undefined);
     setShowMarkerInfo(state);
     setFormLng(lng);
     setFormLat(lat);
@@ -83,12 +84,17 @@ export default function Home<Props>( props:any ): JSX.Element{
 
     setSelectedLocation(location);
 
-    console.log("LOCATION:")
-    console.log(location);
+    let newCardList:any[] = [];
 
-    let cardList = await getLocationObject(session, location._id);
-    console.log ("Home.tsx -- handleShowMarkerInfo -- cardList", cardList);
+    newCardList.push(await getLocationObject(session, location._id));
     
+    let friends = await getFriends(session.info.webId!);
+    for (let i = 0; i < friends.length; i++) {
+      newCardList.push(await getLocationFromFriend(session, friends[i], location._id))  
+      if (i == friends.length - 1)
+        setCardList(newCardList);
+    }
+
     //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas PODS ");
     //Pruebas varias de los métodos del pod. 
     //1 Llamo aqui a obtener toda la lista de locations
@@ -125,6 +131,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     let gruposDespuesBorrar = await deleteGroup(session, pruebaGrupoNuevo);
     console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Grupos despues de borrar : ",gruposDespuesBorrar);
     */
+
 
     /*console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getPublicAccessRead");
     let testGetPublicAccess:boolean | undefined = await getPublicAccessRead (session,
@@ -191,8 +198,6 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log ("FINAL Prueba completa modificación ACL. ");
     */
 
-    if (cardList != undefined)
-      setCardList(cardList);
   };
 
   const closeForm = (state: boolean) => {

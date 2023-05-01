@@ -1,43 +1,47 @@
-import { defineFeature, loadFeature } from 'jest-cucumber';
+import { defineFeature, loadFeature } from "jest-cucumber";
 import puppeteer from "puppeteer";
 
-const feature = loadFeature('./features/login.feature');
+const feature = loadFeature("./features/login.feature");
 
-let page: puppeteer.Page;
-let browser: puppeteer.Browser;
+defineFeature(feature, (test) => {
+  let browser: puppeteer.Browser;
+  let page: puppeteer.Page;
 
-defineFeature(feature, test => {
   beforeEach(async () => {
-    browser = await puppeteer.launch({ headless: true, slowMo: 150 });
+    browser = await puppeteer.launch({ headless: false });
     page = await browser.newPage();
+    await page.goto("http://localhost:3000/login");
   });
 
   afterEach(async () => {
     await browser.close();
   });
 
-  test('Successful login', ({ given, when, then }) => {
-    given('I am on the login page', async () => {
+  test("Successful login", ({ given, when,and, then }) => {
+    given("I am on the login page", async () => {
       await page.goto("http://localhost:3000/login");
     });
 
-    when('I click the login button', async () => {
-      const idpInput = await page.$("#identityProvider");
-        if (idpInput) {
-          await idpInput.type('https://login.inrupt.com');
-        }
-
-        const loginButton = await page.$("#login");
-        if (loginButton !== null) {
-          await loginButton.click();
-        }
+    when("I click on the providers box", async () => {
+      const providersBox = await page.$("#identityProvider");
+      await providersBox?.click();
     });
 
-    then('I should be redirected to the dashboard page', async () => {
+    and("I select login.inrupt as my Identity Provider", async () => {
+      const idpOption = await page.$("#podspaces");
+      await page.waitForTimeout(1000);
+      await idpOption?.click();
+    });
+
+    and("I click the login button", async () => {
+      const loginButton = await page.$("#login");
+      await page.waitForTimeout(1000);
+      await loginButton?.click();
+    });
+
+    then("I should be redirected to the dashboard page", async () => {
       await page.waitForNavigation();
-      expect(page.url()).toMatch(/^https:\/\/auth\.inrupt\.com\/login.*/);
+      expect(page.url()).toMatch(/^https:\/\/auth\.inrupt\.com\/.*/);
     });
   });
-
-  
 });

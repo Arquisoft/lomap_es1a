@@ -1,5 +1,5 @@
-export default {
-    transform: {
-        "^.+\\.tsx?$": "ts-jest"
-    },
-}
+module.exports = {
+  transform: {
+    "^.+\\.tsx?$": "ts-jest"
+  },
+};
