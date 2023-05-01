@@ -6,7 +6,7 @@ import styles from './navbar.module.css';
 import { Typography } from '@mui/material';
 import { CombinedDataProvider, useSession, LogoutButton, Text } from "@inrupt/solid-ui-react";
 import { useNavigate } from "react-router-dom";
-import {createBaseContainers} from "../../src/util/PodUtil"
+import {initPodForLomap} from "../../src/util/PodUtil"
 import ThemeSwitch from './ThemeSwitch';
 
 function Name(): JSX.Element {
@@ -40,16 +40,6 @@ interface Props {
 
 export default function SearchAppBar<Props>( props:any ): JSX.Element {
   const { session } = useSession();
-
-  //Inicializamos los contenedores en el pod mediante el hook useEffect
-  useEffect(() => {
-    if (!session || !session.info.isLoggedIn) return;
-    (async () => {  
-      await createBaseContainers(session);
-      console.log("Iniciando contenedores en el POD tras login:");
-    })();
-  }, [session, session.info.isLoggedIn]);
-
   const navigate = useNavigate();
   const clickLogin= () => navigate("/login");
   

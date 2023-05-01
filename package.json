@@ -10,6 +10,7 @@
     "react-map-gl": "^7.0.21",
     "react-map-gl-geocoder": "^2.2.0",
     "react-router-dom": "^6.8.2",
+    "text-encoding": "^0.7.0",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {

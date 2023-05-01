@@ -1,12 +1,18 @@
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
-import mapboxgl, { Marker } from "mapbox-gl";
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
+import mapboxgl, { Marker } from "mapbox-gl";
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
+
+// The following is required to stop "npm build" from transpiling mapbox code. Notice the exclamation point in the import.
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+// mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 interface Props {
   lng: number;
@@ -83,9 +89,10 @@ export default class Map extends React.Component<Props> {
 
     this.map.on("load", async () => {
 
-      const response = await axios.get("http://localhost:5000/locations/");
+      const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+      const response = await axios.get(apiEndPoint + 'locations/');
 
-      console.log ("Transformación JSON de http://localhost:5000/locations a locations");
+      console.log ("Transformación JSON de " + apiEndPoint + "locations a locations");
       let locations = JSON.parse(requestToList(response.data));
       
       console.log("Localizaciones que se cargan en el mapa. Variable locations: ",locations);

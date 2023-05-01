@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { SessionProvider, useSession } from "@inrupt/solid-ui-react";
 import { useState } from "react";
 
+
 import NavBar from "./components/NavBar";
 import Sidenav from "./components/Sidenav";
 import Home from "./pages/Home";

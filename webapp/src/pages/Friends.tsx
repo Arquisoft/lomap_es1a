@@ -18,17 +18,16 @@ export default function Friends() {
   const [selectedBtn, setSelectedBtn] = useState(1);
 
   useEffect(() => {
-    handleFriends();
-  }, [friends]);
-
-  const handleFriends = async () => {
-    if (session.info.webId != undefined && session.info.webId != "") {
-      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
+    setFriends([]);
+    if (!session || !session.info.isLoggedIn) 
+      return;
+    (async () => {  
+      let aux = await getFriends(session.info.webId!).then((friendsPromise) => {
         return friendsPromise;
       });
-      setFriends(aux);
-    } else setFriends([]);
-  };
+      setFriends(aux); 
+    })();
+  }, [session, session.info.webId]);
 
   if (session.info.isLoggedIn) {
     return (

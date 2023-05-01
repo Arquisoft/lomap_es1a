@@ -33,3 +33,9 @@
     display: flex;
     flex-direction: column;
 }
+
+.add-friend-group-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1%;
+}
