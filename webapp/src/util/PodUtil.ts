@@ -1,8 +1,18 @@
 import type { Friend, Group, Location} from "./UserData";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 import {
-  Access,
-  AclDataset,
+  Thing, 
+  getThingAll,
+  getThing,
+  getSolidDataset,
+  createSolidDataset,
+  getUrl,
+  getUrlAll,
+  getStringNoLocale, 
+  createContainerAt,
+  getContainedResourceUrlAll,
+  saveSolidDatasetAt,
+  SolidDataset,
   addUrl,
   buildThing,
   createAcl,
@@ -108,20 +118,28 @@ export async function getLocation(session:Session, idLocation:string){
 
 //Devuelve una lista con todas las locations del Pod del usuario que inició sesión
 async function getAllLocations(session:Session){
-  console.log("PodUtil -- getAllLocations");
-  //console.log("Entrando en getAllLocations");
   //Si no estamo en sesión retornamos null
   if (!session || !session.info.isLoggedIn) return;
   //Conseguimos la URL de almacenamiento del POD
   const urlPOD = await getStorageURL(session);
   //Construimos la ruta del contenedor de las locations 
   const rutaContenedor = urlPOD + RUTA_LOCATIONS;
-  //console.log("getAllLocations --> rutaContenedor: ", rutaContenedor);
+  
   //Pedimos el dataset al POD
   let contenedorLocations = await getDataset(session, rutaContenedor);
   if (contenedorLocations === null){
     return null;
   }
+  console.log("getAllLocations --> datasetLocation: ", contenedorLocations);
+  
+  const listaLocations = await getContainedResourceUrlAll(contenedorLocations!);
+  
+  console.log("getAllLocations --> lista: ", listaLocations);
+
+  return listaLocations;
+}
+
+export async function saveLocation(session:Session, location:Location){
   //console.log("getAllLocations --> datasetLocation: ", contenedorLocations);
   const listaLocations = await getContainedResourceUrlAll(contenedorLocations!);
   //console.log("getAllLocations --> lista: ", listaLocations);
@@ -153,8 +171,7 @@ export async function getLocationFromFriend(session:Session, friend:Friend, idLo
   if (locationThing !== null) {
       return await parseFriendLocation(friend, locationThing!);
   }
-  else 
-    return null;
+  else return null;
 }
 
 async function parseFriendLocation(friend:Friend, location:Thing){
@@ -321,6 +338,7 @@ async function getDataset(session:Session, datasetURI:string) {
 export async function initPodForLomap (session:Session){
   console.log("PodUtil -- initPodForLomap");
   const urlAlmacenamiento = await getStorageURL(session);
+  
   console.log("initPodForLomap -- Ruta base del POD: ", urlAlmacenamiento);
   //Por defecto se crean con permisos de lectura para todo el mundo los contenedores.
   await getOrCreateContainer(session,urlAlmacenamiento + RUTA_LOMAP);
@@ -381,6 +399,12 @@ export async function getAllLocationsObject(session: Session) {
     }
   }
   return listaObjectsLocations;
+
+}
+
+async function getUserName(session:Session){
+  
+  if (!session || !session.info.isLoggedIn) return null;
 
 }
 

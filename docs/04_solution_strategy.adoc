@@ -17,7 +17,6 @@
 * *MongoDb*: Will be used for creating the database as we decided that, because it is a NoSQL database, it makes us able to work with a lot of data
 without having to spend too much time in the modelling process.
 
-* *SOLID specification*: We will use PODs for the users, as it provides a high ammount of security for each user's data.
 
 === Decisions to achieve quality goals
 

@@ -8,9 +8,7 @@ Regarding the design decisions made by the team, we have the following:
 
 * *We are going to use MongoDB to better adapt to what a web application requires, with a variety of data to manage*: For this, a non-relational database like MongoDB will help us have greater flexibility for storing data, since we will be storing a wide variety of data types.
 
-* Use of typeScript for the language of the code, This language has great advantages in the short and long term.
-
-* For the deployment, it has not been decided how it will be done yet, as we have not discussed that yet.
+* For the deployment, we decided we are using Microsoft Azure, because is an easy way to deploy out application and make it scalable
 
 * To perform tests, we are going to use Puppeteer and Cucumber
 

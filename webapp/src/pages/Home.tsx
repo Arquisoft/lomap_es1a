@@ -50,9 +50,21 @@ export default function Home<Props>( props:any ): JSX.Element{
       else
         map.setStyle("mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5");
     }
-    reloadMap();
 
+    reloadMap("");
   }, [props.mapTheme]);
+
+  const [showForm, setShowForm] = useState(false);
+  const [showMarkerInfo, setShowMarkerInfo] = useState(false);
+
+  const [formLng, setFormLng] = useState(-1);
+  const [formLat, setFormLat] = useState(-1);
+
+  const [selectedLocation, setSelectedLocation] = useState<any>();
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
+  const [cardList, setCardList] = useState<any>();
 
   useEffect(() => {
     //Cuando se inicia sesión en un POD comprobamos si ya están creados los contenedores y los dataset necesarios para LOMAP
@@ -237,15 +249,10 @@ export default function Home<Props>( props:any ): JSX.Element{
     setMountFinished(true);
   }
 
-  const reloadMap = async () => {
+  const reloadMap = async (category:string ) => {
     console.log("RELOADING MAP...");
-    //var source = map.getSource('places');
     
-    const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/';
-    const response = await axios.get(apiEndPoint + "locations/");
-    console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint);
-    console.log("Home.tsx - reloadMap - response:",response);
-    
+    const response = await axios.get("http://localhost:5000/locations/" +  category);
     let locations = JSON.parse(requestToList(response.data));
     console.log("Home.tsx - reloadMap - locations:",locations);
     
@@ -279,7 +286,7 @@ export default function Home<Props>( props:any ): JSX.Element{
         <Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' onFormSelect={handleShowForm} onIconSelect={handleShowMarkerInfo} onMapSubmit={onMapSubmit} finishedMounting={finishedMounting} mapTheme={props.mapTheme}/>
       </div>
       <div className="filterDiv">
-        <Filter toggleFriends={session.info.isLoggedIn} />
+        <Filter toggleFriends={session.info.isLoggedIn} reloadMap={reloadMap}/>
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showAddLocationNotification} reloadMap={reloadMap}/>
       <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal} cardList={cardList}/>

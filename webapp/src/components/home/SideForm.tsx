@@ -25,7 +25,7 @@ interface Props {
   lng?: number;
   setOpen: (state: boolean) => void;
   showNotification: (name: string) => void;
-  reloadMap: () => void;
+  reloadMap: (category:string) => void;
 }
 
 interface State {
@@ -73,7 +73,7 @@ export default class SideForm extends React.Component<Props, State> {
       this.setState({ submitted: false });
       this.props.setOpen(false);
       this.props.showNotification(this.state.name);
-      this.props.reloadMap();
+      this.props.reloadMap("");
     };
 
     let drawerClasses = "side-drawer";

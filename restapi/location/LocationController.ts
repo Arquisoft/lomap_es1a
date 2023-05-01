@@ -44,3 +44,54 @@ export async function getLocationById(req: Request, res:Response) {
     res.status(500).send("Error al obtener las ubicaciones");
   }
 }
+
+export async function getMonuments(req: Request, res:Response) {
+  
+  try {
+    const monuments = await Location.find({ category: "monuments"}).exec();
+    res.send({ status: "Ok", data: monuments });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error al obtener los monumentos");
+  }
+
+}
+
+export async function getRestaurants(req: Request, res:Response) {
+  
+  try {
+    const restaurants = await Location.find({ category: "restaurant"}).exec();
+    res.send({ status: "Ok", data: restaurants });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error al obtener los monumentos");
+  }
+
+}
+
+
+export async function getShops(req: Request, res:Response) {
+  
+  try {
+    const shops = await Location.find({ category: "shop"}).exec();
+    res.send({ status: "Ok", data: shops });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error al obtener los monumentos");
+  }
+
+}
+
+export async function getOthers(req: Request, res:Response) {
+  
+  try {
+    const others = await Location.find({ category: "other"}).exec();
+    res.send({ status: "Ok", data: others });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error al obtener los monumentos");
+  }
+
+}
+
+
