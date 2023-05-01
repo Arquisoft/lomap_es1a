@@ -25,7 +25,8 @@ The application is secure because we use the SOLID principles, that means that e
 
 === Operative Concepts
 The basic operations that we can do in this application are:
-* User authentication: Refers to identifying oneself in the application as a registered user through their POD.
-* Put a mark on the map: The user will be able to place a point on the map by clicking on it, and a form for that point will appear.
-* Saving a location with data in the POD: when filling out the form and clicking on submit, that information is saved in the user's POD.
-* Filter by categories: A function that allows the user to see specific types of locations more precisely.
+
+- User authentication: Refers to identifying oneself in the application as a registered user through their POD.
+- Put a mark on the map: The user will be able to place a point on the map by clicking on it, and a form for that point will appear.
+- Saving a location with data in the POD: when filling out the form and clicking on submit, that information is saved in the user's POD.
+- Filter by categories: A function that allows the user to see specific types of locations more precisely.

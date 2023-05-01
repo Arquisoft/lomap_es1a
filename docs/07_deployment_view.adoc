@@ -14,7 +14,7 @@ The Frontend is the interface with which users interact.
 
 The Backend manages the logic of the application and the access to the data.
 
-It is pending to decide on which platform or platforms the frontend and backend of the application will be deployed.
+We have decided that the platform on which we will deploy both parts of the application for the distribution of our service is Microsoft's cloud service: Azure.
 
 Quality and/or Performance Features::
 
@@ -34,4 +34,5 @@ To deploy the project we have two options, deploy it locally or through a web ho
 | Web service    | Used to host the application on a remote server, Servicio que sirve para alojar la aplicación en un servidor remoto, there are a lot of services to host, being able to make the application accessible to other people. 
 
 |===
-We have to decide how to build the infraestructure with dockers.
+
+We have built the Docker infrastructure as indicated in the README structure provided in the skeleton at the beginning of the course.

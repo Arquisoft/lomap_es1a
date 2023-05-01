@@ -12,9 +12,7 @@ The technologies that are going to be used to develop this project are:
 | GitHub                  | Employed for version control and for team coordination, with tools such as issues and branches.
 | Interactive Map         | A means of implementing an interactive map must be included.
 | Docker                  | The web application will run on docker.
-| React                   | We are goinf to use React for the front-end
 | Typescript              | The language of the application will be typescript
-| Node.js                 | For the communication of the application we are going to use Node.js
 |===
 
 === Organizational constraints
