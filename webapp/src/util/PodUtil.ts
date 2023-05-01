@@ -180,7 +180,7 @@ async function parseFriendLocation(friend:Friend, location:Thing){
   if (photo !== null){
     let ficheroPhoto = photo.split("/lomap/images/")[1]
     console.log("parseFriendLocation  ***************** ficheroPhoto: ", ficheroPhoto);
-    let rutaImagen = await friend.webId.split("profile/card#me")[0] + "/lomap/images/" + ficheroPhoto;
+    let rutaImagen = await friend.webId.split("profile/card#me")[0] + "lomap/images/" + ficheroPhoto;
     console.log("parseFriendLocation  *****************  rutaImagen: ", rutaImagen);
     image = await getFile(rutaImagen, {fetch: fetch})
       .catch(
@@ -220,13 +220,13 @@ export async function saveLocation(session:Session, location:Location, allowedUs
   //Almacenar imagen relacionada si se ha subido
   if (location.image !== undefined) {
     //Recuperamos la extensión del fichero
-    let extension: string | undefined = location.image.name.split(".").pop();  
+    extension = location.image.name.split(".").pop();  
     if (extension === undefined)
       extension = "";
     else
       extension = "." + extension;
     console.log("PodUtil -- saveLocation -- extension: ", extension);
-    rutaImagen = await getStorageURL(session) + RUTA_IMAGES + "/" + location.id + extension;
+    rutaImagen = await getStorageURL(session) + RUTA_LOMAP + "/" + RUTA_IMAGES + "/" + location.id + extension;
     console.log("PodUtil -- saveLocation -- rutaImagen: ", rutaImagen);
     await overwriteFile(
       rutaImagen,

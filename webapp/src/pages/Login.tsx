@@ -31,7 +31,11 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
 
   const handleChange = (event: SelectChangeEvent) => {
     setIdp(event.target.value as string);
+    
   };
+
+
+
   return (
     <div className="login">
       <Container
@@ -49,6 +53,7 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
           Log In
         </Typography>
         <FormGroup>
+          <TextField id="idpTextField"></TextField>
           <InputLabel id="idpInputLabel" style={{ textAlign: "center", marginBottom: "0.6em" }}>
             Select your Identity Provider:{" "}
           </InputLabel>
@@ -70,8 +75,11 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
             <MenuItem id="inrupt" value={"https://solidweb.org"}>
               https://solidweb.org 
             </MenuItem>
+            <MenuItem id="podspaces" value={"https://datapod.igrant.io/login"}>
+              https://datapod.igrant.io/
+            </MenuItem>
             <MenuItem id="podspaces" value={"https://login.inrupt.com"}>
-              https://login.inrupt.com (PodSpaces)
+              https://login.inrupt.com
             </MenuItem>
           </Select>
         </FormGroup>
