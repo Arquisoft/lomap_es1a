@@ -31,10 +31,10 @@ function UserLocationList( props:any ): JSX.Element {
               {
                 props.locations.map((l: Location) =>
                   <TableRow>
-                    <TableCell className='table-header-cell' style={{fontSize:"1.5em"}}>{l.name}</TableCell>
-                <TableCell align="right" className='table-header-cell' style={{fontSize:"1.5em"}}>{l.category}</TableCell>
-                <TableCell align="right" className='table-header-cell' style={{fontSize:"1.5em"}}>{l.comments}</TableCell>
-                <TableCell align="right" className='table-header-cell' style={{fontSize:"1.5em"}}>{l.score}</TableCell>
+                    <TableCell className='table-header-cell' style={{fontSize:"1.5em"}}>{l.nameLocation}</TableCell>
+                    <TableCell align="right" className='table-header-cell' style={{fontSize:"1.5em"}}>{l.category}</TableCell>
+                    <TableCell align="right" className='table-header-cell' style={{fontSize:"1.5em"}}>{l.comments}</TableCell>
+                    <TableCell align="right" className='table-header-cell' style={{fontSize:"1.5em"}}>{l.score}</TableCell>
                   </TableRow>
                 )
               }

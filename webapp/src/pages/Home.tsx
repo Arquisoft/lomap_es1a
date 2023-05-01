@@ -142,7 +142,6 @@ export default function Home<Props>( props:any ): JSX.Element{
   const reloadMap = async (category:string) => {
     console.log("RELOADING MAP...");
     //var source = map.getSource('places');
-  
     
     const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/';
     const response = await axios.get(apiEndPoint + "locations/" + category);

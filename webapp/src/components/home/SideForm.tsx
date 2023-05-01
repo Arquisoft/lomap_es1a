@@ -53,6 +53,7 @@ export default class SideForm extends React.Component<Props, State> {
       e.preventDefault();
       const data:Location = {
         name: this.state.name,
+        nameLocation: this.state.name,
         category: this.state.category,
         latitud: this.props.lat,
         longitud: this.props.lng,

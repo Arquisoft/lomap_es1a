@@ -11,11 +11,12 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+import TableHead from "@mui/material/TableHead";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
 import TextField from "@mui/material/TextField";
-import { getFriends, saveLocation } from "../..//util/PodUtil";
-import type { Friend } from "../../util/UserData";
+import { getFriends, saveLocation, getAllGroupsObject } from "../..//util/PodUtil";
+import type { Friend, Group } from "../../util/UserData";
 
 Modal.setAppElement("#root");
 
@@ -50,6 +51,7 @@ interface Props {
 export default function AddLocationModal<Props>(props: any): JSX.Element {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [friendGroups, setFriendGroups] = useState<Group[]>([]);
   const [comments, setComments] = useState("");
   const [rating, setRating] = useState<number>(1);
   const [image, setImage] = useState<File>();
@@ -68,6 +70,12 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
   };
 
   useEffect(() => {
+    setFriendGroups([]);
+    if (!session || !session.info.isLoggedIn) return;
+    (async () => {
+      setFriendGroups(await getAllGroupsObject(session));
+    })();
+
     setFriends([]);
     if (!session || !session.info.isLoggedIn) 
       return;
@@ -96,6 +104,7 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
         name: props.selectedLocation.name,
         category: props.selectedLocation.category,
         id: props.selectedLocation._id,
+        nameLocation: props.selectedLocation.name,
         comments: comments,
         score: rating,
         latitud: parseFloat(props.selectedLocation.latitud),
@@ -153,6 +162,14 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
           <div className="friend-list-table">
             <TableContainer className="table-container" component={Paper}>
               <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell className='table-header-cell' 
+                  style={{fontWeight:"bold", fontSize:"1.5em", display:"flex", justifyContent:"center"}}
+                  >Friends
+                  </TableCell>
+                </TableRow>
+              </TableHead>
                 <TableBody>
                   {friends.map((f) => (
                     <TableRow key = {f.webId}>
@@ -170,6 +187,31 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
                         height="20"
                       >
                         <Checkbox value={f.webId} onChange={handleCheck} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+                <TableCell className='table-header-cell' 
+                  style={{fontWeight:"bold", fontSize:"1.5em", display:"flex", justifyContent:"center"}}
+                  >Friend Groups
+                </TableCell>
+                <TableBody>
+                  {friendGroups.map((g) => (
+                    <TableRow key = {g.name}>
+                      <TableCell
+                        className="table-cell"
+                        component="th"
+                        scope="row"
+                        style={{ fontSize: "1.2em" }}
+                      >
+                        {g.name}
+                      </TableCell>
+                      <TableCell
+                        className="table-cell"
+                        align="right"
+                        height="20"
+                      >
+                        <Checkbox value={g.members} onChange={handleCheck} />
                       </TableCell>
                     </TableRow>
                   ))}
