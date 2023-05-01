@@ -61,11 +61,14 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
             fullWidth
             style= {{marginBottom:"0.6em"}}
           >
-            <MenuItem id="solidcommunity" value={"https://solidcommunity.net"}>
-              https://solidcommunity.net (NSS 5.7.6)
-            </MenuItem>
             <MenuItem id="inrupt" value={"https://inrupt.net"}>
-              https://inrupt.net (Solid prototype)
+              https://inrupt.net
+            </MenuItem>  
+            <MenuItem id="solidcommunity" value={"https://solidcommunity.net"}>
+              https://solidcommunity.net
+            </MenuItem>
+            <MenuItem id="inrupt" value={"https://solidweb.org"}>
+              https://solidweb.org 
             </MenuItem>
             <MenuItem id="podspaces" value={"https://login.inrupt.com"}>
               https://login.inrupt.com (PodSpaces)
