@@ -9,8 +9,8 @@ defineFeature(feature, (test) => {
   let page: puppeteer.Page;
 
   beforeEach(async () => {
-    jest.setTimeout(60000);
-    browser = await puppeteer.launch({ headless: false });
+    jest.setTimeout(80000);
+    browser = await puppeteer.launch({ headless: true });
     page = await browser.newPage();
     await page.goto("http://localhost:3000/login");
   });

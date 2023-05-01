@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/leaflet": "^1.9.1",
     "@types/mongodb": "^4.0.7",
+    "enzyme-adapter-react-16": "^1.15.7",
     "jest-cucumber": "^3.0.1",
     "jest-puppeteer": "^8.0.6",
     "puppeteer": "^19.8.3"

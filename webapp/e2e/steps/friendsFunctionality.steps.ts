@@ -2,7 +2,7 @@ import { defineFeature, loadFeature } from "jest-cucumber";
 import puppeteer from "puppeteer";
 
 
-const feature = loadFeature("./features/logout.feature");
+const feature = loadFeature("./features/friendsfunctionality.feature");
 
 defineFeature(feature, (test) => {
   let browser: puppeteer.Browser;
@@ -10,12 +10,13 @@ defineFeature(feature, (test) => {
 
   beforeEach(async () => {
     jest.setTimeout(80000);
-    browser = await puppeteer.launch({ headless: true });
+    browser = await puppeteer.launch({ headless: false });
     page = await browser.newPage();
     await page.goto("http://localhost:3000/login");
   });
 
   afterAll(async () => {
+    await page.close();
     await browser.close();
   });
 
@@ -63,21 +64,34 @@ defineFeature(feature, (test) => {
     then("I should be redirected to the home page", async () => {
       await page.waitForNavigation();
       expect(page.url()).toMatch("http://localhost:3000");
-      await page.waitForTimeout(2000);
     });
 
-    when("I click on Logout", async () => {
-        const logoutButton = await page.$('button.MuiButton-root[type="button"]');
+    when('I go to the friends page', async () => {
+        const friendsButton = await page.$('[data-testid="EmojiPeopleIcon"]');
         await page.waitForTimeout(1000);
-        await logoutButton?.click();
+        if (friendsButton !== null) {
+          await friendsButton.click();
+        }
       });
+    
+    then('I should be in the friends page and see my solid friends', async () => {
+      await page.waitForTimeout(1000);
+      const url = page.url();
+      expect(url).toBe('http://localhost:3000/friends');
+      await page.waitForTimeout(5000);
+      
+      const pageContent = await page.content();
+      await page.waitForTimeout(1000);
 
-    then("I should logout", async () => {
-      await page.waitForTimeout(2000);
-      const loginButton = await page.$x("//button[contains(., 'Log in')]");
-      expect(loginButton).not.toBeNull();
+      expect(pageContent.includes("Andrés Ángel"));
+      expect(pageContent.includes("https://aagonzalez.inrupt.net/profile/card#me"));
+      expect(pageContent.includes("Amigo1"));
+      expect(pageContent.includes("https://amigo1.solidcommunity.net/profile/card#me"));
+      expect(pageContent.includes("Justin Bingham"));
+      expect(pageContent.includes("https://justin.inrupt.net/profile/card#me"));
+      expect(pageContent.includes("Andrés Ángel"));
+      expect(pageContent.includes("https://uo68216.solidcommunity.net/profile/card#me"));
     });
-  });
 
-  
+  });
 });

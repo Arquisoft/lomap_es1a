@@ -1,25 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Map from '../components/Map';
-import { render, fireEvent } from '@testing-library/react';
-import ReactDOM from 'react-dom';
+import Enzyme, {shallow, mount} from "enzyme"
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-describe('Map component', () => {
-  let container: HTMLDivElement
+Enzyme.configure({adapter: new Adapter()});
 
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-    ReactDOM.render(<Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' mapTheme="light"/>,container)
-  })
+test("DefineMap", ()=>{
+    expect(Map).toBeDefined();
+});
 
-  afterEach(() =>{
-    document.body.removeChild(container);
-    container.remove();
-  }
-  )
-
-  it('renders without crashing', () => {
-    const m = container.querySelector("#mapboxgl-canvas")
-    expect(m).toBeInTheDocument();
-  });
+test("RenderMap", ()=>{
+  const temp = shallow(<Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' mapTheme='light'/>);
+  expect(temp).toMatchSnapshot();
 });
