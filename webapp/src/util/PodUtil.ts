@@ -132,7 +132,8 @@ async function getAllLocations(session:Session){
 export async function getLocationFromFriend(session:Session, friend:Friend, idLocation:string){
   console.log("Entrando en getLocationFromFriend");
   //Si no estamos en sesión retornamos null
-  if (!session || !session.info.isLoggedIn) return;
+  if (!session || !session.info.isLoggedIn) 
+    return null;
 
   //Conseguimos la URL de almacenamiento del POD
   const urlPOD = friend.webId.split("profile/card#me")[0];
@@ -310,12 +311,16 @@ async function getDataset(session:Session, datasetURI:string) {
     const dataset = await getSolidDataset(datasetURI, { fetch }); 
     return dataset;
   } catch (error:any) {
+    if (error.statusCode === 403) {
+      console.log("PodUtil -- getDataset --> Error 403. Usuario no autorizado a ", datasetURI);
+      return null;
+    }
     if (error.statusCode === 404) {
+      console.log("PodUtil -- getDataset --> Error 404. No existe ", datasetURI);
       return null;
     }
   }
 }
-
 
 //Si no existen en el Pod crea los contenedores (directorios) y los dataset necesarios para la aplciación
 export async function initPodForLomap (session:Session){

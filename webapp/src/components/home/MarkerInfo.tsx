@@ -60,13 +60,14 @@ export default class MarkerInfo extends React.Component<Props> {
             <div style={{overflow: "hidden"}}>
             {
                 this.props.cardList !== undefined ?
+                
                 this.props.cardList.map((location:any) => 
                   location !== undefined && location !== null ?
                   <InfoCard key={this.props.cardList} username={location.name} rating={location.score} comments={location.comments} image={location.image} />
                   : ""
                 )
                 : <p>Fetching data...</p>
-              }
+            }
             </div>
           </div>
           <div className={"addButton"}>
