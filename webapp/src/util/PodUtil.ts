@@ -395,7 +395,7 @@ export async function getAllLocationsObject(session: Session) {
   console.log ("PodUtil.ts -- getAllLocationsObject")
   const listaLocations = await getAllLocations(session);
   console.log ("PodUtil.ts -- getAllLocationsObject -- listaLocations", listaLocations);
-  if (listaLocations == undefined || listaLocations == null) return null;
+  if (listaLocations === undefined || listaLocations === null) return null;
   let listaObjectsLocations  = []; 
   for (let elemento of listaLocations) { 
     let idLocation = elemento.substring(elemento.lastIndexOf("/")+1);
@@ -428,7 +428,7 @@ export async function getUserName(session:Session){
 
 export async function getUserNameFromWebId(webId:string){
   console.log ("PodUtil.ts -- getUserNameFromWebId --> Parametros llamada: webId: ", webId);
-  if (typeof webId == 'undefined' || !webId || webId.length === 0 || webId === "")
+  if (typeof webId === 'undefined' || !webId || webId.length === 0 || webId === "")
     return "";
   const profileThing = await getUserProfile(webId);
   const name = await getStringNoLocale(profileThing!, FOAF.name);
@@ -530,7 +530,7 @@ export async function getAllGroupsObject(session: Session) {
   const listaGroups = await getAllGroups(session);
   let listaObjectsGroup:Group[]  = []; 
 
-  if (listaGroups == undefined || listaGroups == null) 
+  if (listaGroups === undefined || listaGroups === null) 
     return listaObjectsGroup;
   
   for (let elemento of listaGroups) { 
@@ -573,7 +573,7 @@ export async function saveGroup(session:Session, group:Group){
   //Devolvemos el nuevo grupo Guardado
   const urlNuevoGrupoGuardado = rutaDataset + "#" + group.name;
   const nuevoGrupoGuardado: Thing | null = await getThing(datasetGuardado, urlNuevoGrupoGuardado);
-  if (nuevoGrupoGuardado == null)
+  if (nuevoGrupoGuardado === null)
     return null;
   const nuevoObjectGroupGuardado:Group = await parseGroup(nuevoGrupoGuardado);
   return nuevoObjectGroupGuardado;

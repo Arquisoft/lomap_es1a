@@ -13,7 +13,6 @@ import FriendList from "../components/friends/FriendList";
 import { useNotifications } from 'reapop'
 import FriendGroupList from "../components/friends/FriendGroupList";
 import AddFriendGroupModal from "../components/friends/AddFriendGroupModal";
-import AddFriendGroup from "../components/friends/AddFriendGroupModal";
 
 export default function Friends() {
   const { session } = useSession();
@@ -68,7 +67,7 @@ export default function Friends() {
             </Button>
           </ButtonGroup>
         </div>
-        {selectedBtn == 1 ? <FriendList friends={friends} /> : <FriendGroupList modalIsOpen={modalIsOpen} closeModal={closeModal} openModal={openModal} showNotification={showFriendGroupNotification} />}
+        {selectedBtn === 1 ? <FriendList friends={friends} /> : <FriendGroupList modalIsOpen={modalIsOpen} closeModal={closeModal} openModal={openModal} showNotification={showFriendGroupNotification} />}
         <AddFriendGroupModal modalIsOpen={modalIsOpen} closeModal={closeModal} openModal={openModal} showNotification={showFriendGroupNotification}/>
       </div>
     );

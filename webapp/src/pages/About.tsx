@@ -1,4 +1,3 @@
-import React from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -9,7 +8,7 @@ import "./About.css";
 export default function About() {
     return (
       <div>
-        <img className="background-image" src={gifBackground}></img>
+        <img className="background-image" src={gifBackground} alt="Background Image"></img>
         <div className="main-container">
           <Stack component="main" justifyContent="center">
             <Container maxWidth="sm" className="title-container">

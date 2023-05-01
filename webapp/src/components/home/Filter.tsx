@@ -4,17 +4,10 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import styles from './filter.module.css';
 
-
-interface Props {
-  toggleFriends: boolean
-  reloadMap: (category:string) => void;
-}
-
-export default function Filter<Props>( props:any ): JSX.Element {
+export default function Filter( props:any ): JSX.Element {
   const [category, setCategory] = React.useState("Show all");
 
   const handleChange = (event:any) => {
