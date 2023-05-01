@@ -19,23 +19,6 @@ export default function Filter( props:any ): JSX.Element {
 
   return (
     <div className={styles.boxContainer}>
-      {props.toggleFriends ? (
-            <FormControlLabel
-            label="Friend locations"
-            control={<Switch />} 
-            className={styles.friendsFilter}
-            value={false}
-            onChange={props.handleFilterFriends}
-            />
-          ) : (
-            <FormControlLabel
-            label="Friend locations"
-            control={<Switch />}
-            className={styles.friendsFilter}
-            value={true}
-            onChange={props.handleFilterFriends}
-            />
-          )}
       <FormControl className={styles.form}>
         <InputLabel id="category-select-label">Category</InputLabel>
         <Select
@@ -55,4 +38,23 @@ export default function Filter( props:any ): JSX.Element {
       </FormControl>
     </div>
   );
+
+  // {props.toggleFriends ? (
+    // <FormControlLabel
+    // label="Friend locations"
+    // control={<Switch />} 
+    // className={styles.friendsFilter}
+    // value={false}
+    // onChange={props.handleFilterFriends}
+    // />
+  // ) : (
+    // <FormControlLabel
+    // label="Friend locations"
+    // control={<Switch />}
+    // className={styles.friendsFilter}
+    // value={true}
+    // onChange={props.handleFilterFriends}
+    // />
+  // )
+  // }
 }

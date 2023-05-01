@@ -186,7 +186,6 @@ export default function Home<Props>( props:any ): JSX.Element{
         <Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' onFormSelect={handleShowForm} onIconSelect={handleShowMarkerInfo} onMapSubmit={onMapSubmit} finishedMounting={finishedMounting} mapTheme={props.mapTheme}/>
       </div>
       <div className="filterDiv">
-  const [toggleFilter, setToggleFilter] = useState(false);
         <Filter toggleFriends={session.info.isLoggedIn} reloadMap={reloadMap} toggleFilter={handleFilterFriends}/>
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showAddLocationNotification} reloadMap={reloadMap}/>

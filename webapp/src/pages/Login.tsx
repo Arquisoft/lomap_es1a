@@ -22,7 +22,6 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
   const [idp, setIdp] = useState("https://solidcommunity.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
   
-
   useEffect(() => {
     console.log("Login.tsx -- useEffect()");
     console.log("Login.tsx -- useEffect() -- windows.location.origin", window.location.origin);
@@ -31,10 +30,11 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
 
   const handleChange = (event: SelectChangeEvent) => {
     setIdp(event.target.value as string);
-    
   };
 
-
+  const modifyText = (event: any) => {
+    setIdp(event.target.value);
+  }
 
   return (
     <div className="login">
@@ -53,9 +53,12 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
           Log In
         </Typography>
         <FormGroup>
-          <TextField id="idpTextField"></TextField>
+          <InputLabel id="iddTextField" style={{ textAlign: "center", marginBottom: "0.6em" }}>
+            Enter a URL:{" "}
+          </InputLabel>
+          <TextField id="idpTextField" style={{marginBottom:"2%"}} value={idp} onChange={modifyText}></TextField>
           <InputLabel id="idpInputLabel" style={{ textAlign: "center", marginBottom: "0.6em" }}>
-            Select your Identity Provider:{" "}
+            Or select your Identity Provider:{" "}
           </InputLabel>
           <Select
             labelId="idpInputLabel"
