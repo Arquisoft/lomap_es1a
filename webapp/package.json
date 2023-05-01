@@ -21,12 +21,8 @@
     "@types/react": "^17.0.37",
     "@types/react-modal": "^3.13.1",
     "@types/react-notifications-component": "^3.1.1",
-<<<<<<< HEAD
     "axios": "^1.4.0",
-=======
-    "axios": "^1.3.5",
     "cors": "^2.8.5",
->>>>>>> d57742294fe6c4c62973815ad9d1b83bfdbc8f05
     "express": "^4.18.2",
     "faker": "^6.6.6",
     "mapbox-gl": "^2.13.0",
