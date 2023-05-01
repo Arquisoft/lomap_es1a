@@ -3,6 +3,7 @@
     padding: 0 5%;
     border: 0.02em grey;
     border-style: solid none;
+    overflow: hidden;
 }
 
 .card-header {

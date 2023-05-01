@@ -366,7 +366,7 @@ export async function initPodForLomap (session:Session){
 
   await getOrCreateDataset(session, urlAlmacenamiento + RUTA_GROUPS);
   console.log("initPodForLomap -- Comprobar en pod recurso " + RUTA_GROUPS + ".");
-  setPublicAccessRead(session, urlAlmacenamiento + RUTA_GROUPS, true);
+  setPublicAccessRead(session, urlAlmacenamiento + RUTA_GROUPS, false);
   console.log("initPodForLomap -- Crear ACL para recurso " + urlAlmacenamiento + RUTA_GROUPS + ".");
   
   //Crarmos por defecto un grupo con todos los amigos del pod
