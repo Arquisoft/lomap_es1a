@@ -13,7 +13,7 @@ import {initPodForLomap, saveGroup, deleteGroup,getPublicAccessRead, setPublicAc
 import type { Friend, Group, Location} from "../../src/util/UserData";
 
 import "./Home.css";
-import { getLocationObject, getAllLocationsObject, getUserName, getFriends, getLocationFromFriend, getAllGroups, getAllGroupsObject, getUserRead, setUserRead, getGroupRead, setGroupRead} from '../util/PodUtil';
+import { getLocationObject, getAllLocationsObject, getUserName, getFriends, getAllGroups, getAllGroupsObject, getUserRead, setUserRead, getGroupRead, setGroupRead, getLocationFromFriend } from '../util/PodUtil';
 
 interface Props {
   mapTheme: string;
