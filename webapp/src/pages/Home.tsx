@@ -52,7 +52,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     }
     reloadMap();
 
-  }, [props.mapTheme]);
+  }, [map, mountFinished, props.mapTheme]);
 
   useEffect(() => {
     //Cuando se inicia sesión en un POD comprobamos si ya están creados los contenedores y los dataset necesarios para LOMAP

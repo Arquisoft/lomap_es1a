@@ -57,19 +57,18 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
 
   const label = { inputProps: { "aria-label": "Checkbox placeholder" } };
 
-  const handleFriends = useCallback(async () => {
-    if (session.info.webId != undefined && session.info.webId != "") {
-      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
+  useEffect(() => {
+    setFriends([]);
+    if (!session || !session.info.isLoggedIn) 
+      return;
+    (async () => {  
+      let aux = await getFriends(session.info.webId!).then((friendsPromise) => {
         return friendsPromise;
       });
-      setFriends(aux);
-    } else setFriends([]);
-  },[session]);
-
-  useEffect(() => {
-    handleFriends();
-  }, [friends]);
-
+      setFriends(aux); 
+    })();
+  }, [session, session.info.webId]);
+ 
   const handleRatingChange = async (e:any) => {
     setRating(e.target.value);
   }
