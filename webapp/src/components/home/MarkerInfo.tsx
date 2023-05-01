@@ -38,6 +38,7 @@ export default class MarkerInfo extends React.Component<Props> {
       drawerClasses = "side-drawer open";
     }
 
+
     return (
       <div className={drawerClasses}>
         <div className={"closeButton"}>
@@ -57,17 +58,24 @@ export default class MarkerInfo extends React.Component<Props> {
               : this.props.location.name}
           </Typography>
           <div className={"infoContainer"}>
-            <div style={{overflow: "hidden"}}>
             {
-                this.props.cardList !== undefined ?
-                this.props.cardList.map((location:any) => 
-                  location !== undefined && location !== null ?
-                  <InfoCard key={this.props.cardList} username={location.name} rating={location.score} comments={location.comments} image={location.image} />
-                  : ""
-                )
-                : <p>Fetching data...</p>
-              }
-            </div>
+              this.props.cardList !== undefined ?
+              this.props.cardList.map((location:any) => 
+                location !== undefined && location !== null ?
+                <InfoCard key={this.props.cardList} username={location.name} rating={location.score} comments={location.comments} image={location.image} />
+                : ""
+              )
+              : <p>Fetching data...</p>
+            }
+            {
+              this.props.cardList !== undefined ?
+              this.props.cardList.map((location:any) => 
+                location !== undefined && location !== null ?
+                <InfoCard key={this.props.cardList} username={location.name} rating={location.score} comments={location.comments} image={location.image} />
+                : ""
+              )
+              : <p>Fetching data...</p>
+            }
           </div>
           <div className={"addButton"}>
             <Button type="submit" variant="contained" color="primary" sx={{width:'100%'}} onClick={this.props.openModal}>
