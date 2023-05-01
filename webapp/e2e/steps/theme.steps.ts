@@ -2,7 +2,7 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import puppeteer from "puppeteer";
 
 
-const feature = loadFeature('./features/friends.feature');
+const feature = loadFeature('./features/theme.feature');
 
 defineFeature(feature, test => {
   let page: puppeteer.Page;
@@ -22,21 +22,20 @@ defineFeature(feature, test => {
     browser.close();
   });
 
-  test('Navegar por la seccion de Friends', ({ given, when, then }) => {
+  test('Cambiar la apariencia', ({ given, when, then }) => {
     given('Estoy en la página principal', async () => {
       await page.goto('http://localhost:3000');
     });
 
-    when('Hago clic en el icono de Friends', async () => {
-      const friendsButton = await page.$('[href="/friends"]');
-      if (friendsButton !== null) {
-        await friendsButton.click();
-      }
+    when('Hago clic en el boton de cambio de apariencia', async () => {
+      const themeButton = await page.$("#theme");
+      await themeButton?.click();
     });
 
-    then('Debería ir a la pagina de Friends', async () => {
+    then('Debería cambiar la apariencia', async () => {
       const url = await page.url();
-      expect(url).toBe('http://localhost:3000/friends');
+      expect(url).toBe('http://localhost:3000/');
     });
-
-})});
+  });
+  
+});

@@ -25,7 +25,7 @@ Deployment in the cloud has advantages over an on-premises solution (software de
 
 Mapping of Building Blocks to Infrastructure::
 Deployment
-To deploy the project we have two options, deploy it locally or through a web hosting service.
+To deploy the project we have two options, deploy it locally or through Microsoft Azure.
 
 
 |===
@@ -34,4 +34,4 @@ To deploy the project we have two options, deploy it locally or through a web ho
 | Web service    | Used to host the application on a remote server, Servicio que sirve para alojar la aplicación en un servidor remoto, there are a lot of services to host, being able to make the application accessible to other people. 
 
 |===
-We have to decide how to build the infraestructure with dockers.
+For building the infrastructure with Docker, we just follow the instruction we found in the README files to build all the containers
