@@ -21,7 +21,7 @@ export default function Filter<Props>( props:any ): JSX.Element {
     
     let category = (event.target.value as string);
     props.reloadMap(category);
-    
+    setCategory(category);
   };
 
   return (
