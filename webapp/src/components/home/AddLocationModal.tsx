@@ -156,7 +156,7 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
               <Table stickyHeader aria-label="sticky table">
                 <TableBody>
                   {friends.map((f) => (
-                    <TableRow>
+                    <TableRow key = {f.webId}>
                       <TableCell
                         className="table-cell"
                         component="th"

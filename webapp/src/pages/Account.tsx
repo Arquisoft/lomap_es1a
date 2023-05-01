@@ -1,6 +1,8 @@
 import { useSession } from "@inrupt/solid-ui-react";
 import { Navigate } from 'react-router-dom';
 import "./Account.css";
+import FriendList from "../components/friends/FriendList";
+import UserLocationList from "../components/home/UserLocationList";
 
 export default function Account() {
 
@@ -8,9 +10,7 @@ export default function Account() {
 
   if (session.info.isLoggedIn) {
     return (
-      <div className='main-container'>
-        <h1>Account</h1>
-      </div>
+      <UserLocationList/>
     );
   }
   else

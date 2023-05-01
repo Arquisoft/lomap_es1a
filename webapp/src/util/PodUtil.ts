@@ -21,6 +21,7 @@ import {
   getStringNoLocale, 
   getThing,
   getThingAll,
+  getUrl,
   getUrlAll,
   hasAccessibleAcl,
   hasFallbackAcl,
@@ -132,7 +133,8 @@ async function getAllLocations(session:Session){
 export async function getLocationFromFriend(session:Session, friend:Friend, idLocation:string){
   console.log("Entrando en getLocationFromFriend");
   //Si no estamos en sesión retornamos null
-  if (!session || !session.info.isLoggedIn) return;
+  if (!session || !session.info.isLoggedIn) 
+    return null;
 
   //Conseguimos la URL de almacenamiento del POD
   const urlPOD = friend.webId.split("profile/card#me")[0];
@@ -159,23 +161,32 @@ export async function getLocationFromFriend(session:Session, friend:Friend, idLo
 
 async function parseFriendLocation(friend:Friend, location:Thing){
 
-  console.log ("parseLocation --> location", location);
+  console.log ("parseFriendLocation --> location", location);
   const comments =  getStringNoLocale(location, URL_VOCABULARIO + "comments");
-  console.log ("parseLocation --> comments", location);
+  console.log ("parseFriendLocation --> comments", location);
   const score = getStringNoLocale(location, URL_VOCABULARIO + "score");
-  console.log ("parseLocation --> comments", score);
+  console.log ("parseFriendLocation --> comments", score);
   const name = friend.name;
-  console.log ("parseLocation --> name", name);
+  console.log ("parseFriendLocation --> name", name);
   const category = await getStringNoLocale(location, URL_VOCABULARIO + "category");
-  console.log ("parseLocation --> category", category);
+  console.log ("parseFriendLocation --> category", category);
   const id = await getStringNoLocale(location, URL_VOCABULARIO + "id_location");
-  console.log ("parseLocation --> id", id);
+  console.log ("parseFriendLocation --> id", id);
 
-  const image = await getFile(await friend.webId.split("profile/card#me")[0] + "lomap/" + RUTA_IMAGES + "/" + id + ".jpg", {fetch: fetch}).catch(
-    () => {
-      console.log("No image found")
-    }
-  );
+  //Calculamos la ruta absoluta de la imagen a partir de la relativa almacenada en el POD
+  let image = null;
+  const photo =  getUrl(location, URL_VOCABULARIO + "photo");
+  console.log("parseFriendLocation   *****************  photo: ", photo);
+  if (photo !== null){
+    let ficheroPhoto = photo.split("/lomap/images/")[1]
+    console.log("parseFriendLocation  ***************** ficheroPhoto: ", ficheroPhoto);
+    let rutaImagen = await friend.webId.split("profile/card#me")[0] + "/lomap/images/" + ficheroPhoto;
+    console.log("parseFriendLocation  *****************  rutaImagen: ", rutaImagen);
+    image = await getFile(rutaImagen, {fetch: fetch})
+      .catch(
+        () => { console.log("No image found");}
+      );
+  } 
 
   let result = {
     name: name,
@@ -196,8 +207,7 @@ export async function saveLocation(session:Session, location:Location, allowedUs
   const rutaDataset = urlPOD + RUTA_LOCATIONS + "/" + location.id;
   console.log("PodUtil -- saveLocation -- ruta dataset: ", rutaDataset);
   let nuevoDataset= await getOrCreateDataset(session, rutaDataset);
-  //console.log("nuevoDataset: ", nuevoDataset);
-  
+    
   //Transformamos coordenadas y score de número a String
   const latitudeString:string  = Number(location.latitud).toString();
   const longitudeString:string = Number(location.longitud).toString();
@@ -205,14 +215,21 @@ export async function saveLocation(session:Session, location:Location, allowedUs
 
   getOrCreateContainer(session, getStorageURL(session) + "/" + RUTA_IMAGES)
 
-  console.log("IMAGEN:")
-  console.log(location.image)
-
-  //Almacenar imagen relacionada
-  console.log(await getStorageURL(session) + RUTA_IMAGES + "/" + location.id + ".jpg");
+  let extension: string | undefined = "";
+  let rutaImagen = ""
+  //Almacenar imagen relacionada si se ha subido
   if (location.image !== undefined) {
+    //Recuperamos la extensión del fichero
+    let extension: string | undefined = location.image.name.split(".").pop();  
+    if (extension === undefined)
+      extension = "";
+    else
+      extension = "." + extension;
+    console.log("PodUtil -- saveLocation -- extension: ", extension);
+    rutaImagen = await getStorageURL(session) + RUTA_IMAGES + "/" + location.id + extension;
+    console.log("PodUtil -- saveLocation -- rutaImagen: ", rutaImagen);
     await overwriteFile(
-      await getStorageURL(session) + "lomap/" + RUTA_IMAGES + "/" + location.id + ".jpg",
+      rutaImagen,
       location.image,
       { contentType: location.image.type, fetch: fetch }
     );
@@ -226,8 +243,8 @@ export async function saveLocation(session:Session, location:Location, allowedUs
   .addStringNoLocale(URL_VOCABULARIO + "latitude", latitudeString)
   .addStringNoLocale(URL_VOCABULARIO + "longitude", longitudeString)
   .addStringNoLocale(URL_VOCABULARIO + "comments", location.comments !== null ? location.comments! : "") 
-  .addStringNoLocale(URL_VOCABULARIO + "score", scoreString) 
-  .addStringNoLocale(URL_VOCABULARIO + "photo", location.image != null ? location.image.name : "no_image")
+  .addStringNoLocale(URL_VOCABULARIO + "score", scoreString)
+  .addUrl(URL_VOCABULARIO + "photo", rutaImagen )
   .addUrl(RDF.type, URL_VOCABULARIO + "Location")
   .build();
   
@@ -315,12 +332,16 @@ async function getDataset(session:Session, datasetURI:string) {
     const dataset = await getSolidDataset(datasetURI, { fetch }); 
     return dataset;
   } catch (error:any) {
+    if (error.statusCode === 403) {
+      console.log("PodUtil -- getDataset --> Error 403. Usuario no autorizado a ", datasetURI);
+      return null;
+    }
     if (error.statusCode === 404) {
+      console.log("PodUtil -- getDataset --> Error 404. No existe ", datasetURI);
       return null;
     }
   }
 }
-
 
 //Si no existen en el Pod crea los contenedores (directorios) y los dataset necesarios para la aplciación
 export async function initPodForLomap (session:Session){
@@ -427,12 +448,17 @@ async function parseLocation (session:Session, location:Thing){
   console.log ("parseLocation --> category", category);
   const id = await getStringNoLocale(location, URL_VOCABULARIO + "id_location");
   console.log ("parseLocation --> id", id);
-
-  const image = await getFile(await getStorageURL(session) + "lomap/" + RUTA_IMAGES + "/" + id + ".jpg", {fetch: fetch}).catch(
-    () => {
-      console.log("No image found")
-    }
-  );
+  
+  //Calculamos la ruta absoluta de la imagen a partir de la relativa almacenada en el POD
+  let image = null;
+  const photo =  getUrl(location, URL_VOCABULARIO + "photo");
+  if (photo !== null){
+    
+    image = await getFile(photo, {fetch: fetch})
+      .catch(
+        () => { console.log("No image found");}
+      );
+  } 
 
   let result = {
     name: name,
@@ -581,7 +607,7 @@ export async function deleteGroup(session: Session, group: Group){
   return await getAllGroupsObject(session);
 }
 
-///// PERMISOS
+// PERMISOS
 
 // Consegue la lista de control de acceso (ACL) propia del dataset, si esta disponible,
 // o inicia una nueva, si es posible.
