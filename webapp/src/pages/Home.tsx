@@ -89,7 +89,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     let cardList = await getLocationObject(session, location._id);
     console.log ("Home.tsx -- handleShowMarkerInfo -- cardList", cardList);
     
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas PODS ");
+    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas PODS ");
     //Pruebas varias de los métodos del pod. 
     //1 Llamo aqui a obtener toda la lista de locations
     //let locations = await getAllLocationsObject(session);
@@ -190,7 +190,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log ("Permiso Lectura grupo2 debería ser true: ", permisoReadGrupo2);
     console.log ("FINAL Prueba completa modificación ACL. ");
     */
-   
+
     if (cardList != undefined)
       setCardList(cardList);
   };
