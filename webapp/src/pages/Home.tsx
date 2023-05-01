@@ -38,6 +38,12 @@ export default function Home<Props>( props:any ): JSX.Element{
 
   const { notify } = useNotifications();
 
+  const [toggleFilter, setToggleFilter] = useState(false);
+  const handleFilterFriends = () => {
+    setToggleFilter(!toggleFilter);
+    reloadMap("");
+  }
+
   useEffect(() => {
     console.log("Home.tsx -- useEffect");
     console.log("CURRENT MAP:")
@@ -94,109 +100,6 @@ export default function Home<Props>( props:any ): JSX.Element{
         setCardList(newCardList);
     }
 
-    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas PODS ");
-    //Pruebas varias de los métodos del pod. 
-    //1 Llamo aqui a obtener toda la lista de locations
-    //let locations = await getAllLocationsObject(session);
-    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Lista de todas las localizaciones", locations);
-    //2. Conseguir el nombre de usuario del pod
-    //let userName = await getUserName(session);
-    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getUserName", userName);
-    //let groups = await getAllGroups(session);
-    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getAllGroups", groups);
-    //let groups = await getAllGroupsObject(session);
-    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getAllGroupsObject", groups);
-    
-    //let friends = await getFriends(session.info.webId!);
-    //console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getFriends", friends);
-    
-    /*
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. SaveGroup");
-    let pruebaGrupoNuevo:Group = {
-      name: "grupoTodos",
-      members: friends
-    }
-
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. SaveGroup con espacios en el nombre");
-    let pruebaGrupoEspaciosNombre:Group = {
-      name: "grupo de todos los amigos del POD",
-      members: friends
-    }
-
-    let grupoGuardado = await saveGroup(session, pruebaGrupoEspaciosNombre);
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. grupoGuardado: ",grupoGuardado);
-
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. borrar el grupo: ");
-    let gruposDespuesBorrar = await deleteGroup(session, pruebaGrupoNuevo);
-    console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. Grupos despues de borrar : ",gruposDespuesBorrar);
-    */
-
-
-    /*console.log ("Home.tsx -- handleShowMarkerInfo -- Pruebas. getPublicAccessRead");
-    let testGetPublicAccess:boolean | undefined = await getPublicAccessRead (session,
-      "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d");
-    console.log ("testgetPublicAccess: ", testGetPublicAccess);*/
-    /*
-    //Desactivamos el permiso de lectura pública. Dataset sin acl creada
-    let testSetPublicAccess = await setPublicAccessRead (session,
-      "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d", false);
-    console.log ("Desactivado permiso de lectura pública: ", testSetPublicAccess);
-    //Volvemos a consultar el valor
-    let testGetPublicAccess = await getPublicAccessRead (session,
-      "https://aagonzalez.inrupt.net/lomap/locations/6432acba6078761b6f511c1d");
-    console.log ("Debería ser falso tras desactivarlo. testGetPublicAccess: ", testGetPublicAccess);  
-      */
-    
-    /*
-    //Desactivamos el permiso de lectura pública. Dataset con acl creada
-    let testSetPublicAccess = await setPublicAccessRead (session,
-      "https://aagonzalez.inrupt.net/lomap/locations/64329bd1f09bf1a2f06cb193", false);
-    console.log ("Desactivado permiso de lectura pública: ", testSetPublicAccess);
-    //Volvemos a consultar el valor
-    let testGetPublicAccess = await getPublicAccessRead (session,
-      "https://aagonzalez.inrupt.net/lomap/locations/64329bd1f09bf1a2f06cb193");
-    console.log ("Debería ser falso tras desactivarlo. testGetPublicAccess: ", testGetPublicAccess);  
-    */  
-    
-    /*
-    //Prueba completa modificación ACL. Quitar permiso de lectura pública y añadir usuarios y grupos
-    console.log ("iNICIO prueba completa modificación ACL. Quitar permiso de lectura pública y añadir usuarios y grupos");
-    let recursoPruebaCompleta = "https://aagonzalez.inrupt.net/lomap/locations/64337eb048c1302f714702b1"
-    console.log ("Recurso prueba: ", recursoPruebaCompleta);
-    //  Desactivamos el permiso de lectura pública. Dataset con acl creada
-    let testSetPublicAccess = await setPublicAccessRead (session, recursoPruebaCompleta, false);
-    console.log ("Desactivado permiso de lectura pública.");
-    //Volvemos a consultar el valor
-    let testGetPublicAccess = await getPublicAccessRead (session,recursoPruebaCompleta);
-    console.log ("Debería ser falso tras desactivarlo. testGetPublicAccess: ", testGetPublicAccess); 
-    //  Activamos permisos del lectura a 2 usuarios
-    let idUsuario1 = "https://labra2223.inrupt.net/profile/card#me"
-    let idUsuario2 = "https://andresangel2.solidcommunity.net/profile/card#me"
-    console.log ("Activamos permisos lectura usuario1: ", idUsuario1);
-    await setUserRead(session,recursoPruebaCompleta,idUsuario1,true);
-    console.log ("Activamos permisos lectura usuario2: ", idUsuario2);
-    await setUserRead(session,recursoPruebaCompleta,idUsuario2,true);
-    //  Comprobamos los permisos de los usuarios
-    let permisoReadUsuario1:boolean|undefined = await getUserRead(session,recursoPruebaCompleta,idUsuario1)
-    console.log ("Permiso Lectura usuario1 debería ser true: ", permisoReadUsuario1);
-    let permisoReadUsuario2:boolean|undefined = await getUserRead(session,recursoPruebaCompleta,idUsuario2)
-    console.log ("Permiso Lectura usuario2 debería ser true: ", permisoReadUsuario2);
-    
-    //  Activamos permisos del lectura a 2 grupos
-    let idGrupo1 = "https://aagonzalez.inrupt.net/lomap/groups.ttl#grupo%20de%20todos%20los%20amigos%20del%20POD"
-    let idGrupo2 = "https://aagonzalez.inrupt.net/lomap/groups.ttl#Amigos"
-    console.log ("Activamos permisos lectura grupo1: ", idGrupo1);
-    await setGroupRead(session,recursoPruebaCompleta,idGrupo1,true);
-    console.log ("Activamos permisos lectura grupo2: ", idGrupo2);
-    await setGroupRead(session,recursoPruebaCompleta,idGrupo2,true);
-    //  Comprobamos los permisos de los usuarios
-    let permisoReadGrupo1: boolean|undefined = await getGroupRead(session,recursoPruebaCompleta,idGrupo1)
-    console.log ("Permiso Lectura grupo1 debería ser true: ", permisoReadGrupo1);
-    let permisoReadGrupo2: boolean|undefined = await getGroupRead(session,recursoPruebaCompleta,idGrupo2)
-    console.log ("Permiso Lectura grupo2 debería ser true: ", permisoReadGrupo2);
-    console.log ("FINAL Prueba completa modificación ACL. ");
-    */
-
   };
 
   const closeForm = (state: boolean) => {
@@ -239,12 +142,17 @@ export default function Home<Props>( props:any ): JSX.Element{
   const reloadMap = async (category:string) => {
     console.log("RELOADING MAP...");
     //var source = map.getSource('places');
+  
     
     const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/';
     const response = await axios.get(apiEndPoint + "locations/" + category);
     console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint);
     console.log("Home.tsx - reloadMap - response:",response);
     
+    
+    if(toggleFilter){
+      console.log(response.data);
+    }
     let locations = JSON.parse(requestToList(response.data));
     console.log("Home.tsx - reloadMap - locations:",locations);
     
@@ -278,7 +186,8 @@ export default function Home<Props>( props:any ): JSX.Element{
         <Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' onFormSelect={handleShowForm} onIconSelect={handleShowMarkerInfo} onMapSubmit={onMapSubmit} finishedMounting={finishedMounting} mapTheme={props.mapTheme}/>
       </div>
       <div className="filterDiv">
-        <Filter toggleFriends={session.info.isLoggedIn} reloadMap={reloadMap}/>
+  const [toggleFilter, setToggleFilter] = useState(false);
+        <Filter toggleFriends={session.info.isLoggedIn} reloadMap={reloadMap} toggleFilter={handleFilterFriends}/>
       </div>
       <SideForm show={showForm} lat={formLat} lng={formLng} setOpen={closeForm} showNotification={showAddLocationNotification} reloadMap={reloadMap}/>
       <MarkerInfo show={showMarkerInfo} location={selectedLocation} setOpen={closeInfo} openModal={openModal} cardList={cardList}/>

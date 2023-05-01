@@ -10,7 +10,7 @@ import styles from './filter.module.css';
 export default function Filter( props:any ): JSX.Element {
   const [category, setCategory] = React.useState("Show all");
 
-  const handleChange = (event:any) => {
+  const handleChangeCategory = (event:any) => {
     
     let category = (event.target.value as string);
     props.reloadMap(category);
@@ -24,12 +24,16 @@ export default function Filter( props:any ): JSX.Element {
             label="Friend locations"
             control={<Switch />} 
             className={styles.friendsFilter}
+            value={false}
+            onChange={props.handleFilterFriends}
             />
           ) : (
             <FormControlLabel
             label="Friend locations"
-            control={<Switch disabled />}
+            control={<Switch />}
             className={styles.friendsFilter}
+            value={true}
+            onChange={props.handleFilterFriends}
             />
           )}
       <FormControl className={styles.form}>
@@ -39,7 +43,7 @@ export default function Filter( props:any ): JSX.Element {
           id="category-select"
           value={category}
           label="Category"
-          onChange={handleChange}
+          onChange={handleChangeCategory}
           className={styles.categoryFilter}
         >
           <MenuItem value={""}>Show all</MenuItem>
