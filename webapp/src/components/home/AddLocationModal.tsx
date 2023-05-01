@@ -52,10 +52,21 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
   const [comments, setComments] = useState("");
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(1);
   const [image, setImage] = useState<File>();
+  const [checked, setChecked] = useState<any>([]);
 
-  const label = { inputProps: { "aria-label": "Checkbox placeholder" } };
+  const handleCheck = (event:any) => {
+    var updatedList:any = [...checked];
+    if (event.target.checked) {
+      updatedList = [...checked, event.target.value];
+    } else {
+      updatedList.splice(checked.indexOf(event.target.value), 1);
+    }
+    setChecked(updatedList);
+    console.log("CHECK LIST:")
+    console.log(checked);
+  };
 
   useEffect(() => {
     setFriends([]);
@@ -91,7 +102,7 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
         latitud: parseFloat(props.selectedLocation.latitud),
         longitud: parseFloat(props.selectedLocation.longitud),
         image: image
-    }).then(() => {
+    }, checked).then(() => {
       props.closeModal();
       props.showNotification();
     }
@@ -159,7 +170,7 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
                         align="right"
                         height="20"
                       >
-                        <Checkbox {...label} />
+                        <Checkbox value={f.webId} onChange={handleCheck} />
                       </TableCell>
                     </TableRow>
                   ))}
