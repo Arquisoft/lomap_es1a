@@ -25,8 +25,12 @@ export default function InfoCard<Props>( props:any ): JSX.Element {
                 <h3>{props.username}</h3>
                 <h5>Rating: {props.rating}</h5>
             </div>
-            <p>{props.comments}</p>
-            <img className="image-container" src={props.image != undefined ? imageUrl : noimage}/>
+            <div className="text-container">
+                {props.comments}
+            </div>
+            <div className="image-container">
+                <img src={props.image != undefined ? imageUrl : noimage}/>
+            </div>
         </div>
     );
 
