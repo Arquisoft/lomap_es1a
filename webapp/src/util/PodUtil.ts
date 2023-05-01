@@ -130,7 +130,7 @@ async function getAllLocations(session:Session){
 
 // Obtiene la información, añadida por los amigos del usuario, sobre una localización dada
 export async function getLocationFromFriend(session:Session, friend:Friend, idLocation:string){
-  console.log("Entrando en getFriendLocationsLocation");
+  console.log("Entrando en getLocationFromFriend");
   //Si no estamos en sesión retornamos null
   if (!session || !session.info.isLoggedIn) return;
 
@@ -138,23 +138,23 @@ export async function getLocationFromFriend(session:Session, friend:Friend, idLo
   const urlPOD = friend.webId.split("profile/card#me")[0];
   //Construimos la ruta del dataset de la Location
   const rutaDataset = urlPOD + RUTA_LOCATIONS + "/" + idLocation;
-  console.log("getFriendLocation --> ruta location: ", rutaDataset);
+  console.log("getLocationFromFriend --> ruta location: ", rutaDataset);
   //Pedimos el dataset de la Location al POD
   let datasetLocation = await getDataset(session, rutaDataset);
   if (datasetLocation === null){
     return null;
   }
-  console.log("getFriendLocation --> datasetLocation: ", datasetLocation);
+  console.log("getLocationFromFriend --> datasetLocation: ", datasetLocation);
   //Construimos la ruta de la Location (thing)
   const rutaThing = rutaDataset + "#" + idLocation;
-  console.log("getFriendLocation --> rutaThing: ", rutaThing);
+  console.log("getLocationFromFriend --> rutaThing: ", rutaThing);
   const locationThing = await getThing(datasetLocation!, rutaThing);
-  console.log("getFriendLocation --> locationThing: ", locationThing);
+  console.log("getLocationFromFriend --> locationThing: ", locationThing);
   if (locationThing !== null) {
       return await parseFriendLocation(friend, locationThing!);
   }
-  else return null;
-  
+  else 
+    return null;
 }
 
 async function parseFriendLocation(friend:Friend, location:Thing){
