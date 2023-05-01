@@ -49,7 +49,7 @@ export default function SearchAppBar<Props>( props:any ): JSX.Element {
           <Typography variant="h4" component="div" sx={{ flexGrow: 0.95, textAlign: "left" }}>
             LoMap
           </Typography>
-          <ThemeSwitch sx={{ m: 1 }} onClick={props.changeTheme}/>
+          <ThemeSwitch id="theme" sx={{ m: 1 }} onClick={props.changeTheme}/>
           {session.info.isLoggedIn ? (
             <>
               <Name />

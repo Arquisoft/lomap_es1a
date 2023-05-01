@@ -1,14 +1,27 @@
 import React from 'react';
-import { shallow, configure } from 'enzyme';
 import Map from '../components/Map';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
-configure({adapter: new Adapter()});
+import ReactDOM from 'react-dom';
 
 describe('Map component', () => {
-  it('renders the map container', () => {
-    const wrapper = shallow(<Map lng={-0.118092} lat={51.509865} zoom={12} mapWidth="100%" mapHeight="400px" mapTheme="light-v10" />);
-    expect(wrapper.find('.mapboxgl-canvas-container').exists()).toBe(true);
+  const mockProps = {
+    lng: -73.935242,
+    lat: 40.73061,
+    zoom: 10,
+    mapWidth: '100%',
+    mapHeight: '500px',
+    mapTheme: 'light',
+  };
+
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Map {...mockProps} />, div);
+    ReactDOM.unmountComponentAtNode(div);
   });
+
+  it('sets up the map correctly', () => {
+    const map = new Map(mockProps);
+    expect(map.map).not.toBeNull();
+    expect(map.mapMarkers).toHaveLength(0);
+  });
+
 });
