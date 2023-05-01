@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -12,10 +12,7 @@ import List from "@mui/material/List";
 import Collapse from "@mui/material/Collapse";
 import CloseIcon from '@mui/icons-material/Close';
 import {
-  getAllGroupsObject,
-  saveLocation,
-  saveGroup,
-  getFriends, deleteGroup
+  getAllGroupsObject,deleteGroup
 } from "../..//util/PodUtil";
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import "./../../pages/Friends.css";

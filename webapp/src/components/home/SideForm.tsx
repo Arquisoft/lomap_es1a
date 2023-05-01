@@ -7,17 +7,11 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import { SelectChangeEvent } from "@mui/material";
 import axios from "axios";
 import { FormGroup } from "@mui/material";
-import { useSession } from "@inrupt/solid-ui-react";
 import type { Location } from "../../util/UserData";
-import {saveLocation} from "../../util/PodUtil";
-import { Session } from "@inrupt/solid-client-authn-browser";
 import "./SideForm.css"
-
 
 interface Props {
   show: boolean;
@@ -105,8 +99,8 @@ export default class SideForm extends React.Component<Props, State> {
             <div>
               Selected coordinates
               <Typography variant="subtitle1">
-                lat: {this.props.lat == -1 ? "undefined" : this.props.lat} -
-                lng: {this.props.lng == -1 ? "undefined" : this.props.lng}
+                lat: {this.props.lat === -1 ? "undefined" : this.props.lat} -
+                lng: {this.props.lng === -1 ? "undefined" : this.props.lng}
               </Typography>
             </div>
           </Typography>

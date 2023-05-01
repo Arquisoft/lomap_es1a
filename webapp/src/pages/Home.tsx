@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from "@inrupt/solid-ui-react";
 import Map from "../components/Map";
 import Filter from '../components/home/Filter';
@@ -9,11 +9,10 @@ import { Navigate } from "react-router-dom";
 import { useNotifications } from 'reapop'
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
-import {initPodForLomap, saveGroup, deleteGroup,getPublicAccessRead, setPublicAccessRead} from "../../src/util/PodUtil"
-import type { Friend, Group, Location} from "../../src/util/UserData";
+import {initPodForLomap} from "../../src/util/PodUtil"
 
 import "./Home.css";
-import { getLocationObject, getAllLocationsObject, getUserName, getFriends, getAllGroups, getAllGroupsObject, getUserRead, setUserRead, getGroupRead, setGroupRead, getLocationFromFriend } from '../util/PodUtil';
+import { getLocationObject, getFriends, getLocationFromFriend } from '../util/PodUtil';
 
 interface Props {
   mapTheme: string;
@@ -45,7 +44,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log(props.mapTheme)
     console.log(mountFinished)
     if (mountFinished) {
-      if (props.mapTheme == 'light')
+      if (props.mapTheme === 'light')
         map.setStyle("mapbox://styles/alvesit0/clg86aosh005p01o5khz3eqcw");
       else
         map.setStyle("mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5");
@@ -91,7 +90,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     let friends = await getFriends(session.info.webId!);
     for (let i = 0; i < friends.length; i++) {
       newCardList.push(await getLocationFromFriend(session, friends[i], location._id))  
-      if (i == friends.length - 1)
+      if (i === friends.length - 1)
         setCardList(newCardList);
     }
 
@@ -222,7 +221,7 @@ export default function Home<Props>( props:any ): JSX.Element{
   }
 
   const openModal = () => {
-    if (session.info.isLoggedIn == true)
+    if (session.info.isLoggedIn === true)
       setIsOpen(true);
     else
       setRedirectToLogin(true);
@@ -249,7 +248,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     let locations = JSON.parse(requestToList(response.data));
     console.log("Home.tsx - reloadMap - locations:",locations);
     
-    if (map.getSource("places") == undefined) {
+    if (map.getSource("places") === undefined) {
       map.addSource("places", {
         type: "geojson",
         data: locations,
