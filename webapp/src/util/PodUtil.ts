@@ -160,12 +160,13 @@ export async function getLocationFromFriend(session:Session, friend:Friend, idLo
 }
 
 async function parseFriendLocation(friend:Friend, location:Thing){
-
-  console.log ("parseFriendLocation --> location", location);
+  console.log ("PodUtil.ts -- parseFriendLocation --> Parametros llamada: location: ", location);
   const comments =  getStringNoLocale(location, URL_VOCABULARIO + "comments");
-  console.log ("parseFriendLocation --> comments", location);
+  console.log ("parseFriendLocation --> comments", comments);
   const score = getStringNoLocale(location, URL_VOCABULARIO + "score");
   console.log ("parseFriendLocation --> comments", score);
+  const nameLocation = getStringNoLocale(location, URL_VOCABULARIO + "name");
+  console.log ("parseLocation --> nameLocation", nameLocation);
   const name = friend.name;
   console.log ("parseFriendLocation --> name", name);
   const category = await getStringNoLocale(location, URL_VOCABULARIO + "category");
@@ -189,14 +190,14 @@ async function parseFriendLocation(friend:Friend, location:Thing){
   } 
 
   let result = {
-    name: name,
+    nameLocation: nameLocation,
+    name: name,//nombre del usuario
     category: category,
     id: id,
     comments: comments,
     score: score,
     image: image
   }
-
   return result;
 }
 
@@ -255,7 +256,7 @@ export async function saveLocation(session:Session, location:Location, allowedUs
   const datasetGuardado = await saveSolidDatasetAt(
     rutaDataset,
     nuevoDataset,
-    { fetch: fetch }             // fetch from authenticated Session
+    { fetch: fetch }
   );
     
   //Devolvemos la nueva location guardada en el pod
@@ -467,11 +468,13 @@ export async function getUserNameFromWebId(webId:string){
 
 async function parseLocation (session:Session, location:Thing){
   console.log ("PodUtil.ts -- parseLocation --> Parametros llamada: location: ", location);
-  console.log ("parseLocation --> location", location);
+  
   const comments =  getStringNoLocale(location, URL_VOCABULARIO + "comments");
-  console.log ("parseLocation --> comments", location);
+  console.log ("parseLocation --> comments", comments);
   const score = getStringNoLocale(location, URL_VOCABULARIO + "score");
-  console.log ("parseLocation --> comments", score);
+  console.log ("parseLocation --> score", score);
+  const nameLocation = getStringNoLocale(location, URL_VOCABULARIO + "name");
+  console.log ("parseLocation --> nameLocation", nameLocation);
   const name = await getUserName(session);
   console.log ("parseLocation --> name", name);
   const category = await getStringNoLocale(location, URL_VOCABULARIO + "category");
@@ -491,14 +494,14 @@ async function parseLocation (session:Session, location:Thing){
   } 
 
   let result = {
-    name: name,
+    nameLocation: nameLocation,
+    name: name,//nombre del usuario
     category: category,
     id: id,
     comments: comments,
     score: score,
     image: image
   }
-
   return result;
 }
 
