@@ -9,11 +9,8 @@ import Paper from '@mui/material/Paper';
 import "./../../pages/Friends.css";
 import type { Friend } from "../../util/UserData";
 
-interface Props {
-    friends: Friend[]
-}
 
-function FriendList<Props>( props:any ): JSX.Element {
+function FriendList( props:any ): JSX.Element {
   return (
     <TableContainer className="table-container" component={Paper} square variant="outlined">
       <Table stickyHeader aria-label="sticky table">

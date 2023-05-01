@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import React, { useState, useEffect, useCallback } from "react";
+import  { useState, useEffect } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -10,7 +10,6 @@ import Checkbox from "@mui/material/Checkbox";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
@@ -140,7 +139,7 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
             <div style={{display:"flex", alignItems:"center"}}>
               <Typography
               variant="subtitle1">
-                {image == undefined ? "No image selected" : image.name}
+                {image === undefined ? "No image selected" : image.name}
               </Typography>
               <Button variant="contained" component="label" style={{marginLeft:"0.5em"}}>
                 Upload File
