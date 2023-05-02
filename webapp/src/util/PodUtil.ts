@@ -175,7 +175,7 @@ async function parseFriendLocation(friend:Friend, location:Thing){
   console.log ("parseFriendLocation --> id", id);
 
   //Calculamos la ruta absoluta de la imagen a partir de la relativa almacenada en el POD
-  let image = null;
+  let image;
   const photo =  getUrl(location, URL_VOCABULARIO + "photo");
   console.log("parseFriendLocation   *****************  photo: ", photo);
   if (photo !== null){
