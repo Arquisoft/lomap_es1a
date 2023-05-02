@@ -160,17 +160,15 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
         <div className="friend-list">
           <h2 style={{ textAlign: "center" }}>Allowed friends</h2>
           <div className="friend-list-table">
-            <TableContainer className="table-container" component={Paper}>
+            <TableContainer className="add-modal-table-container" component={Paper}>
               <Table stickyHeader aria-label="sticky table">
-              <TableHead>
+                <TableBody>
                 <TableRow>
                   <TableCell className='table-header-cell' 
-                  style={{fontWeight:"bold", fontSize:"1.5em", display:"flex", justifyContent:"center"}}
+                  style={{fontWeight:"bold", fontSize:"1.6em"}}
                   >Friends
                   </TableCell>
                 </TableRow>
-              </TableHead>
-                <TableBody>
                   {friends.map((f) => (
                     <TableRow key = {f.webId}>
                       <TableCell
@@ -191,11 +189,13 @@ export default function AddLocationModal<Props>(props: any): JSX.Element {
                     </TableRow>
                   ))}
                 </TableBody>
-                <TableCell className='table-header-cell' 
-                  style={{fontWeight:"bold", fontSize:"1.5em", display:"flex", justifyContent:"center"}}
-                  >Friend Groups
-                </TableCell>
                 <TableBody>
+                <TableRow>
+                  <TableCell className='table-header-cell' 
+                    style={{fontWeight:"bold", fontSize:"1.6em"}}
+                    >Friend Groups
+                  </TableCell>
+                </TableRow>
                   {friendGroups.map((g) => (
                     <TableRow key = {g.name}>
                       <TableCell

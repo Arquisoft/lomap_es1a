@@ -264,7 +264,13 @@ export async function saveLocation(session:Session, location:Location, allowedUs
 
   // Asignamos los permisos a los usuarios de la lista
   for (var i = 0; i < allowedUsers.length; i++) {
-    await setUserRead(session, rutaNuevaLocationGuardada, allowedUsers[i], true)
+    if (allowedUsers[i].length !== undefined)
+      await setUserRead(session, rutaNuevaLocationGuardada, allowedUsers[i], true)
+    else {
+      for (var j = 0; j < allowedUsers[i].length; j++) {
+        await setUserRead(session, rutaNuevaLocationGuardada, allowedUsers[i], true)
+      }
+    }
   }
 
   const nuevaLocationGuardada = await getThing(datasetGuardado, rutaNuevaLocationGuardada);

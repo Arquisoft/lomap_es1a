@@ -11,7 +11,7 @@ export type Group = {
 
 export type Location = {
     id?: string,
-    nameLocation: string,
+    nameLocation?: string,
     name: string,
     category: string,
     comments?: string,
