@@ -36,7 +36,7 @@ jobs:
     - run: npm --prefix webapp install
     - run: npm --prefix restapi install
     - run: npm --prefix webapp run build
-        env:
-            CI: false
+      env:
+          CI: false
     - run: npm --prefix webapp run test:e2e
         
