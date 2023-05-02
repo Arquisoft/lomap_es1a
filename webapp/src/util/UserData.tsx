@@ -10,12 +10,14 @@ export type Group = {
 }
 
 export type Location = {
-    id?: string;
+    id?: string,
+    nameLocation?: string,
     name: string,
     category: string,
     comments?: string,
     latitud?: number,
     longitud?: number,
-    score?: number
+    score?: number,
     image?: File
+    
 }

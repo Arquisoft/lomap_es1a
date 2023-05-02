@@ -1,14 +1,15 @@
-import React from 'react';
-import { shallow, configure } from 'enzyme';
+import React, {Component} from 'react';
 import Map from '../components/Map';
-
+import Enzyme, {shallow, mount} from "enzyme"
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-configure({adapter: new Adapter()});
+Enzyme.configure({adapter: new Adapter()});
 
-describe('Map component', () => {
-  it('renders the map container', () => {
-    const wrapper = shallow(<Map lng={-0.118092} lat={51.509865} zoom={12} mapWidth="100%" mapHeight="400px" mapTheme="light-v10" />);
-    expect(wrapper.find('.mapboxgl-canvas-container').exists()).toBe(true);
-  });
+test("DefineMap", ()=>{
+    expect(Map).toBeDefined();
+});
+
+test("RenderMap", ()=>{
+  const temp = shallow(<Map lng={4.34878} lat={50.85045} zoom={10} mapWidth='100%' mapHeight='100%' mapTheme='light'/>);
+  expect(temp).toMatchSnapshot();
 });

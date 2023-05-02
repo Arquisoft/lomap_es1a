@@ -22,7 +22,6 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
   const [idp, setIdp] = useState("https://solidcommunity.net");
   const [urlRedirect, setUrlRedirect] = useState(urlPrevia);
   
-
   useEffect(() => {
     console.log("Login.tsx -- useEffect()");
     console.log("Login.tsx -- useEffect() -- windows.location.origin", window.location.origin);
@@ -32,6 +31,11 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
   const handleChange = (event: SelectChangeEvent) => {
     setIdp(event.target.value as string);
   };
+
+  const modifyText = (event: any) => {
+    setIdp(event.target.value);
+  }
+
   return (
     <div className="login">
       <Container
@@ -49,8 +53,12 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
           Log In
         </Typography>
         <FormGroup>
+          <InputLabel id="iddTextField" style={{ textAlign: "center", marginBottom: "0.6em" }}>
+            Enter a URL:{" "}
+          </InputLabel>
+          <TextField id="idpTextField" style={{marginBottom:"2%"}} value={idp} onChange={modifyText}></TextField>
           <InputLabel id="idpInputLabel" style={{ textAlign: "center", marginBottom: "0.6em" }}>
-            Select your Identity Provider:{" "}
+            Or select your Identity Provider:{" "}
           </InputLabel>
           <Select
             labelId="idpInputLabel"
@@ -61,14 +69,20 @@ export default function Login({ urlPrevia = window.location.origin }: Ilogin) {
             fullWidth
             style= {{marginBottom:"0.6em"}}
           >
-            <MenuItem id="solidcommunity" value={"https://solidcommunity.net"}>
-              https://solidcommunity.net (NSS 5.7.6)
-            </MenuItem>
             <MenuItem id="inrupt" value={"https://inrupt.net"}>
-              https://inrupt.net (Solid prototype)
+              https://inrupt.net
+            </MenuItem>  
+            <MenuItem id="solidcommunity" value={"https://solidcommunity.net"}>
+              https://solidcommunity.net
+            </MenuItem>
+            <MenuItem id="inrupt" value={"https://solidweb.org"}>
+              https://solidweb.org 
+            </MenuItem>
+            <MenuItem id="podspaces" value={"https://datapod.igrant.io/login"}>
+              https://datapod.igrant.io/
             </MenuItem>
             <MenuItem id="podspaces" value={"https://login.inrupt.com"}>
-              https://login.inrupt.com (PodSpaces)
+              https://login.inrupt.com
             </MenuItem>
           </Select>
         </FormGroup>

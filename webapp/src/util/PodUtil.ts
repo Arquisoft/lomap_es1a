@@ -47,7 +47,7 @@ import { FOAF, RDF, VCARD} from "@inrupt/vocab-common-rdf"
 const URL_VOCABULARIO = "http://w3id.org/lomap/";
 const RUTA_LOMAP = "lomap";
 const RUTA_LOCATIONS = RUTA_LOMAP + "/locations";
-const RUTA_IMAGES = RUTA_LOMAP + "/images";
+const RUTA_IMAGES = "images";
 const RUTA_GROUPS = RUTA_LOMAP + "/groups.ttl";
 
 // Returns a user profile as a Thing
@@ -62,11 +62,11 @@ export async function getUserProfile(webID: string){
 export async function getFriends(webId:string) {
   console.log("PodUtil -- getFriends --> Parametros llamada: webID: ", webId);
   let friendURLs = getUrlAll(await getUserProfile(webId), FOAF.knows);
-  //console.log ("PodUtil -- getFriends -- variable friendsURLs",friendURLs); 
+  console.log ("PodUtil -- getFriends -- variable friendsURLs",friendURLs); 
   let friends: Friend[] = [];
 
   for (let friend of friendURLs) {
-    //console.log ("PodUtil -- getFriends -- bucle for. varaible friend",friend); 
+    console.log ("PodUtil -- getFriends -- bucle for. varaible friend",friend); 
     let name = getStringNoLocale(
       await getUserProfile(friend),
       FOAF.name
@@ -160,12 +160,13 @@ export async function getLocationFromFriend(session:Session, friend:Friend, idLo
 }
 
 async function parseFriendLocation(friend:Friend, location:Thing){
-
-  console.log ("parseFriendLocation --> location", location);
+  console.log ("PodUtil.ts -- parseFriendLocation --> Parametros llamada: location: ", location);
   const comments =  getStringNoLocale(location, URL_VOCABULARIO + "comments");
-  console.log ("parseFriendLocation --> comments", location);
+  console.log ("parseFriendLocation --> comments", comments);
   const score = getStringNoLocale(location, URL_VOCABULARIO + "score");
   console.log ("parseFriendLocation --> comments", score);
+  const nameLocation = getStringNoLocale(location, URL_VOCABULARIO + "name");
+  console.log ("parseLocation --> nameLocation", nameLocation);
   const name = friend.name;
   console.log ("parseFriendLocation --> name", name);
   const category = await getStringNoLocale(location, URL_VOCABULARIO + "category");
@@ -180,7 +181,7 @@ async function parseFriendLocation(friend:Friend, location:Thing){
   if (photo !== null){
     let ficheroPhoto = photo.split("/lomap/images/")[1]
     console.log("parseFriendLocation  ***************** ficheroPhoto: ", ficheroPhoto);
-    let rutaImagen = await friend.webId.split("profile/card#me")[0] + "/lomap/images/" + ficheroPhoto;
+    let rutaImagen = await friend.webId.split("profile/card#me")[0] + "lomap/images/" + ficheroPhoto;
     console.log("parseFriendLocation  *****************  rutaImagen: ", rutaImagen);
     image = await getFile(rutaImagen, {fetch: fetch})
       .catch(
@@ -189,18 +190,18 @@ async function parseFriendLocation(friend:Friend, location:Thing){
   } 
 
   let result = {
-    name: name,
+    nameLocation: nameLocation,
+    name: name,//nombre del usuario
     category: category,
     id: id,
     comments: comments,
     score: score,
     image: image
   }
-
   return result;
 }
 
-export async function saveLocation(session:Session, location:Location){
+export async function saveLocation(session:Session, location:Location, allowedUsers:any[]){
   console.log("PodUtil -- saveLocation --> Parametros llamada: location: ", location);
   //Crear Dataset
   const urlPOD = await getStorageURL(session);
@@ -220,13 +221,13 @@ export async function saveLocation(session:Session, location:Location){
   //Almacenar imagen relacionada si se ha subido
   if (location.image !== undefined) {
     //Recuperamos la extensión del fichero
-    let extension: string | undefined = location.image.name.split(".").pop();  
+    extension = location.image.name.split(".").pop();  
     if (extension === undefined)
       extension = "";
     else
       extension = "." + extension;
     console.log("PodUtil -- saveLocation -- extension: ", extension);
-    rutaImagen = await getStorageURL(session) + RUTA_IMAGES + "/" + location.id + extension;
+    rutaImagen = await getStorageURL(session) + RUTA_LOMAP + "/" + RUTA_IMAGES + "/" + location.id + extension;
     console.log("PodUtil -- saveLocation -- rutaImagen: ", rutaImagen);
     await overwriteFile(
       rutaImagen,
@@ -255,11 +256,23 @@ export async function saveLocation(session:Session, location:Location){
   const datasetGuardado = await saveSolidDatasetAt(
     rutaDataset,
     nuevoDataset,
-    { fetch: fetch }             // fetch from authenticated Session
+    { fetch: fetch }
   );
     
   //Devolvemos la nueva location guardada en el pod
   const rutaNuevaLocationGuardada = rutaDataset + "#" + location.id
+
+  // Asignamos los permisos a los usuarios de la lista
+  for (var i = 0; i < allowedUsers.length; i++) {
+    if (allowedUsers[i].length !== undefined)
+      await setUserRead(session, rutaNuevaLocationGuardada, allowedUsers[i], true)
+    else {
+      for (var j = 0; j < allowedUsers[i].length; j++) {
+        await setUserRead(session, rutaNuevaLocationGuardada, allowedUsers[i], true)
+      }
+    }
+  }
+
   const nuevaLocationGuardada = await getThing(datasetGuardado, rutaNuevaLocationGuardada);
   return nuevaLocationGuardada;
 }
@@ -360,7 +373,7 @@ export async function initPodForLomap (session:Session){
 
   await getOrCreateDataset(session, urlAlmacenamiento + RUTA_GROUPS);
   console.log("initPodForLomap -- Comprobar en pod recurso " + RUTA_GROUPS + ".");
-  setPublicAccessRead(session, urlAlmacenamiento + RUTA_GROUPS, true);
+  setPublicAccessRead(session, urlAlmacenamiento + RUTA_GROUPS, false);
   console.log("initPodForLomap -- Crear ACL para recurso " + urlAlmacenamiento + RUTA_GROUPS + ".");
   
   //Crarmos por defecto un grupo con todos los amigos del pod
@@ -389,7 +402,7 @@ export async function getAllLocationsObject(session: Session) {
   console.log ("PodUtil.ts -- getAllLocationsObject")
   const listaLocations = await getAllLocations(session);
   console.log ("PodUtil.ts -- getAllLocationsObject -- listaLocations", listaLocations);
-  if (listaLocations == undefined || listaLocations == null) return null;
+  if (listaLocations === undefined || listaLocations === null) return null;
   let listaObjectsLocations  = []; 
   for (let elemento of listaLocations) { 
     let idLocation = elemento.substring(elemento.lastIndexOf("/")+1);
@@ -402,6 +415,36 @@ export async function getAllLocationsObject(session: Session) {
   }
   return listaObjectsLocations;
 
+}
+
+// Obtiene una lista con los identificadores de todas las localizaciones de los amigos
+export async function getListLocationFromFriends(session:Session){
+  let listaIdsLocalizaciones = new Set<string>();
+  //Si no estamo en sesión retornamos un array vacío
+  if (!session || !session.info.isLoggedIn) 
+    return listaIdsLocalizaciones;
+  //Recupamos la lista de todos los amigos
+  let friends:Friend[] = await getFriends(session.info.webId!);
+  //Para cada amigo recuperamos sus localizaciones
+  for (let friend of friends) { 
+    //Conseguimos la URL de almacenamiento del POD del amigo
+    const urlPodFriend = friend.webId.split("profile/card#me")[0];
+    //Construimos la ruta del contenedor de las locations 
+    const rutaContenedor = urlPodFriend + RUTA_LOCATIONS;
+    //Pedimos el dataset al POD
+    let contenedorLocations = await getDataset(session, rutaContenedor);
+    if (contenedorLocations !== null){
+      //Obtenemos la lista de las localizaciones
+      const listaLocations: string[] = await getContainedResourceUrlAll(contenedorLocations!);
+      for (let elemento of listaLocations){ 
+        //Obtenemos la id de la localización
+        let idLocation:string = elemento.substring(elemento.lastIndexOf("/")+1);
+        //La añadimos al set
+        listaIdsLocalizaciones.add(idLocation);
+      }  
+    }
+  }
+  return Array.from( listaIdsLocalizaciones);
 }
 
 export async function getUserName(session:Session){
@@ -422,7 +465,7 @@ export async function getUserName(session:Session){
 
 export async function getUserNameFromWebId(webId:string){
   console.log ("PodUtil.ts -- getUserNameFromWebId --> Parametros llamada: webId: ", webId);
-  if (typeof webId == 'undefined' || !webId || webId.length === 0 || webId === "")
+  if (typeof webId === 'undefined' || !webId || webId.length === 0 || webId === "")
     return "";
   const profileThing = await getUserProfile(webId);
   const name = await getStringNoLocale(profileThing!, FOAF.name);
@@ -431,11 +474,13 @@ export async function getUserNameFromWebId(webId:string){
 
 async function parseLocation (session:Session, location:Thing){
   console.log ("PodUtil.ts -- parseLocation --> Parametros llamada: location: ", location);
-  console.log ("parseLocation --> location", location);
+  
   const comments =  getStringNoLocale(location, URL_VOCABULARIO + "comments");
-  console.log ("parseLocation --> comments", location);
+  console.log ("parseLocation --> comments", comments);
   const score = getStringNoLocale(location, URL_VOCABULARIO + "score");
-  console.log ("parseLocation --> comments", score);
+  console.log ("parseLocation --> score", score);
+  const nameLocation = getStringNoLocale(location, URL_VOCABULARIO + "name");
+  console.log ("parseLocation --> nameLocation", nameLocation);
   const name = await getUserName(session);
   console.log ("parseLocation --> name", name);
   const category = await getStringNoLocale(location, URL_VOCABULARIO + "category");
@@ -455,14 +500,14 @@ async function parseLocation (session:Session, location:Thing){
   } 
 
   let result = {
-    name: name,
+    nameLocation: nameLocation,
+    name: name,//nombre del usuario
     category: category,
     id: id,
     comments: comments,
     score: score,
     image: image
   }
-
   return result;
 }
 
@@ -524,7 +569,7 @@ export async function getAllGroupsObject(session: Session) {
   const listaGroups = await getAllGroups(session);
   let listaObjectsGroup:Group[]  = []; 
 
-  if (listaGroups == undefined || listaGroups == null) 
+  if (listaGroups === undefined || listaGroups === null) 
     return listaObjectsGroup;
   
   for (let elemento of listaGroups) { 
@@ -567,7 +612,7 @@ export async function saveGroup(session:Session, group:Group){
   //Devolvemos el nuevo grupo Guardado
   const urlNuevoGrupoGuardado = rutaDataset + "#" + group.name;
   const nuevoGrupoGuardado: Thing | null = await getThing(datasetGuardado, urlNuevoGrupoGuardado);
-  if (nuevoGrupoGuardado == null)
+  if (nuevoGrupoGuardado === null)
     return null;
   const nuevoObjectGroupGuardado:Group = await parseGroup(nuevoGrupoGuardado);
   return nuevoObjectGroupGuardado;

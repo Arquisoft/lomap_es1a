@@ -1,18 +1,12 @@
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
+import mapboxgl, { Marker } from "mapbox-gl";
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
 
-import mapboxgl, { Marker } from "mapbox-gl";
-
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
-
-// The following is required to stop "npm build" from transpiling mapbox code. Notice the exclamation point in the import.
-// @ts-ignore
-// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
-// mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 interface Props {
   lng: number;
@@ -36,13 +30,13 @@ export default class Map extends React.Component<Props> {
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: this.props.mapTheme == 'light' ? "mapbox://styles/alvesit0/clg86aosh005p01o5khz3eqcw" : "mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5",
+      style: this.props.mapTheme === 'light' ? "mapbox://styles/alvesit0/clg86aosh005p01o5khz3eqcw" : "mapbox://styles/alvesit0/clgtrmdnh004001qy4ngrcyb5",
       center: [this.props.lng, this.props.lat],
       zoom: this.props.zoom,
       attributionControl: false,
     });
 
-    if (this.props.onMapSubmit != undefined) 
+    if (this.props.onMapSubmit !== undefined) 
       this.props.onMapSubmit(this.map, this.mapMarkers);
 
     this.map.doubleClickZoom.disable();
@@ -52,10 +46,10 @@ export default class Map extends React.Component<Props> {
         marker.remove();
       });
 
-      if (this.props.onFormSelect != undefined)
+      if (this.props.onFormSelect !== undefined)
         this.props.onFormSelect(true, e.lngLat.lat, e.lngLat.lng);
         
-      if (this.props.onIconSelect != undefined)
+      if (this.props.onIconSelect !== undefined)
         this.props.onIconSelect(false, e.lngLat.lat, e.lngLat.lng, "noid");
 
       this.map.flyTo({
@@ -73,7 +67,7 @@ export default class Map extends React.Component<Props> {
       marker.setPopup(popup);
     });
 
-    if (this.props.onMapSubmit != undefined) 
+    if (this.props.onMapSubmit !== undefined) 
       this.props.onMapSubmit(this.map, this.mapMarkers);
 
     this.map.addControl(
@@ -139,10 +133,10 @@ export default class Map extends React.Component<Props> {
           marker.remove();
         });
 
-        if (this.props.onFormSelect != undefined)
+        if (this.props.onFormSelect !== undefined)
           this.props.onFormSelect(false, e.lngLat.lat, e.lngLat.lng);
 
-        if (this.props.onIconSelect != undefined)
+        if (this.props.onIconSelect !== undefined)
           this.props.onIconSelect(true, e.lngLat.lat, e.lngLat.lng, id);
         
       });
@@ -159,7 +153,7 @@ export default class Map extends React.Component<Props> {
 
     });
 
-    if (this.props.finishedMounting != undefined)
+    if (this.props.finishedMounting !== undefined)
       this.props.finishedMounting();
   }
 

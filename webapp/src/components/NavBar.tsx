@@ -1,4 +1,3 @@
-import { useEffect, useState, useMemo } from "react";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,7 +5,6 @@ import styles from './navbar.module.css';
 import { Typography } from '@mui/material';
 import { CombinedDataProvider, useSession, LogoutButton, Text } from "@inrupt/solid-ui-react";
 import { useNavigate } from "react-router-dom";
-import {initPodForLomap} from "../../src/util/PodUtil"
 import ThemeSwitch from './ThemeSwitch';
 
 function Name(): JSX.Element {
@@ -49,7 +47,7 @@ export default function SearchAppBar<Props>( props:any ): JSX.Element {
           <Typography variant="h4" component="div" sx={{ flexGrow: 0.95, textAlign: "left" }}>
             LoMap
           </Typography>
-          <ThemeSwitch sx={{ m: 1 }} onClick={props.changeTheme}/>
+          <ThemeSwitch id="theme" sx={{ m: 1 }} onClick={props.changeTheme}/>
           {session.info.isLoggedIn ? (
             <>
               <Name />
