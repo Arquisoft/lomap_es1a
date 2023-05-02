@@ -99,7 +99,6 @@ export default function Home<Props>( props:any ): JSX.Element{
       if (i === friends.length - 1)
         setCardList(newCardList);
     }
-
   };
 
   const closeForm = (state: boolean) => {
