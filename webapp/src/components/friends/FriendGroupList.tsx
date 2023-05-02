@@ -31,10 +31,6 @@ function FriendGroupList(props: any): JSX.Element {
     if (!session || !session.info.isLoggedIn) return;
     (async () => {
       setFriendGroups(await getAllGroupsObject(session));
-
-      console.log("CURRENT FRIEND GROUPS:");
-      console.log(friendGroups);
-      console.log(openRow);
     })();
   }, [session, session.info.webId]);
 
@@ -71,8 +67,9 @@ function FriendGroupList(props: any): JSX.Element {
                   variant="contained"
                   color="primary"
                   sx={{ height: "50%" }} style={{marginRight:"1%"}}
-                  onClick={() => {
+                  onClick={async () => {
                     deleteGroup(session, friendGroup)
+                    setFriendGroups(await getAllGroupsObject(session))
                   }}
                 >
                   <CloseIcon/>

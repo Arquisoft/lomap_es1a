@@ -27,14 +27,7 @@ Developed for Software Architecture at University of Oviedo, using **React** wit
 ## Deployment guide
 <mark>In case you already have node.js and npm, make sure you update them before attempting to build the images</mark>
 
-If you want to execute the project you will need [git](https://git-scm.com/downloads), [Node.js and npm](https://www.npmjs.com/get-npm) and [Docker](https://docs.docker.com/get-docker/). Make sure the three of them are installed in your system. Download the project with `git clone https://github.com/arquisoft/lomap_es1a`. The fastest way to launch everything is with docker:
-```bash
-docker-compose up --build
-```
-This will create two docker images as they don't exist in your system (the webapp and the restapi) and launch our mongo container database. You should then be able to acces the application from here:
- - [Webapp - http://localhost:3000](http://localhost:3000)
-
-If you want to run it without docker. Compile and run the restapi:
+If you want to execute the project you will need [git](https://git-scm.com/downloads), [Node.js and npm](https://www.npmjs.com/get-npm) and [Docker](https://docs.docker.com/get-docker/). Make sure the three of them are installed in your system. To run the app locally, compile and run the restapi:
 ```shell
 cd restapi
 npm install
@@ -50,3 +43,11 @@ npm start
 ```
 
 You should be able to access the application in [http://localhost:3000](http://localhost:3000).
+
+## Demonstration Video
+
+<a href="https://youtu.be/8jDXuokrXMs"> Video on Youtube </a>
+
+## Deployment
+
+<a href="http://20.108.13.14"> Deployed on Azure </a>
