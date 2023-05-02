@@ -8,6 +8,6 @@ services:
     image: ghcr.io/arquisoft/lomap_es1a/webapp:latest
     ports:
       - "80:3000"
-      #- "3000:3000" originalmente
+      - "3000:3000"
     depends_on: 
       - restapi
