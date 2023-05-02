@@ -86,20 +86,25 @@ export default function Home<Props>( props:any ): JSX.Element{
     const response = await axios.get(apiEndPoint + "locations/info/" + id);
     
     let location = response.data.data;
+    console.log ("  ----  Home.tsx -- handleShowMarkerInfo -- location desde axios: ",location);
 
     setSelectedLocation(location);
 
     let newCardList:any[] = [];
 
     newCardList.push(await getLocationObject(session, location._id));
-    
+    //console.log ("  ----  Home.tsx -- handleShowMarkerInfo -- newCardList despues de añadir el primero: ",newCardList);
     let friends = await getFriends(session.info.webId!);
+    //console.log ("  ----  Home.tsx -- handleShowMarkerInfo -- friends: ",friends);
     for (let i = 0; i < friends.length; i++) {
+      //console.log ("  ----  Home.tsx -- handleShowMarkerInfo -- dentro bucle for frineds[i]: ",friends[i]);
       newCardList.push(await getLocationFromFriend(session, friends[i], location._id))  
       if (i === friends.length - 1)
         setCardList(newCardList);
     }
-
+    if (friends.length == 0){
+      setCardList(newCardList);
+    }
   };
 
   const closeForm = (state: boolean) => {

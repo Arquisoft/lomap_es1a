@@ -62,11 +62,11 @@ export async function getUserProfile(webID: string){
 export async function getFriends(webId:string) {
   console.log("PodUtil -- getFriends --> Parametros llamada: webID: ", webId);
   let friendURLs = getUrlAll(await getUserProfile(webId), FOAF.knows);
-  //console.log ("PodUtil -- getFriends -- variable friendsURLs",friendURLs); 
+  console.log ("PodUtil -- getFriends -- variable friendsURLs",friendURLs); 
   let friends: Friend[] = [];
 
   for (let friend of friendURLs) {
-    //console.log ("PodUtil -- getFriends -- bucle for. varaible friend",friend); 
+    console.log ("PodUtil -- getFriends -- bucle for. varaible friend",friend); 
     let name = getStringNoLocale(
       await getUserProfile(friend),
       FOAF.name
