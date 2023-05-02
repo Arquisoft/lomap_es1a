@@ -1,10 +1,14 @@
 export default {
     transform: {
-        "^.+\\.tsx?$": "ts-jest"
+      "^.+\\.tsx?$": "ts-jest"
     },
     testMatch: ["**/steps/*.ts"],
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
     moduleNameMapper:{"^uuid$": "uuid"},
     preset: "jest-puppeteer",
-    testTimeout: 30000
-}
+    testTimeout: 30000,
+    globals: {
+      'process.env.CI': false
+    }
+  }
+  

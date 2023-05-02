@@ -10,25 +10,42 @@ import "../components/friends/FriendList";
 
 import "./Friends.css";
 import FriendList from "../components/friends/FriendList";
+import { useNotifications } from 'reapop'
 import FriendGroupList from "../components/friends/FriendGroupList";
+import AddFriendGroupModal from "../components/friends/AddFriendGroupModal";
 
 export default function Friends() {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
   const [selectedBtn, setSelectedBtn] = useState(1);
 
-  useEffect(() => {
-    handleFriends();
-  }, [friends]);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  const handleFriends = async () => {
-    if (session.info.webId != undefined && session.info.webId != "") {
-      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
+  const { notify } = useNotifications();
+
+  const showFriendGroupNotification = (name: string) => {
+    notify('Friend group created successfully!');
+  }
+
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
+
+  useEffect(() => {
+    setFriends([]);
+    if (!session || !session.info.isLoggedIn) 
+      return;
+    (async () => {  
+      let aux = await getFriends(session.info.webId!).then((friendsPromise) => {
         return friendsPromise;
       });
-      setFriends(aux);
-    } else setFriends([]);
-  };
+      setFriends(aux); 
+    })();
+  }, [session, session.info.webId]);
 
   if (session.info.isLoggedIn) {
     return (
@@ -50,7 +67,8 @@ export default function Friends() {
             </Button>
           </ButtonGroup>
         </div>
-        {selectedBtn == 1 ? <FriendList friends={friends} /> : <FriendGroupList />}
+        {selectedBtn === 1 ? <FriendList friends={friends} /> : <FriendGroupList modalIsOpen={modalIsOpen} closeModal={closeModal} openModal={openModal} showNotification={showFriendGroupNotification} />}
+        <AddFriendGroupModal modalIsOpen={modalIsOpen} closeModal={closeModal} openModal={openModal} showNotification={showFriendGroupNotification}/>
       </div>
     );
   } else return <Navigate to="/login" />;

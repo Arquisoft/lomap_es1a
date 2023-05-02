@@ -1,7 +1,5 @@
 import { styled } from '@mui/material/styles';
-import Switch, { SwitchProps } from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
+import Switch from '@mui/material/Switch';
 
 export default styled(Switch)(({ theme }) => ({
     width: 62,

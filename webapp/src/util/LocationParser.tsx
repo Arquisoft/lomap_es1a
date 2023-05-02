@@ -1,6 +1,3 @@
-import { JSONArray } from "puppeteer";
-import React from "react";
-
 export function requestToList(locations: any) {
     let result = '{ "type": "FeatureCollection", "features": [';
 
@@ -19,7 +16,7 @@ export function requestToList(locations: any) {
         result += '"type": "Point",'
         result += '"coordinates": ["' + parsed[i].longitud + '", "' + parsed[i].latitud + '"]'
         
-        if (i == parsed.length - 1)
+        if (i === parsed.length - 1)
             result += '}}'
         else 
             result += '}},'

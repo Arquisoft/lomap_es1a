@@ -52,3 +52,7 @@
     margin-top: 2%;
     width: 100%;
 }
+
+.add-modal-table-container {
+    overflow: hidden;
+}

@@ -1,7 +1,6 @@
 import "./App.css";
-import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { SessionProvider, useSession } from "@inrupt/solid-ui-react";
+import { SessionProvider } from "@inrupt/solid-ui-react";
 import { useState } from "react";
 
 
@@ -17,8 +16,7 @@ import NotificationsSystem, {
   setUpNotifications,
   useNotifications,
 } from "reapop";
-import { useTheme, createTheme, ThemeProvider } from "@mui/material/styles";
-import { green, purple } from '@mui/material/colors';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 setUpNotifications({
   defaultProps: {
@@ -54,13 +52,13 @@ export default function App(): JSX.Element {
 
 
   const changeTheme = () => {
-    theme == 'light' ? setTheme('dark') : setTheme('light');
+    theme === 'light' ? setTheme('dark') : setTheme('light');
   }
 
   return (
     <SessionProvider sessionId="lomap_es1a">
       <>
-        <ThemeProvider theme={theme == 'light' ? lightTheme : darkTheme}>
+        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <Sidenav />
         <NavBar changeTheme={changeTheme} />
         <div style={{ width: "100vw", height: "100vh" }}>

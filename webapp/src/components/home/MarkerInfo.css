@@ -9,7 +9,7 @@ body {
 }
 
 .side-drawer {
-   height: 100vh;
+   height: 100%;
    background: white;
    position: fixed;
    top: 0;
@@ -28,7 +28,7 @@ body {
    display: flex;
    flex-direction: column;
    width: 85%;
-   height: 100%;
+   height: 85%;
    align-self: center;
    align-items: center;
 }
@@ -44,20 +44,12 @@ body {
    margin-bottom: 0.2em;
 }
 
-.formGroup {
-   height: 15em;
-   width: 20em;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-evenly;
-}
-
 .addButton {
    width: 15em;
 }
 
 .infoContainer {
-   height: 80%;
+   height: 75%;
    overflow: auto;
    width: 100%;
    border: solid;
