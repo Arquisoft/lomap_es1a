@@ -403,7 +403,7 @@ export async function getAllLocationsObject(session: Session) {
   const listaLocations = await getAllLocations(session);
   console.log ("PodUtil.ts -- getAllLocationsObject -- listaLocations", listaLocations);
   if (listaLocations === undefined || listaLocations === null) return null;
-  let listaObjectsLocations  = []; 
+  let listaObjectsLocations: any[] = []; 
   for (let elemento of listaLocations) { 
     let idLocation = elemento.substring(elemento.lastIndexOf("/")+1);
     console.log("idLocation", idLocation);
@@ -489,7 +489,7 @@ async function parseLocation (session:Session, location:Thing){
   console.log ("parseLocation --> id", id);
   
   //Calculamos la ruta absoluta de la imagen a partir de la relativa almacenada en el POD
-  let image = null;
+  let image;
   const photo =  getUrl(location, URL_VOCABULARIO + "photo");
   if (photo !== null){
     

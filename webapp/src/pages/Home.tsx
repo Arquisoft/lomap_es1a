@@ -13,6 +13,7 @@ import {initPodForLomap} from "../../src/util/PodUtil"
 
 import "./Home.css";
 import { getLocationObject, getFriends, getLocationFromFriend } from '../util/PodUtil';
+import React from 'react';
 
 interface Props {
   mapTheme: string;
