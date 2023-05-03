@@ -41,14 +41,7 @@ const modalStyle = {
   },
 };
 
-interface Props {
-  modalIsOpen: boolean;
-  closeModal: () => void;
-  openModal: () => void;
-  showNotification: () => void;
-}
-
-export default function AddFriendGroup<Props>(props: any): JSX.Element {
+export default function AddFriendGroup(props: any): JSX.Element {
   const { session } = useSession();
   
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -65,14 +58,18 @@ export default function AddFriendGroup<Props>(props: any): JSX.Element {
     }
     setChecked(updatedList);
 
+    console.log("CHECKED:")
+    console.log(checked)
+
     let newCheckedAsFriend:Friend[] = [];
     for (let i = 0; i < checked.length; i++) {
       newCheckedAsFriend.push({
         name: "",
         webId: checked[i]
       })
+      if (i === checked.length - 1)
+        setCheckedAsFriend(newCheckedAsFriend);
     }
-    setCheckedAsFriend(newCheckedAsFriend);
     console.log("CHECK LIST:")
     console.log(checkedAsFriend);
     console.log("NAME:");
@@ -103,8 +100,7 @@ export default function AddFriendGroup<Props>(props: any): JSX.Element {
     }).then(() => {
       props.closeModal();
       props.showNotification();
-    }
-    );
+    });
   };
 
   return (

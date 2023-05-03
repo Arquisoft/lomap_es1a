@@ -366,9 +366,9 @@ export async function initPodForLomap (session:Session){
   setPublicAccessRead(session, urlAlmacenamiento + RUTA_LOCATIONS, true);
   console.log("initPodForLomap -- Crear ACL para " + RUTA_LOCATIONS + ".");
 
-  await getOrCreateContainer(session,urlAlmacenamiento + RUTA_IMAGES);
+  await getOrCreateContainer(session,urlAlmacenamiento + "lomap/" + RUTA_IMAGES);
   console.log("initPodForLomap -- Comprobar en pod ruta " + RUTA_IMAGES + ".");
-  setPublicAccessRead(session, urlAlmacenamiento + RUTA_IMAGES, true);
+  setPublicAccessRead(session, urlAlmacenamiento + "lomap/" + RUTA_IMAGES, true);
   console.log("initPodForLomap -- Crear ACL para " + RUTA_IMAGES + ".");
 
   await getOrCreateDataset(session, urlAlmacenamiento + RUTA_GROUPS);
