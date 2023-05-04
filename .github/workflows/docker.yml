@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - pruebasDocker
+      - master
 
 jobs:
   docker-push-webapp:
