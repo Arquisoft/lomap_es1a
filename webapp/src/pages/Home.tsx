@@ -82,7 +82,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     setShowMarkerInfo(state);
     setFormLng(lng);
     setFormLat(lat);
-    const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+    const apiEndPoint = process.env.REACT_APP_API_URI || 'https://localhost:5000/'
     const response = await axios.get(apiEndPoint + "locations/info/" + id);
     
     let location = response.data.data;
@@ -148,7 +148,7 @@ export default function Home<Props>( props:any ): JSX.Element{
     console.log("RELOADING MAP...");
     //var source = map.getSource('places');
     
-    const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/';
+    const apiEndPoint = process.env.REACT_APP_API_URI || 'https://localhost:5000/';
     const response = await axios.get(apiEndPoint + "locations/" + category);
     console.log("Home.tsx - reloadMap - apiEndPoint:",apiEndPoint);
     console.log("Home.tsx - reloadMap - response:",response);

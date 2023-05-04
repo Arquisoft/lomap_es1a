@@ -59,7 +59,7 @@ export default class SideForm extends React.Component<Props, State> {
         longitud: this.props.lng,
       };
       try {
-        const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/'
+        const apiEndPoint= process.env.REACT_APP_API_URI || 'https://localhost:5000/'
         const res = await axios.post(apiEndPoint+'locations', data);
         console.log(res.data);
       } catch (err: any) {
