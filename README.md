@@ -12,6 +12,8 @@
   <a href="https://youtu.be/8jDXuokrXMs"> <b>Demonstration video</b> </a> - <a href="https://20.108.13.14"> <b>Deployed website</b> </a>
 </p>
 
+<p align="center" margin-top="2em"> <b>Note:</b> The deployed website <b>does not work on Firefox </b></p>
+
 ## Team members
 - Andrés Ángel González Granda - uo68216@uniovi.es
 - Pedro Garcia-Cañal Sánchez - uo264578@uniovi.es
