@@ -1,10 +1,16 @@
-# LoMap: ES1a
-
 [![Actions Status](https://github.com/arquisoft/lomap_es1a/workflows/CI%20for%20LOMAP_0/badge.svg)](https://github.com/arquisoft/lomap_es1a/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_es1a&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_es1a)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_es1a&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_es1a)
 
-![alt text](lomap_logo.png "Title")
+<h1 align="center"> LoMap: ES1A </h1>
+
+<p align="center" margin-top="2em">
+  <img src="lomap_logo.png" alt="LoMap logo">
+</p>
+
+<p align="center" margin-top="2em">
+  <a href="https://youtu.be/8jDXuokrXMs"> <b>Demonstration video</b> </a> - <a href="https://20.108.13.14"> <b>Deployed website</b> </a>
+</p>
 
 ## Team members
 - Andrés Ángel González Granda - uo68216@uniovi.es
@@ -34,12 +40,12 @@ npm install
 npm start
 ```
 
-Now the webapp:
+Tu run the webapp you need to create a production build in order for the restapi to work properly:
 
 ```shell
 cd webapp
-npm install
-npm start
+npm run build
+npm run prod
 ```
 
 You should be able to access the application in [http://localhost:3000](http://localhost:3000).
@@ -50,4 +56,4 @@ You should be able to access the application in [http://localhost:3000](http://l
 
 ## Deployment
 
-<a href="http://20.108.13.14"> Deployed on Azure </a>
+<a href="https://20.108.13.14"> Deployed on Azure </a>

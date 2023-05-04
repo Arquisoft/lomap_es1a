@@ -18,7 +18,8 @@ import TextField from "@mui/material/TextField";
 import { getFriends, saveLocation, getAllGroupsObject } from "../..//util/PodUtil";
 import type { Friend, Group } from "../../util/UserData";
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root');
+else Modal.setAppElement('body');
 
 const modalStyle = {
   content: {
@@ -48,7 +49,7 @@ interface Props {
   showNotification: () => void;
 }
 
-export default function AddLocationModal<Props>(props: any): JSX.Element {
+export default function AddLocationModal(props: any): JSX.Element {
   const { session } = useSession();
   const [friends, setFriends] = useState<Friend[]>([]);
   const [friendGroups, setFriendGroups] = useState<Group[]>([]);

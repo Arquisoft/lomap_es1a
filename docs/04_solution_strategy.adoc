@@ -26,7 +26,7 @@ without having to spend too much time in the modelling process.
 while having to replace as little code as possible.
 * *Usability*: The app must be accesible and usable, and for that we will be implementing several design features into our
 user interface in order for clients to be able to complete their tasks efficiently.
-* *Disponibility*: The application must always work with as little errors as possible and, if any bugs appear, the application
+* *Availability*: The application must always work with as little errors as possible and, if any bugs appear, the application
 must be able to take care of them and inform the user in an organised manner. As such, we will implement mechanisms for these functionalities
 to take effect.
 
