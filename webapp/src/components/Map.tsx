@@ -1,7 +1,10 @@
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
-import axios from "axios";
+import axios, {
+  AxiosRequestConfig,
+  Method,
+} from 'axios';
 import { requestToList } from '../util/LocationParser';
 import mapboxgl, { Marker } from "mapbox-gl";
 
@@ -87,8 +90,18 @@ export default class Map extends React.Component<Props> {
 
     this.map.on("load", async () => {
 
-      const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/'
-      const response = await axios.get(apiEndPoint + 'locations/');
+      const apiEndPoint= process.env.REACT_APP_API_URI || 'https://localhost:5000/'
+      
+      const config : AxiosRequestConfig= {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'origin':'x-requested-with',
+            'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD',
+            'Content-Type': 'application/json',
+        }
+      };
+
+      const response = await axios.get(apiEndPoint + 'locations/',config);
 
       console.log ("Transformación JSON de " + apiEndPoint + "locations a locations");
       let locations = JSON.parse(requestToList(response.data));

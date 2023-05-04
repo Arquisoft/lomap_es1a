@@ -6,10 +6,10 @@ import fs from "fs";
 var app: Application = express();
 const portProduction: number = 3000;
 
-app.use(cors({
+/*app.use(cors({
     origin: '*', //Admitimos todos los origenes 
     credentials: true
-}));
+}));*/
 
 app.use(express.static('build'));
 
