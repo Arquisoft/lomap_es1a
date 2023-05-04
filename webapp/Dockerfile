@@ -10,7 +10,6 @@ ENV REACT_APP_API_URI=$API_URI
 
 #Create an optimized version of the webapp
 RUN npm run build 
-#--> PTE Resolver problema transpilar mapa
 
 #Execute npm run prod to run the server
 #CMD ["npm", "start"]

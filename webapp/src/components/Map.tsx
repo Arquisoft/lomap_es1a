@@ -1,13 +1,17 @@
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
-import mapboxgl, { Marker } from "mapbox-gl";
 import axios from "axios";
 import { requestToList } from '../util/LocationParser';
+import mapboxgl, { Marker } from "mapbox-gl";
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass =  require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
-
+ 
 interface Props {
   lng: number;
   lat: number;
