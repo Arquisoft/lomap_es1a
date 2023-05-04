@@ -64,11 +64,12 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-        API_URI: http://${{ secrets.DEPLOY_HOST }}:5000/api
+        API_URI: https://${{ secrets.DEPLOY_HOST }}:5000/
       with:
           name: arquisoft/lomap_es1a/webapp
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
+          tags: "latest"
           registry: ghcr.io
           workdir: webapp
           buildargs: API_URI
@@ -84,6 +85,7 @@ jobs:
           name: arquisoft/lomap_es1a/restapi
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
+          tags: "latest"
           registry: ghcr.io
           workdir: restapi
   deploy:
