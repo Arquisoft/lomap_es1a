@@ -92,16 +92,17 @@ export default class Map extends React.Component<Props> {
 
       const apiEndPoint= process.env.REACT_APP_API_URI || 'https://localhost:5000/'
       
-      const config : AxiosRequestConfig= {
+      /*const config : AxiosRequestConfig= {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'origin':'x-requested-with',
             'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD',
             'Content-Type': 'application/json',
         }
-      };
+      };*/
 
-      const response = await axios.get(apiEndPoint + 'locations/',config);
+      const response = await axios.get(apiEndPoint + 'locations/');
+      
 
       console.log ("Transformación JSON de " + apiEndPoint + "locations a locations");
       let locations = JSON.parse(requestToList(response.data));

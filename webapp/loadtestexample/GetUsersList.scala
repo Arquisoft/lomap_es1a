@@ -8,7 +8,7 @@ import io.gatling.jdbc.Predef._
 class GetUsersList extends Simulation {
 
   private val httpProtocol = http
-    .baseUrl("http://localhost:3000")
+    .baseUrl("https://localhost:3000")
     .inferHtmlResources(AllowList(), DenyList())
     .acceptHeader("*/*")
     .acceptEncodingHeader("gzip, deflate")
@@ -24,23 +24,23 @@ class GetUsersList extends Simulation {
   
   private val headers_2 = Map(
   		"If-None-Match" -> """W/"21-Da2z2ryWGAvtwohXYJERIWJgKbU"""",
-  		"Origin" -> "http://localhost:3000"
+  		"Origin" -> "https://localhost:3000"
   )
   
   private val headers_3 = Map(
   		"Access-Control-Request-Headers" -> "content-type",
   		"Access-Control-Request-Method" -> "POST",
-  		"Origin" -> "http://localhost:3000"
+  		"Origin" -> "https://localhost:3000"
   )
   
   private val headers_4 = Map(
   		"Content-Type" -> "application/json",
-  		"Origin" -> "http://localhost:3000"
+  		"Origin" -> "https://localhost:3000"
   )
   
   private val headers_5 = Map(
   		"If-None-Match" -> """W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"""",
-  		"Origin" -> "http://localhost:3000"
+  		"Origin" -> "https://localhost:3000"
   )
   
   private val uri1 = "localhost"
@@ -55,22 +55,22 @@ class GetUsersList extends Simulation {
             .get("/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg")
             .headers(headers_1),
           http("request_2")
-            .get("http://" + uri1 + ":5000/api/users/list")
+            .get("https://" + uri1 + ":5000/api/users/list")
             .headers(headers_2)
         )
     )
     .pause(3)
     .exec(
       http("request_3")
-        .options("http://" + uri1 + ":5000/api/users/add")
+        .options("https://" + uri1 + ":5000/api/users/add")
         .headers(headers_3)
         .resources(
           http("request_4")
-            .post("http://" + uri1 + ":5000/api/users/add")
+            .post("https://" + uri1 + ":5000/api/users/add")
             .headers(headers_4)
             .body(RawFileBody("getuserslist/0004_request.txt")),
           http("request_5")
-            .get("http://" + uri1 + ":5000/api/users/list")
+            .get("https://" + uri1 + ":5000/api/users/list")
             .headers(headers_5)
         )
     )

@@ -19,7 +19,7 @@ const options = {
 }
 
 https.createServer(options, app).listen(portProduction, ():void => {
-    console.log('Server HTTPS. Webapp started on port '+ portProduction);
+    console.log('(HTTPS) Webapp started on port '+ portProduction);
 }).on("error",(error:Error)=>{
     console.error('Error occured: ' + error.message);
 });

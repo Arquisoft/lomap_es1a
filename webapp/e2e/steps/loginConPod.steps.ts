@@ -12,7 +12,7 @@ defineFeature(feature, (test) => {
     jest.setTimeout(80000);
     browser = await puppeteer.launch({ headless: true });
     page = await browser.newPage();
-    await page.goto("http://localhost:3000/login");
+    await page.goto("https://localhost:3000/login");
   });
 
   afterAll(async () => {
@@ -21,7 +21,7 @@ defineFeature(feature, (test) => {
 
   test("Successful login", ({ given, when,and, then }) => {
     given("I am on the login page", async () => {
-      await page.goto("http://localhost:3000/login");
+      await page.goto("https://localhost:3000/login");
     });
 
     when("I click on the providers box", async () => {
@@ -62,7 +62,7 @@ defineFeature(feature, (test) => {
 
     then("I should be redirected to the home page", async () => {
       await page.waitForNavigation();
-      expect(page.url()).toMatch("http://localhost:3000");
+      expect(page.url()).toMatch("https://localhost:3000");
     });
     
   });
