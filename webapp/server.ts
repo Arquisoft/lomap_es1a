@@ -1,11 +1,10 @@
 import express,{Application} from 'express'; 
 import cors from "cors";
-//for using an import here we need to configure the tsconfig.json
-//setting the option module to commonjs
+import https from "https";
+import fs from "fs";
 
-var app: Application = express()
-const port: number = 3000;
-
+var app: Application = express();
+const portProduction: number = 3000;
 
 app.use(cors({
     origin: '*', //Admitimos todos los origenes 
@@ -14,8 +13,13 @@ app.use(cors({
 
 app.use(express.static('build'));
 
-app.listen(port, ():void => {
-    console.log('Webapp started on port '+ port);
+const options = {
+    key: fs.readFileSync('./certificate/private-key.pkey'),
+    cert: fs.readFileSync('./certificate/certificate.cert')
+}
+
+https.createServer(options, app).listen(portProduction, ():void => {
+    console.log('Server HTTPS. Webapp started on port '+ portProduction);
 }).on("error",(error:Error)=>{
     console.error('Error occured: ' + error.message);
 });
