@@ -15,7 +15,7 @@ defineFeature(feature, test => {
       : await puppeteer.launch({ headless: true, slowMo: 50 });
     page = await browser.newPage();
   
-    await page.goto("http://localhost:3000").catch(() => {});
+    await page.goto("https://localhost:3000").catch(() => {});
   });
 
   afterAll(async () => {
@@ -24,7 +24,7 @@ defineFeature(feature, test => {
 
   test('Navegar por la seccion de about', ({ given, when, then }) => {
     given('Estoy en la página principal', async () => {
-      await page.goto('http://localhost:3000');
+      await page.goto('https://localhost:3000');
     });
 
     when('Hago clic en el icono de About', async () => {
@@ -36,7 +36,7 @@ defineFeature(feature, test => {
 
     then('Debería ir a la pagina de About', async () => {
       const url = await page.url();
-      expect(url).toBe('http://localhost:3000/about');
+      expect(url).toBe('https://localhost:3000/about');
     });
 
 })});

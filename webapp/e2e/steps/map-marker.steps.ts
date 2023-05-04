@@ -17,7 +17,7 @@ defineFeature(feature, test => {
       : await puppeteer.launch({ headless: true, slowMo: 50 });
     page = await browser.newPage();
   
-    await page.goto("http://localhost:3000").catch(() => {});
+    await page.goto("https://localhost:3000").catch(() => {});
   });
 
   afterAll(async () => {
@@ -26,7 +26,7 @@ defineFeature(feature, test => {
 
   test('Double clicking on the map should create a marker', ({ given, when, then }) => {
     given('I am on the Map page', async () => {
-      await page.goto('http://localhost:3000');
+      await page.goto('https://localhost:3000');
     });
 
     when('I double click on the map', async () => {

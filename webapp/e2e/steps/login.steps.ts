@@ -10,7 +10,7 @@ defineFeature(feature, (test) => {
   beforeEach(async () => {
     browser = await puppeteer.launch({ headless: true });
     page = await browser.newPage();
-    await page.goto("http://localhost:3000/login");
+    await page.goto("https://localhost:3000/login");
   });
 
   afterEach(async () => {
@@ -19,7 +19,7 @@ defineFeature(feature, (test) => {
 
   test("Successful login", ({ given, when,and, then }) => {
     given("I am on the login page", async () => {
-      await page.goto("http://localhost:3000/login");
+      await page.goto("https://localhost:3000/login");
     });
 
     when("I click on the providers box", async () => {
