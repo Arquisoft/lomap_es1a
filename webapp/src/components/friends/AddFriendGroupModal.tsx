@@ -19,7 +19,8 @@ import type { Friend, Group } from "../../util/UserData";
 
 import './AddFriendGroupModal.css';
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root');
+else Modal.setAppElement('body');
 
 const modalStyle = {
   content: {

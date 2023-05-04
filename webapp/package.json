@@ -99,7 +99,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs"
+      "axios": "axios/dist/node/axios.cjs",
+      "mapbox-workerclass": "worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker"
     }
   }
 }

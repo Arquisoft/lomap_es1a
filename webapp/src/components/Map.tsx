@@ -1,4 +1,3 @@
-
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
 import axios, {
@@ -9,8 +8,8 @@ import { requestToList } from '../util/LocationParser';
 import mapboxgl, { Marker } from "mapbox-gl";
 
 // @ts-ignore
-// eslint-disable-next-line import/no-webpack-loader-syntax
-mapboxgl.workerClass =  require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+// eslint-disable-next-line import/no-webpack-loader-syntax 
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidW8yNjQ1NzgiLCJhIjoiY2xldzVmcnBhMTYxMDNzczBwczRvMm5ueSJ9.t5bV5V6yx7ES0VZKIEqDsw";
@@ -48,7 +47,7 @@ export default class Map extends React.Component<Props> {
 
     this.map.doubleClickZoom.disable();
 
-    this.map.on("dblclick", (e: any) => {
+    this.map.on("click", (e: any) => {
       this.mapMarkers.forEach((marker: any) => {
         marker.remove();
       });

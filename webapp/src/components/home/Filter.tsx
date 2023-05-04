@@ -8,7 +8,7 @@ import Switch from "@mui/material/Switch";
 import styles from './filter.module.css';
 
 export default function Filter( props:any ): JSX.Element {
-  const [category, setCategory] = React.useState("Show all");
+  const [category, setCategory] = React.useState('');
 
   const handleChangeCategory = (event:any) => {
     
